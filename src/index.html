@@ -208,11 +208,10 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
       <label>Email address<input id="checkoutEmail" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"></label>
       <label>Bangladesh mobile number<input id="checkoutPhone" type="tel" required autocomplete="tel" placeholder="01XXXXXXXXX"></label>
       <div><label>Choose payment method</label><div class="checkout-methods">
-        <label class="checkout-method"><input type="radio" name="payment_method" value="bkash" checked> <span><b>bKash Personal</b><br><small>Send Money</small></span></label>
-        <label class="checkout-method"><input type="radio" name="payment_method" value="bank_transfer"> <span><b>Bank Transfer</b><br><small>Bank deposit / transfer</small></span></label>
+        <label class="checkout-method"><input type="radio" name="payment_method" value="bank_transfer" checked> <span><b>Bank Transfer</b><br><small>Bank deposit / transfer</small></span></label>
       </div></div>
       <div id="paymentInstructions" class="checkout-instructions" aria-live="polite">Loading payment instructions…</div>
-      <label>Transaction ID / Bank reference<input id="checkoutReference" type="text" required maxlength="80" autocomplete="off" placeholder="Enter the transaction ID"></label>
+      <label>Bank transaction ID / reference<input id="checkoutReference" type="text" required maxlength="80" autocomplete="off" placeholder="Enter your bank transaction/reference number"></label>
       <p class="checkout-hint">Your order remains pending until Bramble Admin checks the transaction in the receiving account. Never send your PIN, password or OTP.</p>
       <p id="checkoutError" class="checkout-error" role="alert"></p>
       <button id="checkoutSubmit" class="checkout-submit" type="submit">Submit Order for Verification</button>
@@ -507,7 +506,7 @@ let paymentSettings = null;
 async function loadPaymentSettings() {
   if (!db) return;
   const {data,error} = await db.from("bramble_payment_settings")
-    .select("bkash_personal_number,bank_name,bank_account_name,bank_account_number,bank_branch,bank_routing_number")
+    .select("bank_name,bank_account_name,bank_account_number,bank_branch,bank_routing_number")
     .eq("id",1).maybeSingle();
   if (error) { console.warn("Bramble payment settings could not be loaded:", error.message); return; }
   paymentSettings = data || null;
@@ -516,24 +515,19 @@ async function loadPaymentSettings() {
 function updatePaymentInstructions() {
   const area = $("#paymentInstructions");
   if (!area) return;
-  const method = document.querySelector('input[name="payment_method"]:checked')?.value || "bkash";
   const bankReady = !!(paymentSettings?.bank_name && paymentSettings?.bank_account_name && paymentSettings?.bank_account_number);
   const bankChoice = document.querySelector('input[name="payment_method"][value="bank_transfer"]');
-  if (bankChoice) {
-    bankChoice.disabled = !bankReady;
-    if (!bankReady && bankChoice.checked) document.querySelector('input[name="payment_method"][value="bkash"]').checked = true;
+  if (bankChoice) bankChoice.disabled = !bankReady;
+  if (!bankReady) {
+    area.innerHTML = '<p><strong>Bank Transfer is not available yet.</strong></p><p>The store owner is adding the bank account details. Please try again later.</p>';
+    $("#checkoutSubmit").disabled = true;
+    return;
   }
-  const chosen = bankChoice?.checked && bankReady ? "bank_transfer" : "bkash";
-  if (chosen === "bank_transfer") {
-    area.innerHTML = '<p><strong>Bank Transfer</strong></p><p>Bank: <strong>' + escapeHtml(paymentSettings.bank_name) + '</strong></p><p>Account name: <strong>' + escapeHtml(paymentSettings.bank_account_name) + '</strong></p><p>Account number: <strong>' + escapeHtml(paymentSettings.bank_account_number) + '</strong></p>' +
-      (paymentSettings.bank_branch ? '<p>Branch: <strong>' + escapeHtml(paymentSettings.bank_branch) + '</strong></p>' : '') +
-      (paymentSettings.bank_routing_number ? '<p>Routing number: <strong>' + escapeHtml(paymentSettings.bank_routing_number) + '</strong></p>' : '') +
-      '<p>Transfer the exact order amount and enter your bank transaction/reference number below.</p>';
-  } else {
-    const number = paymentSettings?.bkash_personal_number || "+8801969419302";
-    const amount = activeCheckoutProduct ? baseMoney(activeCheckoutProduct) : "the exact order amount";
-    area.innerHTML = '<p><strong>bKash Personal — Send Money</strong></p><p>Send <strong>' + escapeHtml(amount) + '</strong> to <strong>' + escapeHtml(number) + '</strong>.</p><p>Use <strong>Send Money</strong> (not Cash Out). Enter the bKash Transaction ID below.</p>';
-  }
+  $("#checkoutSubmit").disabled = false;
+  area.innerHTML = '<p><strong>Bank Transfer</strong></p><p>Bank: <strong>' + escapeHtml(paymentSettings.bank_name) + '</strong></p><p>Account name: <strong>' + escapeHtml(paymentSettings.bank_account_name) + '</strong></p><p>Account number: <strong>' + escapeHtml(paymentSettings.bank_account_number) + '</strong></p>' +
+    (paymentSettings.bank_branch ? '<p>Branch: <strong>' + escapeHtml(paymentSettings.bank_branch) + '</strong></p>' : '') +
+    (paymentSettings.bank_routing_number ? '<p>Routing number: <strong>' + escapeHtml(paymentSettings.bank_routing_number) + '</strong></p>' : '') +
+    '<p>Transfer the exact order amount and enter your bank transaction/reference number below.</p>';
 }
 function openCheckout(productId) {
   const product = productsById[productId] || sampleProducts[productId];
@@ -562,9 +556,9 @@ function closeCheckout() {
 async function submitCheckout(event) {
   event.preventDefault();
   if (!activeCheckoutProduct || !isPurchasable(activeCheckoutProduct)) return;
-  const method = document.querySelector('input[name="payment_method"]:checked')?.value || "bkash";
+  const method = "bank_transfer";
   const bankReady = !!(paymentSettings?.bank_name && paymentSettings?.bank_account_name && paymentSettings?.bank_account_number);
-  if (method === "bank_transfer" && !bankReady) { $("#checkoutError").textContent = "Bank details are not configured yet. Choose bKash or try later."; return; }
+  if (!bankReady) { $("#checkoutError").textContent = "Bank details are not configured yet. Please try again later."; return; }
   const button = $("#checkoutSubmit");
   button.disabled = true; button.textContent = "Submitting order…";
   $("#checkoutError").textContent = "";
