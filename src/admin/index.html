@@ -150,22 +150,11 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
       </section>
     </div>
     <section class="admin-card admin-spaced" id="paymentSettings">
-      <h3>Bank Transfer Settings</h3>
-      <p class="admin-hint">Add the bank account where customers should transfer their order payments. These public receiving details appear at checkout.</p>
-      <form id="paymentSettingsForm">
-        <div class="payment-settings-grid">
-          <label>Bank name<input id="settingBankName" type="text" required placeholder="Bank name"></label>
-          <label>Account holder name<input id="settingBankAccountName" type="text" required placeholder="Exactly as shown by the bank"></label>
-          <label>Account number<input id="settingBankAccountNumber" type="text" required placeholder="Bank account number"></label>
-          <label>Branch<input id="settingBankBranch" type="text" placeholder="Branch name"></label>
-          <label class="full">Routing number (optional)<input id="settingBankRouting" type="text" placeholder="Routing number"></label>
-        </div>
-        <button class="payment-save" type="submit">Save Bank Details</button>
-      </form>
-      <p class="payment-settings-note">Never enter your ATM PIN, online banking password, bKash PIN, OTP or card CVV here. Only account receiving details are needed.</p>
+      <h3>Bangla QR Payments</h3>
+      <p class="admin-hint">Customers pay using the Bangla QR displayed at checkout. Match the transaction ID and exact credited amount before marking an order as paid.</p>
     </section>
     <section class="admin-card admin-spaced">
-      <h3>Orders & Payment Verification</h3><p class="admin-hint">Service target: verify genuine payments and unlock the customer’s download within 30 minutes after funds are credited to the receiving account. Check the transaction reference and exact credited amount before selecting “Verify & Mark Paid”. For SWIFT orders, transfer arrival may take longer; start the 30-minute window only after the remittance is credited and converted to the expected BDT amount.</p>
+      <h3>Orders & Payment Verification</h3><p class="admin-hint">Verify each Bangla QR payment against the transaction ID and actual credited amount before selecting “Verify & Mark Paid”. Downloads unlock after the payment is confirmed.</p>
       <div class="admin-order-table-wrap"><table class="admin-order-table"><thead><tr><th>Order</th><th>Customer</th><th>Payment</th><th>Transaction ID</th><th>Status</th><th>Total</th><th>Date</th><th>Admin action</th></tr></thead><tbody id="adminOrders"><tr><td colspan="8">No orders yet.</td></tr></tbody></table></div>
     </section>
   </div>
@@ -182,7 +171,7 @@ const money = (value, currency = "BDT") => {
   try { return new Intl.NumberFormat("en-BD", {style:"currency",currency}).format(Number(value || 0)); }
   catch (error) { return currency + " " + Number(value || 0).toFixed(2); }
 };
-let currentSession = null, adminProducts = [], adminCategories = [], adminOrders = [], adminPaymentSettings = null;
+let currentSession = null, adminProducts = [], adminCategories = [], adminOrders = [];
 function toast(message){const el=$("#toast");el.textContent=message;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2600);}
 function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function isAdmin(session){return session?.user?.email?.toLowerCase()===ADMIN_EMAIL && session?.user?.app_metadata?.role==='admin';}
@@ -248,21 +237,13 @@ $("#passwordResetForm").addEventListener("submit",async event=>{
 async function refreshAdmin(){
   if(!db||!currentSession||!isAdmin(currentSession)){showSignedOut('This account does not have Bramble Admin permission.');return;}
   $("#adminAuth").hidden=true;$("#adminContent").hidden=false;$("#adminSignOut").hidden=false;
-  const [products,categories,orders,payments]=await Promise.all([
+  const [products,categories,orders]=await Promise.all([
     db.from('products').select('*').order('created_at',{ascending:false}),
     db.from('categories').select('*').order('sort_order'),
-    db.from('orders').select('id,customer_email,customer_name,customer_phone,payment_method,payment_provider,payment_reference,total,status,currency,created_at').order('created_at',{ascending:false}),
-    db.from('bramble_payment_settings').select('*').eq('id',1).maybeSingle()
+    db.from('orders').select('id,customer_email,customer_name,customer_phone,payment_method,payment_provider,payment_reference,total,status,currency,created_at').order('created_at',{ascending:false})
   ]);
-  if(products.error||categories.error||orders.error||payments.error){toast('Could not load dashboard data. Please check database permissions.');return;}
-  adminProducts=products.data||[];adminCategories=categories.data||[];adminOrders=orders.data||[];adminPaymentSettings=payments.data||null;
-  if(adminPaymentSettings){
-    $("#settingBankName").value=adminPaymentSettings.bank_name||'';
-    $("#settingBankAccountName").value=adminPaymentSettings.bank_account_name||'';
-    $("#settingBankAccountNumber").value=adminPaymentSettings.bank_account_number||'';
-    $("#settingBankBranch").value=adminPaymentSettings.bank_branch||'';
-    $("#settingBankRouting").value=adminPaymentSettings.bank_routing_number||'';
-  }
+  if(products.error||categories.error||orders.error){toast('Could not load dashboard data. Please check database permissions.');return;}
+  adminProducts=products.data||[];adminCategories=categories.data||[];adminOrders=orders.data||[];
   const paidOrders=adminOrders.filter(order=>['paid','processing','fulfilled'].includes(order.status));
   $("#statSales").textContent=String(paidOrders.length);
   $("#statOrders").textContent=String(adminOrders.length);
@@ -283,7 +264,7 @@ function renderAdminLists(){
   $("#categoryList").innerHTML=adminCategories.map(category=>`<div class="admin-row"><div><b>${escapeHtml(category.name)}</b><small>${category.is_active?'Visible on storefront':'Hidden from storefront'}</small></div><div><button data-rename-category="${category.id}">Rename</button> <button data-toggle-category="${category.id}">${category.is_active?'Hide':'Show'}</button> <button data-delete-category="${category.id}">Delete</button></div></div>`).join('')||'<p>No categories yet.</p>';
   renderProductRows();
   $("#adminOrders").innerHTML=adminOrders.map(order=>{
-    const method=order.payment_method==='swift_transfer'?'International SWIFT (USD)':order.payment_method==='bkash'?'bKash Personal':'Bangladesh Bank Transfer';
+    const method=order.payment_method==='bangla_qr'?'Bangla QR':order.payment_method==='swift_transfer'?'Legacy International SWIFT (USD)':order.payment_method==='bkash'?'Legacy bKash':'Legacy Bank Transfer';
     const pending=['pending_payment_verification','pending'].includes(order.status);
     const customer=[order.customer_name,order.customer_email,order.customer_phone].filter(Boolean).map(escapeHtml).join('<br>');
     return `<tr><td>#${escapeHtml(String(order.id).slice(0,8))}<small>${escapeHtml(order.id)}</small></td><td>${customer||'Guest'}</td><td>${method}</td><td><span class="payment-ref">${escapeHtml(order.payment_reference||'—')}</span></td><td><span class="admin-order-status">${escapeHtml(order.status)}</span></td><td>${money(order.total,order.currency||'BDT')}</td><td>${order.created_at?new Date(order.created_at).toLocaleString():'—'}</td><td>${pending?`<button class="order-verify-btn" type="button" data-verify-payment="${order.id}">Verify &amp; Mark Paid</button>`:'—'}</td></tr>`;
@@ -351,24 +332,6 @@ $("#productForm").addEventListener('submit',async event=>{
   const result=id?await db.from('products').update(payload).eq('id',id):await db.from('products').insert(payload);
   if(result.error){toast(result.error.message);return;}
   resetProductEditor();await refreshAdmin();toast(id?'Product changes saved':'Product added successfully');
-});
-$("#paymentSettingsForm").addEventListener('submit',async event=>{
-  event.preventDefault();if(!isAdmin(currentSession))return;
-  const payload={
-    id:1,
-    bank_name:$("#settingBankName").value.trim(),
-    bank_account_name:$("#settingBankAccountName").value.trim(),
-    bank_account_number:$("#settingBankAccountNumber").value.trim(),
-    bank_branch:$("#settingBankBranch").value.trim(),
-    bank_routing_number:$("#settingBankRouting").value.trim(),
-    updated_at:new Date().toISOString()
-  };
-  if(!payload.bank_name||!payload.bank_account_name||!payload.bank_account_number){
-    toast('Bank name, account holder and account number are required.');return;
-  }
-  const {error}=await db.from('bramble_payment_settings').upsert(payload,{onConflict:'id'});
-  if(error){toast('Payment settings could not be saved: '+error.message);return;}
-  await refreshAdmin();toast('Payment settings saved. Checkout will show the updated details.');
 });
 $("#categoryForm").addEventListener('submit',async event=>{
   event.preventDefault();if(!isAdmin(currentSession))return;
