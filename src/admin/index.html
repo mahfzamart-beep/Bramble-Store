@@ -68,6 +68,21 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
 @media(min-width:801px){.stats-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
 @media(max-width:900px){.admin-workbench-tools{grid-template-columns:1fr 1fr}.admin-workbench-tools input{grid-column:1/-1}.admin-product-row{grid-template-columns:62px minmax(0,1fr)}.admin-product-thumb{width:62px;height:62px}.admin-product-actions{grid-column:1/-1;max-width:none;justify-content:flex-start}}
 @media(max-width:520px){.admin-workbench-tools{grid-template-columns:1fr}.admin-workbench-tools input{grid-column:auto}.admin-product-actions .product-action{flex:1}}
+
+.payment-settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.payment-settings-grid label{display:grid;gap:6px;font-size:13px;font-weight:900}
+.payment-settings-grid input{width:100%;padding:12px;border:1px solid #e4dece;border-radius:11px;background:#fff;font:inherit}
+.payment-settings-grid .full{grid-column:1/-1}
+.payment-save{margin-top:14px;border:0;border-radius:25px;padding:12px 20px;background:var(--green);color:#fff;font:900 14px Nunito,sans-serif;cursor:pointer}
+.payment-settings-note{font-size:12px;color:var(--muted);line-height:1.5}
+.admin-order-table{min-width:1050px}
+.admin-order-table td{vertical-align:top;max-width:220px;overflow-wrap:anywhere}
+.admin-order-table td small{display:block;color:var(--muted);margin-top:3px}
+.payment-ref{font-family:monospace;font-weight:800}
+.order-verify-btn{border:0;border-radius:9px;padding:8px 10px;background:var(--green);color:#fff;font:900 12px Nunito,sans-serif;cursor:pointer;white-space:nowrap}
+.order-verify-btn:disabled{opacity:.5;cursor:default}
+@media(max-width:700px){.payment-settings-grid{grid-template-columns:1fr}.payment-settings-grid .full{grid-column:auto}}
+
 </style>
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="referrer" content="no-referrer">
@@ -124,7 +139,7 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
       <p class="admin-product-count" id="productResultCount" aria-live="polite">Loading products…</p>
       <div id="adminProducts" class="admin-products-list"></div>
     </section>
-    <div class="admin-grid"><section class="admin-card" id="productEditor"><h3>Complete Product Editor</h3><div id="editModeNotice" class="form-edit-state" hidden>Editing an existing product — save changes or cancel editing.</div><form id="productForm" class="admin-form"><input id="productId" type="hidden"><label>Product title<input id="productTitle" required placeholder="Product title"></label><label>URL slug (optional)<input id="productSlug" placeholder="auto-created-from-title"></label><label>Category<select id="productCategory" required></select></label><label>Product type<select id="productType"><option value="ebook">Ebook</option><option value="template">Template</option><option value="planner">Planner</option><option value="course">Course</option><option value="bundle">Bundle</option><option value="other">Other</option></select></label><label>Price (USD)<input id="productPrice" type="number" min="0" step="0.01" required></label><label>Compare-at price (optional)<input id="productComparePrice" type="number" min="0" step="0.01" placeholder="Original price before discount"></label><label>Cover image — upload directly<div class="upload-control"><input id="coverImageFile" type="file" accept="image/jpeg,image/png,image/webp"><span class="upload-help">Choose JPG, PNG or WebP (max 10 MB). It uploads securely to Bramble Storage.</span><div class="upload-preview"><img id="coverImagePreview" alt="Cover image preview" hidden><span id="coverUploadStatus" class="upload-status" aria-live="polite">No image uploaded yet.</span></div></div><input id="productCover" type="url" placeholder="Uploaded image URL appears here; you can also paste a URL"></label><label>Preview URL (optional)<input id="productPreview" type="url" placeholder="https://..."></label><label>Digital product file — upload directly<div class="upload-control"><input id="digitalProductFile" type="file" accept=".pdf,.epub,.zip,application/pdf,application/epub+zip,application/zip"><span class="upload-help">PDF, EPUB or ZIP (max 100 MB). Stored privately; customers must have access before download.</span><div id="digitalFileUploadStatus" class="upload-status" aria-live="polite">No file uploaded yet.</div></div><input id="productFilePath" type="text" placeholder="Private storage path appears here"><small class="admin-hint">The uploaded file is stored in the private Bramble digital products bucket.</small></label><label>Short description<textarea id="productDescription" rows="3" placeholder="Short summary shown in product cards"></textarea></label><label>Full product description<textarea id="productLongDescription" rows="6" placeholder="Full product details, contents, format and what customers receive"></textarea></label><label>Status<select id="productStatus"><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select></label><label class="check-row"><input id="productFeatured" type="checkbox"> Feature this product on the storefront</label><div class="auth-actions"><button class="primary-btn" id="saveProductButton" type="submit">Save Product</button><button class="admin-toolbar-btn" id="cancelProductEdit" type="button" hidden>Cancel editing</button></div></form></section>
+    <div class="admin-grid"><section class="admin-card" id="productEditor"><h3>Complete Product Editor</h3><div id="editModeNotice" class="form-edit-state" hidden>Editing an existing product — save changes or cancel editing.</div><form id="productForm" class="admin-form"><input id="productId" type="hidden"><label>Product title<input id="productTitle" required placeholder="Product title"></label><label>URL slug (optional)<input id="productSlug" placeholder="auto-created-from-title"></label><label>Category<select id="productCategory" required></select></label><label>Product type<select id="productType"><option value="ebook">Ebook</option><option value="template">Template</option><option value="planner">Planner</option><option value="course">Course</option><option value="bundle">Bundle</option><option value="other">Other</option></select></label><label>Price (BDT)<input id="productPrice" type="number" min="0" step="0.01" required></label><label>Compare-at price (BDT, optional)<input id="productComparePrice" type="number" min="0" step="0.01" placeholder="Original price before discount"></label><label>Cover image — upload directly<div class="upload-control"><input id="coverImageFile" type="file" accept="image/jpeg,image/png,image/webp"><span class="upload-help">Choose JPG, PNG or WebP (max 10 MB). It uploads securely to Bramble Storage.</span><div class="upload-preview"><img id="coverImagePreview" alt="Cover image preview" hidden><span id="coverUploadStatus" class="upload-status" aria-live="polite">No image uploaded yet.</span></div></div><input id="productCover" type="url" placeholder="Uploaded image URL appears here; you can also paste a URL"></label><label>Preview URL (optional)<input id="productPreview" type="url" placeholder="https://..."></label><label>Digital product file — upload directly<div class="upload-control"><input id="digitalProductFile" type="file" accept=".pdf,.epub,.zip,application/pdf,application/epub+zip,application/zip"><span class="upload-help">PDF, EPUB or ZIP (max 100 MB). Stored privately; customers must have access before download.</span><div id="digitalFileUploadStatus" class="upload-status" aria-live="polite">No file uploaded yet.</div></div><input id="productFilePath" type="text" placeholder="Private storage path appears here"><small class="admin-hint">The uploaded file is stored in the private Bramble digital products bucket.</small></label><label>Short description<textarea id="productDescription" rows="3" placeholder="Short summary shown in product cards"></textarea></label><label>Full product description<textarea id="productLongDescription" rows="6" placeholder="Full product details, contents, format and what customers receive"></textarea></label><label>Status<select id="productStatus"><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select></label><label class="check-row"><input id="productFeatured" type="checkbox"> Feature this product on the storefront</label><div class="auth-actions"><button class="primary-btn" id="saveProductButton" type="submit">Save Product</button><button class="admin-toolbar-btn" id="cancelProductEdit" type="button" hidden>Cancel editing</button></div></form></section>
       <section class="admin-card">
         <h3>Manage Categories</h3><p class="admin-hint">These controls only rename or show/hide categories. Product editing is in Product Management above.</p>
         <form id="categoryForm" class="inline-form">
@@ -134,9 +149,25 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
         <div id="categoryList" class="admin-list"></div>
       </section>
     </div>
+    <section class="admin-card admin-spaced" id="paymentSettings">
+      <h3>Payment Settings</h3>
+      <p class="admin-hint">bKash is configured as Personal Send Money. Add your bank account details here when ready; these instructions are shown to customers at checkout.</p>
+      <form id="paymentSettingsForm">
+        <div class="payment-settings-grid">
+          <label class="full">bKash Personal number (Send Money)<input id="settingBkashNumber" type="tel" required value="+8801969419302" placeholder="+8801XXXXXXXXX"></label>
+          <label>Bank name<input id="settingBankName" type="text" placeholder="Bank name"></label>
+          <label>Account holder name<input id="settingBankAccountName" type="text" placeholder="Account holder name"></label>
+          <label>Account number<input id="settingBankAccountNumber" type="text" placeholder="Bank account number"></label>
+          <label>Branch<input id="settingBankBranch" type="text" placeholder="Branch name"></label>
+          <label class="full">Routing number (optional)<input id="settingBankRouting" type="text" placeholder="Routing number"></label>
+        </div>
+        <button class="payment-save" type="submit">Save Payment Settings</button>
+      </form>
+      <p class="payment-settings-note">Only the public payment destination details are shown to customers. Never enter your bank PIN, bKash PIN, OTP or online banking password.</p>
+    </section>
     <section class="admin-card admin-spaced">
-      <h3>Recent orders</h3><p class="admin-hint">Read-only order overview. Payment status should only change after a real payment is verified.</p>
-      <div class="admin-order-table-wrap"><table class="admin-order-table"><thead><tr><th>Order</th><th>Customer</th><th>Status</th><th>Total</th><th>Date</th></tr></thead><tbody id="adminOrders"><tr><td colspan="5">No orders yet.</td></tr></tbody></table></div>
+      <h3>Orders & Payment Verification</h3><p class="admin-hint">Check the TxID in your receiving bKash/bank account and confirm the amount before selecting “Verify & Mark Paid”.</p>
+      <div class="admin-order-table-wrap"><table class="admin-order-table"><thead><tr><th>Order</th><th>Customer</th><th>Payment</th><th>Transaction ID</th><th>Status</th><th>Total</th><th>Date</th><th>Admin action</th></tr></thead><tbody id="adminOrders"><tr><td colspan="8">No orders yet.</td></tr></tbody></table></div>
     </section>
   </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -148,8 +179,11 @@ const ADMIN_EMAIL = "mahfzamart@gmail.com";
 const ADMIN_REDIRECT_URL = "https://bramble-digital-store-his-ans-her-mart.vercel.app/admin/";
 const db = window.supabase?.createClient(SUPABASE_URL, SUPABASE_KEY);
 const $ = selector => document.querySelector(selector);
-const money = value => "$" + Number(value || 0).toFixed(2);
-let currentSession = null, adminProducts = [], adminCategories = [], adminOrders = [];
+const money = (value, currency = "BDT") => {
+  try { return new Intl.NumberFormat("en-BD", {style:"currency",currency}).format(Number(value || 0)); }
+  catch (error) { return currency + " " + Number(value || 0).toFixed(2); }
+};
+let currentSession = null, adminProducts = [], adminCategories = [], adminOrders = [], adminPaymentSettings = null;
 function toast(message){const el=$("#toast");el.textContent=message;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2600);}
 function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function isAdmin(session){return session?.user?.email?.toLowerCase()===ADMIN_EMAIL && session?.user?.app_metadata?.role==='admin';}
@@ -215,13 +249,22 @@ $("#passwordResetForm").addEventListener("submit",async event=>{
 async function refreshAdmin(){
   if(!db||!currentSession||!isAdmin(currentSession)){showSignedOut('This account does not have Bramble Admin permission.');return;}
   $("#adminAuth").hidden=true;$("#adminContent").hidden=false;$("#adminSignOut").hidden=false;
-  const [products,categories,orders]=await Promise.all([
+  const [products,categories,orders,payments]=await Promise.all([
     db.from('products').select('*').order('created_at',{ascending:false}),
     db.from('categories').select('*').order('sort_order'),
-    db.from('orders').select('id,customer_email,total,status,currency,created_at').order('created_at',{ascending:false})
+    db.from('orders').select('id,customer_email,customer_name,customer_phone,payment_method,payment_provider,payment_reference,total,status,currency,created_at').order('created_at',{ascending:false}),
+    db.from('bramble_payment_settings').select('*').eq('id',1).maybeSingle()
   ]);
-  if(products.error||categories.error||orders.error){toast('Could not load dashboard data. Please check database permissions.');return;}
-  adminProducts=products.data||[];adminCategories=categories.data||[];adminOrders=orders.data||[];
+  if(products.error||categories.error||orders.error||payments.error){toast('Could not load dashboard data. Please check database permissions.');return;}
+  adminProducts=products.data||[];adminCategories=categories.data||[];adminOrders=orders.data||[];adminPaymentSettings=payments.data||null;
+  if(adminPaymentSettings){
+    $("#settingBkashNumber").value=adminPaymentSettings.bkash_personal_number||'';
+    $("#settingBankName").value=adminPaymentSettings.bank_name||'';
+    $("#settingBankAccountName").value=adminPaymentSettings.bank_account_name||'';
+    $("#settingBankAccountNumber").value=adminPaymentSettings.bank_account_number||'';
+    $("#settingBankBranch").value=adminPaymentSettings.bank_branch||'';
+    $("#settingBankRouting").value=adminPaymentSettings.bank_routing_number||'';
+  }
   const paidOrders=adminOrders.filter(order=>['paid','processing','fulfilled'].includes(order.status));
   $("#statSales").textContent=String(paidOrders.length);
   $("#statOrders").textContent=String(adminOrders.length);
@@ -241,14 +284,19 @@ function renderAdminLists(){
   catFilter.value=adminCategories.some(category=>category.id===catSelected)?catSelected:'all';
   $("#categoryList").innerHTML=adminCategories.map(category=>`<div class="admin-row"><div><b>${escapeHtml(category.name)}</b><small>${category.is_active?'Visible on storefront':'Hidden from storefront'}</small></div><div><button data-rename-category="${category.id}">Rename</button> <button data-toggle-category="${category.id}">${category.is_active?'Hide':'Show'}</button> <button data-delete-category="${category.id}">Delete</button></div></div>`).join('')||'<p>No categories yet.</p>';
   renderProductRows();
-  $("#adminOrders").innerHTML=adminOrders.map(order=>`<tr><td>#${escapeHtml(String(order.id).slice(0,8))}</td><td>${escapeHtml(order.customer_email||'Guest')}</td><td><span class="admin-order-status">${escapeHtml(order.status)}</span></td><td>${money(order.total)} ${escapeHtml(order.currency||'USD')}</td><td>${order.created_at?new Date(order.created_at).toLocaleDateString():'—'}</td></tr>`).join('')||'<tr><td colspan="5">No orders yet.</td></tr>';
+  $("#adminOrders").innerHTML=adminOrders.map(order=>{
+    const method=order.payment_method==='bkash'?'bKash Personal':'Bank Transfer';
+    const pending=['pending_payment_verification','pending'].includes(order.status);
+    const customer=[order.customer_name,order.customer_email,order.customer_phone].filter(Boolean).map(escapeHtml).join('<br>');
+    return `<tr><td>#${escapeHtml(String(order.id).slice(0,8))}<small>${escapeHtml(order.id)}</small></td><td>${customer||'Guest'}</td><td>${method}</td><td><span class="payment-ref">${escapeHtml(order.payment_reference||'—')}</span></td><td><span class="admin-order-status">${escapeHtml(order.status)}</span></td><td>${money(order.total,order.currency||'BDT')}</td><td>${order.created_at?new Date(order.created_at).toLocaleString():'—'}</td><td>${pending?`<button class="order-verify-btn" type="button" data-verify-payment="${order.id}">Verify &amp; Mark Paid</button>`:'—'}</td></tr>`;
+  }).join('')||'<tr><td colspan="8">No orders yet.</td></tr>';
 }
 function renderProductRows(){
   const q=$("#productSearch").value.trim().toLowerCase(),status=$("#productStatusFilter").value,category=$("#productCategoryFilter").value,sort=$("#productSort").value;
   let list=adminProducts.filter(product=>(status==='all'||product.status===status)&&(category==='all'||product.category_id===category)&&(!q||[product.title,product.short_description,product.description,product.slug].some(value=>String(value||'').toLowerCase().includes(q))));
   list=[...list].sort((a,b)=>sort==='title'?String(a.title).localeCompare(String(b.title)):sort==='price-low'?Number(a.price)-Number(b.price):sort==='price-high'?Number(b.price)-Number(a.price):new Date(b.created_at||0)-new Date(a.created_at||0));
   $("#productResultCount").textContent=`Showing ${list.length} of ${adminProducts.length} products`;
-  $("#adminProducts").innerHTML=list.map(product=>`<article class="admin-product-row"><img class="admin-product-thumb" src="${escapeHtml(product.cover_url||'https://placehold.co/160x160/f4f0e5/536158?text=Bramble')}" alt="" loading="lazy" onerror="this.src='https://placehold.co/160x160/f4f0e5/536158?text=Bramble'"><div class="admin-product-meta"><b>${escapeHtml(product.title)}</b><small>${money(product.price)} · ${escapeHtml(categoryName(product.category_id))} · ${escapeHtml(product.product_type||'digital')}</small><div class="admin-product-badges"><span class="${escapeHtml(product.status)}">${escapeHtml(product.status)}</span>${product.is_featured?'<span class="featured">Featured</span>':''}${product.compare_at_price?'<span>Was '+money(product.compare_at_price)+'</span>':''}</div></div><div class="admin-product-actions"><button class="product-action primary" data-edit-product="${product.id}">Edit Details</button><button class="product-action" data-toggle-status="${product.id}">${product.status==='published'?'Move to draft':'Publish'}</button><button class="product-action" data-toggle-featured="${product.id}">${product.is_featured?'Unfeature':'Feature'}</button><button class="product-action" data-duplicate-product="${product.id}">Duplicate</button><button class="product-action danger" data-delete-product="${product.id}">Delete</button></div></article>`).join('')||(adminProducts.length===0?'<div class="empty-state"><h3>No products added yet</h3><p>Add your first ebook, template, planner or other digital product. After saving it, its full Edit Details button will appear here.</p><button class="primary-btn" type="button" id="emptyAddProduct">＋ Add your first product</button></div>':'<p class="empty-state">No products match these filters. Try another search or reset the filters.</p>');
+  $("#adminProducts").innerHTML=list.map(product=>`<article class="admin-product-row"><img class="admin-product-thumb" src="${escapeHtml(product.cover_url||'https://placehold.co/160x160/f4f0e5/536158?text=Bramble')}" alt="" loading="lazy" onerror="this.src='https://placehold.co/160x160/f4f0e5/536158?text=Bramble'"><div class="admin-product-meta"><b>${escapeHtml(product.title)}</b><small>${money(product.price,product.currency||'BDT')} · ${escapeHtml(categoryName(product.category_id))} · ${escapeHtml(product.product_type||'digital')}</small><div class="admin-product-badges"><span class="${escapeHtml(product.status)}">${escapeHtml(product.status)}</span>${product.is_featured?'<span class="featured">Featured</span>':''}${product.compare_at_price?'<span>Was '+money(product.compare_at_price)+'</span>':''}</div></div><div class="admin-product-actions"><button class="product-action primary" data-edit-product="${product.id}">Edit Details</button><button class="product-action" data-toggle-status="${product.id}">${product.status==='published'?'Move to draft':'Publish'}</button><button class="product-action" data-toggle-featured="${product.id}">${product.is_featured?'Unfeature':'Feature'}</button><button class="product-action" data-duplicate-product="${product.id}">Duplicate</button><button class="product-action danger" data-delete-product="${product.id}">Delete</button></div></article>`).join('')||(adminProducts.length===0?'<div class="empty-state"><h3>No products added yet</h3><p>Add your first ebook, template, planner or other digital product. After saving it, its full Edit Details button will appear here.</p><button class="primary-btn" type="button" id="emptyAddProduct">＋ Add your first product</button></div>':'<p class="empty-state">No products match these filters. Try another search or reset the filters.</p>');
 }
 
 function safeUploadName(name){return String(name||'file').normalize('NFKD').replace(/[^a-zA-Z0-9._-]+/g,'-').replace(/^-+|-+$/g,'').slice(-100)||'file';}
@@ -301,10 +349,29 @@ function fillProductEditor(product){
 $("#productForm").addEventListener('submit',async event=>{
   event.preventDefault();if(!isAdmin(currentSession))return;
   const id=$("#productId").value,title=$("#productTitle").value.trim(),slug=slugify($("#productSlug").value||title);
-  const payload={title,slug,category_id:$("#productCategory").value||null,price:Number($("#productPrice").value),compare_at_price:$("#productComparePrice").value?Number($("#productComparePrice").value):null,cover_url:$("#productCover").value.trim()||null,preview_url:$("#productPreview").value.trim()||null,short_description:$("#productDescription").value.trim(),description:$("#productLongDescription").value.trim(),file_path:$("#productFilePath").value.trim()||null,status:$("#productStatus").value,currency:'USD',product_type:$("#productType").value,is_featured:$("#productFeatured").checked};
+  const payload={title,slug,category_id:$("#productCategory").value||null,price:Number($("#productPrice").value),compare_at_price:$("#productComparePrice").value?Number($("#productComparePrice").value):null,cover_url:$("#productCover").value.trim()||null,preview_url:$("#productPreview").value.trim()||null,short_description:$("#productDescription").value.trim(),description:$("#productLongDescription").value.trim(),file_path:$("#productFilePath").value.trim()||null,status:$("#productStatus").value,currency:'BDT',product_type:$("#productType").value,is_featured:$("#productFeatured").checked};
   const result=id?await db.from('products').update(payload).eq('id',id):await db.from('products').insert(payload);
   if(result.error){toast(result.error.message);return;}
   resetProductEditor();await refreshAdmin();toast(id?'Product changes saved':'Product added successfully');
+});
+$("#paymentSettingsForm").addEventListener('submit',async event=>{
+  event.preventDefault();if(!isAdmin(currentSession))return;
+  const payload={
+    id:1,
+    bkash_personal_number:$("#settingBkashNumber").value.trim(),
+    bank_name:$("#settingBankName").value.trim(),
+    bank_account_name:$("#settingBankAccountName").value.trim(),
+    bank_account_number:$("#settingBankAccountNumber").value.trim(),
+    bank_branch:$("#settingBankBranch").value.trim(),
+    bank_routing_number:$("#settingBankRouting").value.trim(),
+    updated_at:new Date().toISOString()
+  };
+  if(!/^\\+?8801[3-9]\\d{8}$/.test(payload.bkash_personal_number.replace(/[\\s()-]/g,''))&&!/^01[3-9]\\d{8}$/.test(payload.bkash_personal_number.replace(/[\\s()-]/g,''))){
+    toast('Enter a valid Bangladesh bKash mobile number.');return;
+  }
+  const {error}=await db.from('bramble_payment_settings').upsert(payload,{onConflict:'id'});
+  if(error){toast('Payment settings could not be saved: '+error.message);return;}
+  await refreshAdmin();toast('Payment settings saved. Checkout will show the updated details.');
 });
 $("#categoryForm").addEventListener('submit',async event=>{
   event.preventDefault();if(!isAdmin(currentSession))return;
@@ -329,6 +396,18 @@ $("#exportProducts").addEventListener('click',()=>{
 });
 document.addEventListener('click',async event=>{
   if(!isAdmin(currentSession))return;
+  const verifyPayment=event.target.closest('[data-verify-payment]');
+  if(verifyPayment){
+    const order=adminOrders.find(item=>item.id===verifyPayment.dataset.verifyPayment);
+    if(!order||!['pending_payment_verification','pending'].includes(order.status))return;
+    const paid=confirm('Have you checked this transaction ID in the receiving bKash/bank account and confirmed the exact amount ('+money(order.total,order.currency||'BDT')+')?\\n\\nTransaction ID: '+(order.payment_reference||'Not provided')+'\\n\\nOnly confirm after the funds are actually received.');
+    if(!paid)return;
+    verifyPayment.disabled=true;verifyPayment.textContent='Saving…';
+    const {error}=await db.from('orders').update({status:'paid',paid_at:new Date().toISOString()}).eq('id',order.id);
+    if(error){toast('Could not confirm payment: '+error.message);verifyPayment.disabled=false;verifyPayment.textContent='Verify & Mark Paid';}
+    else{await refreshAdmin();toast('Payment verified and order marked as paid.');}
+    return;
+  }
   const edit=event.target.closest('[data-edit-product]');
   if(edit){const product=adminProducts.find(item=>item.id===edit.dataset.editProduct);if(product)fillProductEditor(product);}
   const toggleStatus=event.target.closest('[data-toggle-status]');
