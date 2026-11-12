@@ -207,19 +207,19 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
     <form id="checkoutForm" class="checkout-form">
       <label>Full name<input id="checkoutName" type="text" required maxlength="120" autocomplete="name" placeholder="Your full name"></label>
       <label>Email address<input id="checkoutEmail" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"></label>
-      <label>Mobile / WhatsApp number (include country code)<input id="checkoutPhone" type="tel" required autocomplete="tel" placeholder="+1 555 123 4567"></label>
+      <label>Bangladesh mobile number<input id="checkoutPhone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="+8801XXXXXXXXX"></label>
       <div id="paymentInstructions" class="checkout-instructions" aria-live="polite">
-        <p><strong>Pay using Bangla QR</strong></p><p>Scan this QR with a supported Bangla QR-enabled bank or mobile financial service app. Pay the exact order amount, then enter the transaction ID below.</p>
-        <img class="checkout-qr" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPQAAAD0AQAAAACEVDZTAAACkElEQVR42u2ZMY4sORJDnwbff7pB3f9YfQPqBFwjqr3FeBPAYiedLCiNqBQZJEN5yt9d7y/+/vr3+f/883POfe+e+y6Hcy4XLuec+8/Xp7W1Bho12FJmORv10WKlaQzBZpb/8fp/5nbhwul9fvzw+Czh/63/4rv4Hq/wPpC7Uv8X/0IbraYkLuF/ygH/m/SBeQv732+1C5JjDvGUrf2nIQ3agq0RLO1K/6GxIiERS7Rpduq3wWLL6E+aUqA7/X/TS3n0ySXv5PUINyv4IykQW0KjqLKz/2nyi4CpBbPIPyu2TQ1Yk2Kyoj9/gEc4vvLwceGDP7631P9RqZFWNQnfLlzDv9oa2qbU2NQl/EV/RXCIF7Cw8/6UJDaYthaSom7pn0TSVPLFoN3rP9JQMLYSNKhL+280QppImQRousT/JvErwGnGECcM7fSfc8MGEDqJaKP+X+M7nkvCx0IhPitL80cU8/sLGkcIl95fAnDvzyXU8/k5mbWV/H848AkX3/HlcTkct/yn39DF9IGYDA939DclhQmiWGpGkpf8p2mIOuo7ItQt/UsjbQIhtZromPCK/zQjPxNCzHcA6Zb+QiLzJ4KNm/xL0xH+RDL+P/Fzpz4xEqrwnb6pXeJfTaYFSGAkAHb0l5aOAH/1J2PIZIv/asXU2kajNt3j3zhQQ+PoUUaCl+qb7/zVjvc27OV/wkR/myilCV3Df1KvcU4/CCPHXcK/KcZhPZM7JgdtzR+tv0GsFpWJYDv4g792N0NH4+L5x8A/A5c1Qatd0b8/wJG++8LpO/iAA4fbve8Tn/CxB3MNP84wtnf+zePl9OZww+3D+8Pa+Tcz7YXOyQsTAvf4PzkAKRlThg3+nX+/P/5fP/8PZGoSnGTgA3wAAAAASUVORK5CYII=" alt="Bangla QR code" width="615" height="615" decoding="async">
+        <p id="qrCountryNotice">Bangla QR payment is available only for customers in Bangladesh. Enter a Bangladesh mobile number starting with +880 to display the QR.</p>
+        <img id="checkoutQr" class="checkout-qr" src="data:image/png;base64,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" alt="Bangla QR code" width="483" height="483" decoding="async" hidden>
       </div>
-      <label>Bangla QR transaction ID / reference<input id="checkoutReference" type="text" required maxlength="80" autocomplete="off" placeholder="Enter your Bangla QR transaction ID"></label>
-      <p class="checkout-hint">Your order stays pending until Bramble verifies the payment. Download access is unlocked after the funds are credited and verified. Never share your PIN, password or OTP.</p>
+      <label id="checkoutReferenceLabel" hidden>Bangla QR transaction ID / reference<input id="checkoutReference" type="text" maxlength="80" autocomplete="off" placeholder="Enter your Bangla QR transaction ID" disabled></label>
+      <p class="checkout-hint">Your order stays pending until Bramble verifies your Bangla QR payment. Download access is unlocked after the funds are credited and verified. Never share your PIN, password or OTP.</p>
       <p id="checkoutError" class="checkout-error" role="alert"></p>
       <button id="checkoutSubmit" class="checkout-submit" type="submit">Submit Order for Verification</button>
     </form>
     <div id="checkoutSuccess" class="checkout-success" hidden>
       <div class="success-icon">🌱</div><h3>Order submitted!</h3>
-      <p>Your order has been submitted, but payment is not confirmed yet. Once the funds reach Bramble’s bank account and are verified, your download access will be unlocked within 30 minutes. SWIFT transfers may take longer to arrive; the 30-minute window starts after the funds are credited.</p>
+      <p>Your order has been submitted, but payment is not confirmed yet. Once your Bangla QR payment is credited and verified by Bramble, your download access will be unlocked within 30 minutes.</p>
       <div id="checkoutOrderId" class="checkout-order-id"></div>
       <p id="checkoutOrderTotal"></p>
       <p><b>Keep your Order ID and checkout email.</b> When your payment is verified, tap the button below. You will be taken to Check Order &amp; Download, where your eBook or digital file will appear. Bramble does not currently email the file as an attachment.</p>
@@ -516,6 +516,7 @@ function openCheckout(productId) {
   $("#checkoutSuccess").hidden = true;
   $("#checkoutError").textContent = "";
   $("#checkoutReference").value = "";
+  updateBanglaQrAvailability();
   $("#checkoutOverlay").classList.add("open");
   $("#checkoutOverlay").setAttribute("aria-hidden","false");
   $("#checkoutName").focus();
@@ -526,10 +527,40 @@ function closeCheckout() {
   $("#checkoutOverlay").setAttribute("aria-hidden","true");
   activeCheckoutProduct = null;
 }
+function normalizeBangladeshPhone(value) {
+  const phone = String(value ?? "").trim().replace(/[()\\s-]/g, "");
+  if (/^01[3-9]\\d{8}$/.test(phone)) return "+88" + phone;
+  if (/^8801[3-9]\\d{8}$/.test(phone)) return "+" + phone;
+  return phone;
+}
+function isBangladeshMobile(value) {
+  return /^\\+8801[3-9]\\d{8}$/.test(normalizeBangladeshPhone(value));
+}
+function updateBanglaQrAvailability() {
+  const rawPhone = $("#checkoutPhone").value;
+  const allowed = isBangladeshMobile(rawPhone);
+  $("#checkoutQr").hidden = !allowed;
+  $("#checkoutReferenceLabel").hidden = !allowed;
+  $("#checkoutReference").required = allowed;
+  $("#checkoutReference").disabled = !allowed;
+  $("#qrCountryNotice").textContent = allowed
+    ? "Scan this QR using a supported Bangla QR-enabled bank or mobile financial service app. Pay the exact order amount, then enter the transaction ID below."
+    : (rawPhone.trim()
+      ? "Bangla QR payment is available only to customers in Bangladesh. International payment is not available yet."
+      : "Bangla QR payment is available only to customers in Bangladesh. Enter a Bangladesh mobile number starting with +880 to display the QR.");
+  if (!allowed) $("#checkoutReference").value = "";
+}
+
 async function submitCheckout(event) {
   event.preventDefault();
   if (!activeCheckoutProduct || !isPurchasable(activeCheckoutProduct)) return;
   const method = "bangla_qr";
+  const customerPhone = normalizeBangladeshPhone($("#checkoutPhone").value);
+  if (!isBangladeshMobile(customerPhone)) {
+    $("#checkoutError").textContent = "Bangla QR payment is available only for customers in Bangladesh. Enter a valid Bangladesh mobile number starting with +880.";
+    updateBanglaQrAvailability();
+    return;
+  }
   const button = $("#checkoutSubmit");
   button.disabled = true; button.textContent = "Submitting order…";
   $("#checkoutError").textContent = "";
@@ -540,7 +571,7 @@ async function submitCheckout(event) {
       body:JSON.stringify({
         customer_name:$("#checkoutName").value.trim(),
         customer_email:$("#checkoutEmail").value.trim(),
-        customer_phone:$("#checkoutPhone").value.trim(),
+        customer_phone:customerPhone,
         payment_method:method,
         payment_reference:$("#checkoutReference").value.trim(),
         items:[{id:activeCheckoutProduct.id,quantity:1}]
@@ -649,6 +680,7 @@ function bindEvents() {
   });
   $("#orderLookupForm").addEventListener("submit", lookupOrder);
   $("#checkoutOverlay").addEventListener("click", event => { if (event.target === $("#checkoutOverlay")) closeCheckout(); });
+  $("#checkoutPhone").addEventListener("input", updateBanglaQrAvailability);
   $("#checkoutForm").addEventListener("submit", submitCheckout);
   $("#libraryToggle").addEventListener("click", openLibrary);
   $("#closeLibrary").addEventListener("click", closeLibrary);
