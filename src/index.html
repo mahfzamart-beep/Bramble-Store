@@ -528,19 +528,19 @@ function closeCheckout() {
   activeCheckoutProduct = null;
 }
 function normalizeBangladeshPhone(value) {
-  const phone = String(value ?? "").trim().replace(/[()\\s-]/g, "");
-  if (/^01[3-9]\\d{8}$/.test(phone)) return "+88" + phone;
-  if (/^8801[3-9]\\d{8}$/.test(phone)) return "+" + phone;
+  const phone = String(value ?? "").trim().replace(/[()\s-]/g, "");
+  if (/^01[3-9]\d{8}$/.test(phone)) return "+88" + phone;
+  if (/^8801[3-9]\d{8}$/.test(phone)) return "+" + phone;
   return phone;
 }
 function isBangladeshMobile(value) {
-  return /^\\+8801[3-9]\\d{8}$/.test(normalizeBangladeshPhone(value));
+  return /^\+8801[3-9]\d{8}$/.test(normalizeBangladeshPhone(value));
 }
 function updateBanglaQrAvailability() {
   const rawPhone = $("#checkoutPhone").value;
   const allowed = isBangladeshMobile(rawPhone);
-  $("#checkoutQr").hidden = !allowed;
-  $("#checkoutReferenceLabel").hidden = !allowed;
+  $("#checkoutQr").style.display = allowed ? "block" : "none";
+  $("#checkoutReferenceLabel").style.display = allowed ? "block" : "none";
   $("#checkoutReference").required = allowed;
   $("#checkoutReference").disabled = !allowed;
   $("#qrCountryNotice").textContent = allowed
