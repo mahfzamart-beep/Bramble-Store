@@ -216,19 +216,23 @@ $("#adminSignOut").addEventListener("click",async()=>{
 });
 async function initAdminAuth(){
   if(!db){showSignedOut("Supabase client could not be loaded.");return;}
+  const recoveryMode=new URLSearchParams(window.location.hash.slice(1)).get("type")==="recovery";
   const {data,error}=await db.auth.getSession();
   if(error){showSignedOut(error.message);return;}
   currentSession=data.session;
-  if(currentSession){
-    if((currentSession.user.email||"").toLowerCase()===ADMIN_EMAIL)showSecurityChallenge();
-    else showSignedOut("This account is not authorised to manage Bramble.");
+  if(recoveryMode&&currentSession)showPasswordReset();
+  else if(currentSession){
+    await db.auth.signOut();
+    currentSession=null;
+    showSignedOut("For security, sign in with your email and password.");
   }else showSignedOut("Sign in with your authorised email to continue.");
   db.auth.onAuthStateChange((event,session)=>{
     currentSession=session;
     if(event==="PASSWORD_RECOVERY"){showPasswordReset();return;}
-    if(!session){showSignedOut("Sign in with your authorised email to continue.");return;}
+    if(event==="SIGNED_OUT"){showSignedOut("You have signed out securely.");return;}
+    if(event!=="SIGNED_IN"||!session)return;
     if((session.user.email||"").toLowerCase()!==ADMIN_EMAIL){showSignedOut("This account is not authorised to manage Bramble.");return;}
-    if(event==="SIGNED_IN"||event==="INITIAL_SESSION")showSecurityChallenge();
+    showSecurityChallenge();
   });
 }
 initAdminAuth();
