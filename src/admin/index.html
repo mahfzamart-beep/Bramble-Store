@@ -65,6 +65,7 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
 .admin-order-table th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.6px}
 .admin-order-status{display:inline-block;border-radius:20px;padding:4px 8px;background:#edf3e8;font-weight:900;font-size:11px}
 .admin-product-count{color:var(--muted);font-size:13px;margin:0 0 10px}
+@media(min-width:801px){.stats-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
 @media(max-width:900px){.admin-workbench-tools{grid-template-columns:1fr 1fr}.admin-workbench-tools input{grid-column:1/-1}.admin-product-row{grid-template-columns:62px minmax(0,1fr)}.admin-product-thumb{width:62px;height:62px}.admin-product-actions{grid-column:1/-1;max-width:none;justify-content:flex-start}}
 @media(max-width:520px){.admin-workbench-tools{grid-template-columns:1fr}.admin-workbench-tools input{grid-column:auto}.admin-product-actions .product-action{flex:1}}
 </style>
@@ -217,7 +218,7 @@ async function refreshAdmin(){
   const [products,categories,orders]=await Promise.all([
     db.from('products').select('*').order('created_at',{ascending:false}),
     db.from('categories').select('*').order('sort_order'),
-    db.from('orders').select('id,customer_email,total,status,currency,created_at').order('created_at',{ascending:false}).limit(50)
+    db.from('orders').select('id,customer_email,total,status,currency,created_at').order('created_at',{ascending:false})
   ]);
   if(products.error||categories.error||orders.error){toast('Could not load dashboard data. Please check database permissions.');return;}
   adminProducts=products.data||[];adminCategories=categories.data||[];adminOrders=orders.data||[];
