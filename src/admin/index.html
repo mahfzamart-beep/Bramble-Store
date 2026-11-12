@@ -366,7 +366,7 @@ $("#paymentSettingsForm").addEventListener('submit',async event=>{
     bank_routing_number:$("#settingBankRouting").value.trim(),
     updated_at:new Date().toISOString()
   };
-  if(!/^\\+?8801[3-9]\\d{8}$/.test(payload.bkash_personal_number.replace(/[\\s()-]/g,''))&&!/^01[3-9]\\d{8}$/.test(payload.bkash_personal_number.replace(/[\\s()-]/g,''))){
+  if(!/^\+?8801[3-9]\d{8}$/.test(payload.bkash_personal_number.replace(/[\s()-]/g,''))&&!/^01[3-9]\d{8}$/.test(payload.bkash_personal_number.replace(/[\s()-]/g,''))){
     toast('Enter a valid Bangladesh bKash mobile number.');return;
   }
   const {error}=await db.from('bramble_payment_settings').upsert(payload,{onConflict:'id'});
