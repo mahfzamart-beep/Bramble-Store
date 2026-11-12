@@ -74,6 +74,18 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
 .checkout-order-id{padding:12px;background:#f2f6e9;border-radius:12px;font-weight:900;overflow-wrap:anywhere;color:var(--green-dark)}
 @media(max-width:520px){.checkout-dialog{padding:18px;border-radius:18px}.checkout-head h2{font-size:23px}.checkout-methods{grid-template-columns:1fr}}
 
+
+.order-lookup-form{max-width:620px;margin:18px auto;display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left;background:#fffaf0;border:1px solid #e8e1d2;border-radius:18px;padding:18px}
+.order-lookup-form label{display:grid;gap:6px;font-size:13px;font-weight:900}
+.order-lookup-form input{width:100%;padding:12px;border:1px solid #dfd9cc;border-radius:11px;background:#fff;font:inherit}
+.order-lookup-form button{grid-column:1/-1}
+.order-lookup-result{max-width:620px;margin:12px auto 0;text-align:left;font-weight:800;line-height:1.5}
+.order-download-link{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;margin-top:8px;background:#f1f7e9;border:1px solid #d9e7cf;border-radius:12px;color:#245d29;text-decoration:none}
+.order-download-link span{font-size:13px;font-weight:900}
+.order-download-link strong{white-space:nowrap}
+.lookup-pending{padding:14px;background:#fff7e7;border:1px solid #f0dfb9;border-radius:12px;color:#76521c}
+@media(max-width:520px){.order-lookup-form{grid-template-columns:1fr;padding:14px}.order-lookup-form button{grid-column:auto}}
+
 </style>
 </head>
 <body>
@@ -172,7 +184,16 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
     <div><span>💜</span><h2>Grow at your own pace.</h2><p>Tools and inspiration for every chapter.</p></div>
   </section>
   <section class="lower-note" id="blog"><h2>Ideas worth sharing</h2><p>Helpful reads, creative inspiration and fresh finds are coming soon.</p></section>
-  <section class="lower-note account-note" id="account"><h2>Your Bramble account</h2><p>Customer sign-in and cloud library are being prepared. Your saved items currently stay on this device.</p></section>
+  <section class="lower-note account-note" id="account">
+    <h2>Check Order &amp; Download</h2>
+    <p>After Bramble verifies your payment, enter your Order ID and checkout email to get a secure download link.</p>
+    <form id="orderLookupForm" class="order-lookup-form">
+      <label>Order ID<input id="lookupOrderId" type="text" required maxlength="36" placeholder="Paste your Order ID"></label>
+      <label>Email used at checkout<input id="lookupEmail" type="email" required maxlength="254" placeholder="you@example.com"></label>
+      <button id="lookupSubmit" class="checkout-submit" type="submit">Check Order / Get Downloads</button>
+    </form>
+    <div id="orderLookupResult" class="order-lookup-result" role="status" aria-live="polite"></div>
+  </section>
 </main>
 
 <footer><a href="#home" class="footer-brand">bramble <span>✦</span></a><p>Discover. Download. Grow.</p><small>© 2026 Bramble. Made for curious minds.</small><br><small>Exchange rates: <a href="https://www.exchangerate-api.com" target="_blank" rel="noopener noreferrer">Rates By Exchange Rate API</a></small></footer>
@@ -202,7 +223,8 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
       <div id="checkoutOrderId" class="checkout-order-id"></div>
       <p id="checkoutOrderTotal"></p>
       <p>Keep this Order ID. Bramble Admin will confirm the payment after checking your transaction reference.</p>
-      <button id="checkoutDone" class="checkout-submit" type="button">Back to Store</button>
+      <button id="checkoutTrackOrder" class="checkout-submit" type="button">Check downloads later</button>
+      <button id="checkoutDone" class="buy-now-btn" type="button">Back to Store</button>
     </div>
   </section>
 </div>
@@ -564,6 +586,8 @@ async function submitCheckout(event) {
     $("#checkoutForm").hidden = true;
     $("#checkoutSuccess").hidden = false;
     $("#checkoutOrderId").textContent = "Order ID: " + data.order_id;
+    $("#lookupOrderId").value = data.order_id;
+    $("#lookupEmail").value = $("#checkoutEmail").value.trim();
     $("#checkoutOrderTotal").textContent = "Order total: " + baseMoney({price:data.total,currency:data.currency});
   } catch (error) {
     $("#checkoutError").textContent = error.message || "Checkout failed. Please try again.";
@@ -593,9 +617,69 @@ function filterProducts() {
   });
   $("#emptyState").hidden = cards.some(card => !card.hidden);
 }
+async function lookupOrder(event) {
+  event.preventDefault();
+  const orderId = $("#lookupOrderId").value.trim();
+  const email = $("#lookupEmail").value.trim().toLowerCase();
+  const result = $("#orderLookupResult");
+  const button = $("#lookupSubmit");
+  result.replaceChildren();
+  button.disabled = true;
+  button.textContent = "Checking order…";
+  try {
+    const response = await fetch(SUPABASE_URL + "/functions/v1/bramble-checkout", {
+      method:"POST",
+      headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY},
+      body:JSON.stringify({action:"download",order_id:orderId,customer_email:email})
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.ok) throw new Error(data.error || "Could not check this order.");
+    const message = document.createElement("p");
+    message.textContent = data.message || "";
+    result.appendChild(message);
+    if (!data.paid) {
+      const pending = document.createElement("div");
+      pending.className = "lookup-pending";
+      pending.textContent = "Status: " + String(data.status || "pending").replaceAll("_"," ") + ". Downloads will appear after payment verification.";
+      result.appendChild(pending);
+      return;
+    }
+    (data.downloads || []).forEach(file => {
+      const link = document.createElement("a");
+      link.className = "order-download-link";
+      link.href = file.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      const title = document.createElement("span");
+      title.textContent = file.title || "Digital product";
+      const action = document.createElement("strong");
+      action.textContent = "Download ↓";
+      link.append(title,action);
+      result.appendChild(link);
+    });
+  } catch (error) {
+    const message = document.createElement("p");
+    message.textContent = error.message || "Could not check this order. Please try again.";
+    message.style.color = "#9b342a";
+    result.appendChild(message);
+  } finally {
+    button.disabled = false;
+    button.textContent = "Check Order / Get Downloads";
+  }
+}
+
 function bindEvents() {
   $("#checkoutClose").addEventListener("click", closeCheckout);
   $("#checkoutDone").addEventListener("click", closeCheckout);
+  $("#checkoutTrackOrder").addEventListener("click", () => {
+    $("#lookupOrderId").value = $("#checkoutOrderId").textContent.replace("Order ID: ","").trim();
+    $("#lookupEmail").value = $("#checkoutEmail").value.trim();
+    $("#orderLookupResult").replaceChildren();
+    closeCheckout();
+    $("#account").scrollIntoView({behavior:"smooth",block:"center"});
+    $("#lookupOrderId").focus({preventScroll:true});
+  });
+  $("#orderLookupForm").addEventListener("submit", lookupOrder);
   $("#checkoutOverlay").addEventListener("click", event => { if (event.target === $("#checkoutOverlay")) closeCheckout(); });
   $("#checkoutForm").addEventListener("submit", submitCheckout);
   document.querySelectorAll('input[name="payment_method"]').forEach(input => input.addEventListener("change", updatePaymentInstructions));
