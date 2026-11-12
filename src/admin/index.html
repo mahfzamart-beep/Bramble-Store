@@ -150,20 +150,19 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
       </section>
     </div>
     <section class="admin-card admin-spaced" id="paymentSettings">
-      <h3>Payment Settings</h3>
-      <p class="admin-hint">bKash is configured as Personal Send Money. Add your bank account details here when ready; these instructions are shown to customers at checkout.</p>
+      <h3>Bank Transfer Settings</h3>
+      <p class="admin-hint">Add the bank account where customers should transfer their order payments. These public receiving details appear at checkout.</p>
       <form id="paymentSettingsForm">
         <div class="payment-settings-grid">
-          <label class="full">bKash Personal number (Send Money)<input id="settingBkashNumber" type="tel" required value="+8801969419302" placeholder="+8801XXXXXXXXX"></label>
-          <label>Bank name<input id="settingBankName" type="text" placeholder="Bank name"></label>
-          <label>Account holder name<input id="settingBankAccountName" type="text" placeholder="Account holder name"></label>
-          <label>Account number<input id="settingBankAccountNumber" type="text" placeholder="Bank account number"></label>
+          <label>Bank name<input id="settingBankName" type="text" required placeholder="Bank name"></label>
+          <label>Account holder name<input id="settingBankAccountName" type="text" required placeholder="Exactly as shown by the bank"></label>
+          <label>Account number<input id="settingBankAccountNumber" type="text" required placeholder="Bank account number"></label>
           <label>Branch<input id="settingBankBranch" type="text" placeholder="Branch name"></label>
           <label class="full">Routing number (optional)<input id="settingBankRouting" type="text" placeholder="Routing number"></label>
         </div>
-        <button class="payment-save" type="submit">Save Payment Settings</button>
+        <button class="payment-save" type="submit">Save Bank Details</button>
       </form>
-      <p class="payment-settings-note">Only the public payment destination details are shown to customers. Never enter your bank PIN, bKash PIN, OTP or online banking password.</p>
+      <p class="payment-settings-note">Never enter your ATM PIN, online banking password, bKash PIN, OTP or card CVV here. Only account receiving details are needed.</p>
     </section>
     <section class="admin-card admin-spaced">
       <h3>Orders & Payment Verification</h3><p class="admin-hint">Check the TxID in your receiving bKash/bank account and confirm the amount before selecting “Verify & Mark Paid”.</p>
@@ -258,7 +257,6 @@ async function refreshAdmin(){
   if(products.error||categories.error||orders.error||payments.error){toast('Could not load dashboard data. Please check database permissions.');return;}
   adminProducts=products.data||[];adminCategories=categories.data||[];adminOrders=orders.data||[];adminPaymentSettings=payments.data||null;
   if(adminPaymentSettings){
-    $("#settingBkashNumber").value=adminPaymentSettings.bkash_personal_number||'';
     $("#settingBankName").value=adminPaymentSettings.bank_name||'';
     $("#settingBankAccountName").value=adminPaymentSettings.bank_account_name||'';
     $("#settingBankAccountNumber").value=adminPaymentSettings.bank_account_number||'';
@@ -358,7 +356,6 @@ $("#paymentSettingsForm").addEventListener('submit',async event=>{
   event.preventDefault();if(!isAdmin(currentSession))return;
   const payload={
     id:1,
-    bkash_personal_number:$("#settingBkashNumber").value.trim(),
     bank_name:$("#settingBankName").value.trim(),
     bank_account_name:$("#settingBankAccountName").value.trim(),
     bank_account_number:$("#settingBankAccountNumber").value.trim(),
@@ -366,8 +363,8 @@ $("#paymentSettingsForm").addEventListener('submit',async event=>{
     bank_routing_number:$("#settingBankRouting").value.trim(),
     updated_at:new Date().toISOString()
   };
-  if(!/^\+?8801[3-9]\d{8}$/.test(payload.bkash_personal_number.replace(/[\s()-]/g,''))&&!/^01[3-9]\d{8}$/.test(payload.bkash_personal_number.replace(/[\s()-]/g,''))){
-    toast('Enter a valid Bangladesh bKash mobile number.');return;
+  if(!payload.bank_name||!payload.bank_account_name||!payload.bank_account_number){
+    toast('Bank name, account holder and account number are required.');return;
   }
   const {error}=await db.from('bramble_payment_settings').upsert(payload,{onConflict:'id'});
   if(error){toast('Payment settings could not be saved: '+error.message);return;}
