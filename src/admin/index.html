@@ -43,6 +43,30 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
 .admin-auth .auth-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:6px}
 .admin-auth .auth-secondary{border:0;background:transparent;text-decoration:underline;color:var(--green-dark);font:inherit;font-weight:800;padding:10px;cursor:pointer}
 .admin-auth [hidden]{display:none!important}
+
+/* Product workbench */
+.admin-workbench-tools{display:grid;grid-template-columns:minmax(180px,2fr) repeat(3,minmax(125px,1fr)) auto;gap:10px;margin:12px 0 16px}
+.admin-workbench-tools input,.admin-workbench-tools select{min-width:0;width:100%;padding:11px 12px;border:1px solid #e4dece;border-radius:11px;background:#fff;font:inherit}
+.admin-toolbar-btn,.product-action{border:1px solid #d9e4d4;background:#f5f8ef;color:#244b35;border-radius:10px;padding:9px 12px;font:inherit;font-weight:900;cursor:pointer}
+.admin-toolbar-btn:hover,.product-action:hover{background:#eaf2df}
+.admin-products-list{display:grid;gap:12px}
+.admin-product-row{display:grid;grid-template-columns:76px minmax(0,1fr) auto;align-items:center;gap:14px;border:1px solid #e8e1d2;border-radius:15px;padding:12px;background:#fff}
+.admin-product-thumb{width:76px;height:76px;object-fit:cover;border-radius:10px;background:#f2eee4}
+.admin-product-meta{min-width:0}.admin-product-meta b{display:block;font-size:16px;overflow-wrap:anywhere}.admin-product-meta small{display:block;color:var(--muted);margin-top:4px;line-height:1.4}
+.admin-product-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.admin-product-badges span{font-size:11px;font-weight:900;border-radius:20px;padding:4px 8px;background:#edf3e8;color:#244b35}
+.admin-product-badges .draft{background:#fff1d8;color:#805414}.admin-product-badges .archived{background:#eee;color:#555}.admin-product-badges .featured{background:#f3e9fb;color:#67379a}
+.admin-product-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end;max-width:330px}
+.product-action.danger{background:#fff5f2;border-color:#efdad3;color:#8c392e}.product-action.primary{background:var(--green);border-color:var(--green);color:#fff}
+.product-action:focus-visible,.admin-toolbar-btn:focus-visible{outline:3px solid #a4c98d;outline-offset:2px}
+.admin-form .check-row{display:flex;align-items:center;gap:9px;font-weight:800}.admin-form .check-row input{width:auto}
+.form-edit-state{border:1px solid #d5e6ce;background:#f1f7eb;border-radius:12px;padding:10px 12px;color:#244b35;font-weight:900}
+.admin-order-table-wrap{overflow:auto}.admin-order-table{width:100%;border-collapse:collapse;min-width:600px}
+.admin-order-table th,.admin-order-table td{text-align:left;padding:12px;border-bottom:1px solid #eee7d9;font-size:14px}
+.admin-order-table th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.6px}
+.admin-order-status{display:inline-block;border-radius:20px;padding:4px 8px;background:#edf3e8;font-weight:900;font-size:11px}
+.admin-product-count{color:var(--muted);font-size:13px;margin:0 0 10px}
+@media(max-width:900px){.admin-workbench-tools{grid-template-columns:1fr 1fr}.admin-workbench-tools input{grid-column:1/-1}.admin-product-row{grid-template-columns:62px minmax(0,1fr)}.admin-product-thumb{width:62px;height:62px}.admin-product-actions{grid-column:1/-1;max-width:none;justify-content:flex-start}}
+@media(max-width:520px){.admin-workbench-tools{grid-template-columns:1fr}.admin-workbench-tools input{grid-column:auto}.admin-product-actions .product-action{flex:1}}
 </style>
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="referrer" content="no-referrer">
@@ -92,8 +116,8 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
   <p class="admin-hint" id="authMessage">Only the authorised Bramble admin email can access store management.</p>
 </div>
   <div id="adminContent" hidden>
-    <div class="stats-grid"><article class="stat-card"><span>Total Sales</span><strong id="statSales">$0.00</strong></article><article class="stat-card"><span>Total Earnings</span><strong id="statEarnings">$0.00</strong></article><article class="stat-card"><span>Total Orders</span><strong id="statOrders">0</strong></article><article class="stat-card"><span>Published Products</span><strong id="statProducts">0</strong></article></div>
-    <div class="admin-grid"><section class="admin-card"><h3>Add / Update Product</h3><form id="productForm" class="admin-form"><input id="productId" type="hidden"><label>Product title<input id="productTitle" required placeholder="Product title"></label><label>Category<select id="productCategory" required></select></label><label>Price (USD)<input id="productPrice" type="number" min="0" step="0.01" required></label><label>Cover image URL<input id="productCover" type="url" placeholder="https://..."></label><label>Short description<textarea id="productDescription" rows="3" placeholder="A short product summary"></textarea></label><label>Status<select id="productStatus"><option value="draft">Draft</option><option value="published">Published</option></select></label><button class="primary-btn" type="submit">Save Product</button></form></section>
+    <div class="stats-grid"><article class="stat-card"><span>Paid / processing sales</span><strong id="statSales">0</strong></article><article class="stat-card"><span>Total earnings</span><strong id="statEarnings">$0.00</strong></article><article class="stat-card"><span>Total orders</span><strong id="statOrders">0</strong></article><article class="stat-card"><span>Published products</span><strong id="statProducts">0</strong></article><article class="stat-card"><span>Draft products</span><strong id="statDrafts">0</strong></article></div>
+    <div class="admin-grid"><section class="admin-card" id="productEditor"><h3>Add / Edit Product</h3><div id="editModeNotice" class="form-edit-state" hidden>Editing an existing product — save changes or cancel editing.</div><form id="productForm" class="admin-form"><input id="productId" type="hidden"><label>Product title<input id="productTitle" required placeholder="Product title"></label><label>URL slug (optional)<input id="productSlug" placeholder="auto-created-from-title"></label><label>Category<select id="productCategory" required></select></label><label>Product type<select id="productType"><option value="ebook">Ebook</option><option value="template">Template</option><option value="planner">Planner</option><option value="course">Course</option><option value="bundle">Bundle</option><option value="other">Other</option></select></label><label>Price (USD)<input id="productPrice" type="number" min="0" step="0.01" required></label><label>Compare-at price (optional)<input id="productComparePrice" type="number" min="0" step="0.01" placeholder="Original price before discount"></label><label>Cover image URL<input id="productCover" type="url" placeholder="https://..."></label><label>Preview URL (optional)<input id="productPreview" type="url" placeholder="https://..."></label><label>Short description<textarea id="productDescription" rows="3" placeholder="A short product summary"></textarea></label><label>Status<select id="productStatus"><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select></label><label class="check-row"><input id="productFeatured" type="checkbox"> Feature this product on the storefront</label><div class="auth-actions"><button class="primary-btn" id="saveProductButton" type="submit">Save Product</button><button class="admin-toolbar-btn" id="cancelProductEdit" type="button" hidden>Cancel editing</button></div></form></section>
       <section class="admin-card">
         <h3>Manage Categories</h3>
         <form id="categoryForm" class="inline-form">
@@ -104,8 +128,14 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
       </section>
     </div>
     <section class="admin-card admin-spaced">
-      <h3>Manage Products</h3>
-      <div id="adminProducts" class="admin-list"></div>
+      <div class="section-heading"><div><h3>Product Workbench</h3><p class="admin-hint">Find, edit, duplicate, publish and organise your digital products.</p></div><button class="admin-toolbar-btn" id="refreshAdminData" type="button">↻ Refresh</button></div>
+      <div class="admin-workbench-tools"><input id="productSearch" type="search" placeholder="Search products by name or description…" aria-label="Search products"><select id="productStatusFilter" aria-label="Filter by product status"><option value="all">All statuses</option><option value="published">Published</option><option value="draft">Draft</option><option value="archived">Archived</option></select><select id="productCategoryFilter" aria-label="Filter by category"><option value="all">All categories</option></select><select id="productSort" aria-label="Sort products"><option value="newest">Newest first</option><option value="title">Title A–Z</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option></select><button class="admin-toolbar-btn" id="exportProducts" type="button">Export CSV</button></div>
+      <p class="admin-product-count" id="productResultCount" aria-live="polite">0 products</p>
+      <div id="adminProducts" class="admin-products-list"></div>
+    </section>
+    <section class="admin-card admin-spaced">
+      <h3>Recent orders</h3><p class="admin-hint">Read-only order overview. Payment status should only change after a real payment is verified.</p>
+      <div class="admin-order-table-wrap"><table class="admin-order-table"><thead><tr><th>Order</th><th>Customer</th><th>Status</th><th>Total</th><th>Date</th></tr></thead><tbody id="adminOrders"><tr><td colspan="5">No orders yet.</td></tr></tbody></table></div>
     </section>
   </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -118,7 +148,7 @@ const ADMIN_REDIRECT_URL = "https://bramble-digital-store-his-ans-her-mart.verce
 const db = window.supabase?.createClient(SUPABASE_URL, SUPABASE_KEY);
 const $ = selector => document.querySelector(selector);
 const money = value => "$" + Number(value || 0).toFixed(2);
-let currentSession = null, adminProducts = [], adminCategories = [];
+let currentSession = null, adminProducts = [], adminCategories = [], adminOrders = [];
 function toast(message){const el=$("#toast");el.textContent=message;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2600);}
 function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function isAdmin(session){return session?.user?.email?.toLowerCase()===ADMIN_EMAIL && session?.user?.app_metadata?.role==='admin';}
@@ -187,41 +217,92 @@ async function refreshAdmin(){
   const [products,categories,orders]=await Promise.all([
     db.from('products').select('*').order('created_at',{ascending:false}),
     db.from('categories').select('*').order('sort_order'),
-    db.from('orders').select('total,status')
+    db.from('orders').select('id,customer_email,total,status,currency,created_at').order('created_at',{ascending:false}).limit(50)
   ]);
   if(products.error||categories.error||orders.error){toast('Could not load dashboard data. Please check database permissions.');return;}
-  adminProducts=products.data||[];adminCategories=categories.data||[];
-  const paidOrders=(orders.data||[]).filter(order=>['paid','processing','fulfilled'].includes(order.status));
+  adminProducts=products.data||[];adminCategories=categories.data||[];adminOrders=orders.data||[];
+  const paidOrders=adminOrders.filter(order=>['paid','processing','fulfilled'].includes(order.status));
   $("#statSales").textContent=String(paidOrders.length);
-  $("#statOrders").textContent=String((orders.data||[]).length);
+  $("#statOrders").textContent=String(adminOrders.length);
   $("#statEarnings").textContent=money(paidOrders.reduce((total,order)=>total+Number(order.total||0),0));
   $("#statProducts").textContent=String(adminProducts.filter(product=>product.status==='published').length);
+  $("#statDrafts").textContent=String(adminProducts.filter(product=>product.status==='draft').length);
   renderAdminLists();
 }
+function slugify(value){return String(value||'').toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')||'digital-product';}
+function categoryName(id){return adminCategories.find(category=>category.id===id)?.name||'Uncategorised';}
 function renderAdminLists(){
-  const select=$("#productCategory");
+  const select=$("#productCategory"),selected=select.value;
   select.innerHTML=adminCategories.map(category=>`<option value="${category.id}">${escapeHtml(category.name)}</option>`).join('');
-  $("#categoryList").innerHTML=adminCategories.map(category=>`<div class="admin-row"><div><b>${escapeHtml(category.name)}</b><small>${category.is_active?'Active':'Hidden'}</small></div><button data-delete-category="${category.id}">Delete</button></div>`).join('')||'<p>No categories yet.</p>';
-  $("#adminProducts").innerHTML=adminProducts.map(product=>`<div class="admin-row"><div><b>${escapeHtml(product.title)}</b><small>${money(product.price)} · ${escapeHtml(product.status)}</small></div><div><button data-edit-product="${product.id}">Edit</button> <button data-delete-product="${product.id}">Delete</button></div></div>`).join('')||'<p>No products yet.</p>';
+  if(selected&&adminCategories.some(category=>category.id===selected))select.value=selected;
+  const catFilter=$("#productCategoryFilter"),catSelected=catFilter.value||'all';
+  catFilter.innerHTML='<option value="all">All categories</option>'+adminCategories.map(category=>`<option value="${category.id}">${escapeHtml(category.name)}</option>`).join('');
+  catFilter.value=adminCategories.some(category=>category.id===catSelected)?catSelected:'all';
+  $("#categoryList").innerHTML=adminCategories.map(category=>`<div class="admin-row"><div><b>${escapeHtml(category.name)}</b><small>${category.is_active?'Visible on storefront':'Hidden from storefront'}</small></div><div><button data-rename-category="${category.id}">Rename</button> <button data-toggle-category="${category.id}">${category.is_active?'Hide':'Show'}</button> <button data-delete-category="${category.id}">Delete</button></div></div>`).join('')||'<p>No categories yet.</p>';
+  renderProductRows();
+  $("#adminOrders").innerHTML=adminOrders.map(order=>`<tr><td>#${escapeHtml(String(order.id).slice(0,8))}</td><td>${escapeHtml(order.customer_email||'Guest')}</td><td><span class="admin-order-status">${escapeHtml(order.status)}</span></td><td>${money(order.total)} ${escapeHtml(order.currency||'USD')}</td><td>${order.created_at?new Date(order.created_at).toLocaleDateString():'—'}</td></tr>`).join('')||'<tr><td colspan="5">No orders yet.</td></tr>';
+}
+function renderProductRows(){
+  const q=$("#productSearch").value.trim().toLowerCase(),status=$("#productStatusFilter").value,category=$("#productCategoryFilter").value,sort=$("#productSort").value;
+  let list=adminProducts.filter(product=>(status==='all'||product.status===status)&&(category==='all'||product.category_id===category)&&(!q||[product.title,product.short_description,product.description,product.slug].some(value=>String(value||'').toLowerCase().includes(q))));
+  list=[...list].sort((a,b)=>sort==='title'?String(a.title).localeCompare(String(b.title)):sort==='price-low'?Number(a.price)-Number(b.price):sort==='price-high'?Number(b.price)-Number(a.price):new Date(b.created_at||0)-new Date(a.created_at||0));
+  $("#productResultCount").textContent=`Showing ${list.length} of ${adminProducts.length} products`;
+  $("#adminProducts").innerHTML=list.map(product=>`<article class="admin-product-row"><img class="admin-product-thumb" src="${escapeHtml(product.cover_url||'https://placehold.co/160x160/f4f0e5/536158?text=Bramble')}" alt="" loading="lazy" onerror="this.src='https://placehold.co/160x160/f4f0e5/536158?text=Bramble'"><div class="admin-product-meta"><b>${escapeHtml(product.title)}</b><small>${money(product.price)} · ${escapeHtml(categoryName(product.category_id))} · ${escapeHtml(product.product_type||'digital')}</small><div class="admin-product-badges"><span class="${escapeHtml(product.status)}">${escapeHtml(product.status)}</span>${product.is_featured?'<span class="featured">Featured</span>':''}${product.compare_at_price?'<span>Was '+money(product.compare_at_price)+'</span>':''}</div></div><div class="admin-product-actions"><button class="product-action primary" data-edit-product="${product.id}">Edit product</button><button class="product-action" data-toggle-status="${product.id}">${product.status==='published'?'Move to draft':'Publish'}</button><button class="product-action" data-toggle-featured="${product.id}">${product.is_featured?'Unfeature':'Feature'}</button><button class="product-action" data-duplicate-product="${product.id}">Duplicate</button><button class="product-action danger" data-delete-product="${product.id}">Delete</button></div></article>`).join('')||'<p class="empty-state">No products match these filters. Try another search or add a product above.</p>';
+}
+function resetProductEditor(){
+  $("#productForm").reset();$("#productId").value='';$("#productSlug").value='';$("#editModeNotice").hidden=true;$("#cancelProductEdit").hidden=true;$("#saveProductButton").textContent='Save Product';
+}
+function fillProductEditor(product){
+  $("#productId").value=product.id;$("#productTitle").value=product.title||'';$("#productSlug").value=product.slug||'';$("#productCategory").value=product.category_id||'';
+  $("#productType").value=product.product_type||'ebook';$("#productPrice").value=product.price??0;$("#productComparePrice").value=product.compare_at_price??'';
+  $("#productCover").value=product.cover_url||'';$("#productPreview").value=product.preview_url||'';$("#productDescription").value=product.short_description||product.description||'';
+  $("#productStatus").value=product.status||'draft';$("#productFeatured").checked=!!product.is_featured;
+  $("#editModeNotice").hidden=false;$("#cancelProductEdit").hidden=false;$("#saveProductButton").textContent='Save product changes';
+  $("#productEditor").scrollIntoView({behavior:'smooth',block:'start'});
 }
 $("#productForm").addEventListener('submit',async event=>{
   event.preventDefault();if(!isAdmin(currentSession))return;
-  const id=$("#productId").value,title=$("#productTitle").value.trim();
-  const payload={title,slug:title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''),category_id:$("#productCategory").value||null,price:Number($("#productPrice").value),cover_url:$("#productCover").value||null,short_description:$("#productDescription").value,description:$("#productDescription").value,status:$("#productStatus").value,currency:'USD',product_type:'ebook'};
+  const id=$("#productId").value,title=$("#productTitle").value.trim(),slug=slugify($("#productSlug").value||title);
+  const payload={title,slug,category_id:$("#productCategory").value||null,price:Number($("#productPrice").value),compare_at_price:$("#productComparePrice").value?Number($("#productComparePrice").value):null,cover_url:$("#productCover").value.trim()||null,preview_url:$("#productPreview").value.trim()||null,short_description:$("#productDescription").value.trim(),description:$("#productDescription").value.trim(),status:$("#productStatus").value,currency:'USD',product_type:$("#productType").value,is_featured:$("#productFeatured").checked};
   const result=id?await db.from('products').update(payload).eq('id',id):await db.from('products').insert(payload);
-  if(result.error){toast(result.error.message);return;}event.target.reset();$("#productId").value='';await refreshAdmin();toast('Product saved');
+  if(result.error){toast(result.error.message);return;}
+  resetProductEditor();await refreshAdmin();toast(id?'Product changes saved':'Product added successfully');
 });
 $("#categoryForm").addEventListener('submit',async event=>{
   event.preventDefault();if(!isAdmin(currentSession))return;
   const name=$("#categoryName").value.trim(),slug=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
   const {error}=await db.from('categories').insert({name,slug});if(error){toast(error.message);return;}event.target.reset();await refreshAdmin();toast('Category added');
 });
+$("#productSearch").addEventListener('input',renderProductRows);
+$("#productStatusFilter").addEventListener('change',renderProductRows);
+$("#productCategoryFilter").addEventListener('change',renderProductRows);
+$("#productSort").addEventListener('change',renderProductRows);
+$("#cancelProductEdit").addEventListener('click',()=>resetProductEditor());
+$("#refreshAdminData").addEventListener('click',()=>refreshAdmin());
+$("#exportProducts").addEventListener('click',()=>{
+  if(!isAdmin(currentSession))return;
+  const columns=['title','slug','category','product_type','price','compare_at_price','status','is_featured','cover_url','preview_url','short_description'];
+  const rows=adminProducts.map(product=>[product.title,product.slug,categoryName(product.category_id),product.product_type,product.price,product.compare_at_price,product.status,product.is_featured,product.cover_url,product.preview_url,product.short_description]);
+  const csv=[columns,...rows].map(row=>row.map(value=>'"'+String(value??'').replace(/"/g,'""')+'"').join(',')).join('\\r\\n');
+  const blob=new Blob(['\\ufeff'+csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),link=document.createElement('a');
+  link.href=url;link.download='bramble-products.csv';link.click();URL.revokeObjectURL(url);
+});
 document.addEventListener('click',async event=>{
   if(!isAdmin(currentSession))return;
   const edit=event.target.closest('[data-edit-product]');
-  if(edit){const product=adminProducts.find(item=>item.id===edit.dataset.editProduct);if(!product)return;$("#productId").value=product.id;$("#productTitle").value=product.title;$("#productCategory").value=product.category_id||'';$("#productPrice").value=product.price;$("#productCover").value=product.cover_url||'';$("#productDescription").value=product.short_description||'';$("#productStatus").value=product.status;window.scrollTo({top:$("#productForm").getBoundingClientRect().top+window.scrollY-100,behavior:'smooth'});}
+  if(edit){const product=adminProducts.find(item=>item.id===edit.dataset.editProduct);if(product)fillProductEditor(product);}
+  const toggleStatus=event.target.closest('[data-toggle-status]');
+  if(toggleStatus){const product=adminProducts.find(item=>item.id===toggleStatus.dataset.toggleStatus);if(!product)return;const nextStatus=product.status==='published'?'draft':'published';const {error}=await db.from('products').update({status:nextStatus}).eq('id',product.id);if(error)toast(error.message);else{await refreshAdmin();toast('Product status updated');}}
+  const toggleFeatured=event.target.closest('[data-toggle-featured]');
+  if(toggleFeatured){const product=adminProducts.find(item=>item.id===toggleFeatured.dataset.toggleFeatured);if(!product)return;const {error}=await db.from('products').update({is_featured:!product.is_featured}).eq('id',product.id);if(error)toast(error.message);else{await refreshAdmin();toast('Featured setting updated');}}
+  const duplicate=event.target.closest('[data-duplicate-product]');
+  if(duplicate){const product=adminProducts.find(item=>item.id===duplicate.dataset.duplicateProduct);if(!product)return;const copy={...product,id:undefined,created_at:undefined,updated_at:undefined,title:product.title+' (Copy)',slug:slugify(product.slug+'-copy-'+Date.now().toString(36)),status:'draft',is_featured:false};delete copy.id;delete copy.created_at;delete copy.updated_at;const {error}=await db.from('products').insert(copy);if(error)toast(error.message);else{await refreshAdmin();toast('Draft copy created');}}
   const removeProduct=event.target.closest('[data-delete-product]');
-  if(removeProduct&&confirm('Delete this product?')){const {error}=await db.from('products').delete().eq('id',removeProduct.dataset.deleteProduct);if(error)toast(error.message);else{await refreshAdmin();toast('Product deleted');}}
+  if(removeProduct&&confirm('Delete this product permanently? Existing purchases may refer to it.')){const {error}=await db.from('products').delete().eq('id',removeProduct.dataset.deleteProduct);if(error)toast(error.message);else{await refreshAdmin();toast('Product deleted');}}
+  const toggleCategory=event.target.closest('[data-toggle-category]');
+  if(toggleCategory){const category=adminCategories.find(item=>item.id===toggleCategory.dataset.toggleCategory);if(!category)return;const {error}=await db.from('categories').update({is_active:!category.is_active}).eq('id',category.id);if(error)toast(error.message);else{await refreshAdmin();toast('Category visibility updated');}}
+  const renameCategory=event.target.closest('[data-rename-category]');
+  if(renameCategory){const category=adminCategories.find(item=>item.id===renameCategory.dataset.renameCategory);if(!category)return;const name=prompt('Enter the new category name:',category.name);if(!name||!name.trim())return;const nextName=name.trim(),slug=slugify(nextName);const {error}=await db.from('categories').update({name:nextName,slug}).eq('id',category.id);if(error)toast(error.message);else{await refreshAdmin();toast('Category renamed');}}
   const removeCategory=event.target.closest('[data-delete-category]');
   if(removeCategory&&confirm('Delete this category? Products assigned to it may prevent deletion.')){const {error}=await db.from('categories').delete().eq('id',removeCategory.dataset.deleteCategory);if(error)toast(error.message);else{await refreshAdmin();toast('Category deleted');}}
 });
