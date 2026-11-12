@@ -62,9 +62,10 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
 .checkout-method:has(input:checked){border-color:var(--green);background:#f0f6e8}
 .checkout-method:has(input:disabled){opacity:.45;cursor:not-allowed}
 .checkout-method input{accent-color:var(--green)}
-.checkout-instructions{border:1px solid #e7e1d4;border-radius:13px;background:#fffaf0;padding:13px;font-size:13px;line-height:1.5}
-.checkout-instructions p{margin:0 0 5px}.checkout-instructions p:last-child{margin-bottom:0}
+.checkout-instructions{border:1px solid #e7e1d4;border-radius:13px;background:#fffaf0;padding:13px;font-size:13px;line-height:1.5;text-align:center}
+.checkout-instructions p{margin:0 0 10px}.checkout-instructions p:last-child{margin-bottom:0}
 .checkout-instructions strong{color:var(--green-dark);overflow-wrap:anywhere}
+.checkout-qr{display:block;width:min(100%,330px);height:auto;margin:8px auto;border-radius:8px;background:#fff}
 .checkout-hint{font-size:12px;color:var(--muted);font-weight:600;line-height:1.45}
 .checkout-submit{width:100%;padding:14px;border:0;border-radius:30px;background:var(--green);color:white;font:900 16px Nunito,sans-serif;cursor:pointer}
 .checkout-submit:disabled{opacity:.55;cursor:wait}
@@ -207,13 +208,12 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
       <label>Full name<input id="checkoutName" type="text" required maxlength="120" autocomplete="name" placeholder="Your full name"></label>
       <label>Email address<input id="checkoutEmail" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"></label>
       <label>Mobile / WhatsApp number (include country code)<input id="checkoutPhone" type="tel" required autocomplete="tel" placeholder="+1 555 123 4567"></label>
-      <div><label>Choose payment method</label><div class="checkout-methods">
-        <label class="checkout-method"><input type="radio" name="payment_method" value="bank_transfer" checked> <span><b>Bangladesh Bank Transfer</b><br><small>Local bank transfer in BDT</small></span></label>
-        <label class="checkout-method"><input type="radio" name="payment_method" value="swift_transfer"> <span><b>International SWIFT Transfer</b><br><small>USD remittance from abroad</small></span></label>
-      </div></div>
-      <div id="paymentInstructions" class="checkout-instructions" aria-live="polite">Loading payment instructions…</div>
-      <label>Bank transaction ID / reference<input id="checkoutReference" type="text" required maxlength="80" autocomplete="off" placeholder="Enter your bank transaction/reference number"></label>
-      <p class="checkout-hint">Your order stays pending until Bramble verifies that the money has reached the receiving bank account. Download access is unlocked within 30 minutes after the funds are credited and verified. International SWIFT transfers can take longer to reach Bangladesh; the 30-minute window starts only after the money is credited. Never send your PIN, password or OTP.</p>
+      <div id="paymentInstructions" class="checkout-instructions" aria-live="polite">
+        <p><strong>Pay using Bangla QR</strong></p>
+        <img class="checkout-qr" src="data:image/png;base64,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" alt="Bangla QR code" width="615" height="615" decoding="async">
+      </div>
+      <label>Bangla QR transaction ID / reference<input id="checkoutReference" type="text" required maxlength="80" autocomplete="off" placeholder="Enter your Bangla QR transaction ID"></label>
+      <p class="checkout-hint">Your order stays pending until Bramble verifies the payment. Download access is unlocked after the funds are credited and verified. Never share your PIN, password or OTP.</p>
       <p id="checkoutError" class="checkout-error" role="alert"></p>
       <button id="checkoutSubmit" class="checkout-submit" type="submit">Submit Order for Verification</button>
     </form>
@@ -503,44 +503,6 @@ function baseMoney(product) {
   catch (error) { return currency + " " + Number(product.price || 0).toFixed(2); }
 }
 let activeCheckoutProduct = null;
-let paymentSettings = null;
-async function loadPaymentSettings() {
-  if (!db) return;
-  const {data,error} = await db.from("bramble_payment_settings")
-    .select("bank_name,bank_account_name,bank_account_number,bank_branch,bank_routing_number")
-    .eq("id",1).maybeSingle();
-  if (error) { console.warn("Bramble payment settings could not be loaded:", error.message); return; }
-  paymentSettings = data || null;
-  updatePaymentInstructions();
-}
-function updatePaymentInstructions() {
-  const area = $("#paymentInstructions");
-  if (!area) return;
-  const bankReady = !!(paymentSettings?.bank_name && paymentSettings?.bank_account_name && paymentSettings?.bank_account_number);
-  const bankChoice = document.querySelector('input[name="payment_method"][value="bank_transfer"]');
-  const swiftChoice = document.querySelector('input[name="payment_method"][value="swift_transfer"]');
-  if (bankChoice) bankChoice.disabled = !bankReady;
-  if (swiftChoice) swiftChoice.disabled = !bankReady;
-  if (!bankReady) {
-    area.innerHTML = '<p><strong>Bank payment is not available yet.</strong></p><p>The store owner is adding the receiving account details. Please try again later.</p>';
-    $("#checkoutSubmit").disabled = true;
-    return;
-  }
-  $("#checkoutSubmit").disabled = false;
-  const method = document.querySelector('input[name="payment_method"]:checked')?.value || "bank_transfer";
-  const common = '<p>Bank: <strong>' + escapeHtml(paymentSettings.bank_name) + '</strong></p><p>Account name: <strong>' + escapeHtml(paymentSettings.bank_account_name) + '</strong></p><p>Account number: <strong>' + escapeHtml(paymentSettings.bank_account_number) + '</strong></p>' +
-    (paymentSettings.bank_branch ? '<p>Branch: <strong>' + escapeHtml(paymentSettings.bank_branch) + '</strong></p>' : '') +
-    (paymentSettings.bank_routing_number ? '<p>Routing number: <strong>' + escapeHtml(paymentSettings.bank_routing_number) + '</strong></p>' : '');
-  if (method === "swift_transfer") {
-    area.innerHTML = '<p><strong>International SWIFT Transfer — USD</strong></p>' + common +
-      '<p>SWIFT / BIC: <strong>BALBBDDH</strong></p><p>Country: <strong>Bangladesh</strong></p>' +
-      '<p>Before sending, contact Bank Asia to confirm the USD amount payable for this BDT order, intermediary-bank details and all transfer fees. The website does not calculate a live USD remittance amount.</p>' +
-      '<p>Send the USD remittance only after confirming the amount with the bank. Then enter the bank transfer reference below. Your order stays pending until the credited funds are checked.</p>';
-  } else {
-    area.innerHTML = '<p><strong>Bangladesh Bank Transfer — BDT</strong></p>' + common +
-      '<p>Transfer the exact order amount in BDT and enter your bank transaction/reference number below.</p>';
-  }
-}
 function openCheckout(productId) {
   const product = productsById[productId] || sampleProducts[productId];
   if (!isPurchasable(product)) {
@@ -554,7 +516,6 @@ function openCheckout(productId) {
   $("#checkoutSuccess").hidden = true;
   $("#checkoutError").textContent = "";
   $("#checkoutReference").value = "";
-  updatePaymentInstructions();
   $("#checkoutOverlay").classList.add("open");
   $("#checkoutOverlay").setAttribute("aria-hidden","false");
   $("#checkoutName").focus();
@@ -568,9 +529,7 @@ function closeCheckout() {
 async function submitCheckout(event) {
   event.preventDefault();
   if (!activeCheckoutProduct || !isPurchasable(activeCheckoutProduct)) return;
-  const method = document.querySelector('input[name="payment_method"]:checked')?.value || "bank_transfer";
-  const bankReady = !!(paymentSettings?.bank_name && paymentSettings?.bank_account_name && paymentSettings?.bank_account_number);
-  if (!bankReady) { $("#checkoutError").textContent = "Bank details are not configured yet. Please try again later."; return; }
+  const method = "bangla_qr";
   const button = $("#checkoutSubmit");
   button.disabled = true; button.textContent = "Submitting order…";
   $("#checkoutError").textContent = "";
@@ -690,9 +649,7 @@ function bindEvents() {
   });
   $("#orderLookupForm").addEventListener("submit", lookupOrder);
   $("#checkoutOverlay").addEventListener("click", event => { if (event.target === $("#checkoutOverlay")) closeCheckout(); });
-  document.querySelectorAll('input[name="payment_method"]').forEach(input=>input.addEventListener("change",updatePaymentInstructions));
-$("#checkoutForm").addEventListener("submit", submitCheckout);
-  document.querySelectorAll('input[name="payment_method"]').forEach(input => input.addEventListener("change", updatePaymentInstructions));
+  $("#checkoutForm").addEventListener("submit", submitCheckout);
   $("#libraryToggle").addEventListener("click", openLibrary);
   $("#closeLibrary").addEventListener("click", closeLibrary);
   $("#overlay").addEventListener("click", closeLibrary);
@@ -835,7 +792,6 @@ async function loadStorefront() {
 bindEvents();
 renderLibrary();
 loadExchangeRates().catch(error => console.warn("Bramble exchange-rate service is unavailable:", error));
-loadPaymentSettings().catch(error => console.warn("Bramble payment settings are unavailable:", error));
 refreshDisplayedPrices();
 loadStorefront().catch(error => {
   $("#productsEyebrow").textContent = "Sample previews";
