@@ -283,8 +283,8 @@ $("#exportProducts").addEventListener('click',()=>{
   if(!isAdmin(currentSession))return;
   const columns=['title','slug','category','product_type','price','compare_at_price','status','is_featured','cover_url','preview_url','short_description'];
   const rows=adminProducts.map(product=>[product.title,product.slug,categoryName(product.category_id),product.product_type,product.price,product.compare_at_price,product.status,product.is_featured,product.cover_url,product.preview_url,product.short_description]);
-  const csv=[columns,...rows].map(row=>row.map(value=>'"'+String(value??'').replace(/"/g,'""')+'"').join(',')).join('\\r\\n');
-  const blob=new Blob(['\\ufeff'+csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),link=document.createElement('a');
+  const csv=[columns,...rows].map(row=>row.map(value=>'"'+String(value??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');
+  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),link=document.createElement('a');
   link.href=url;link.download='bramble-products.csv';link.click();URL.revokeObjectURL(url);
 });
 document.addEventListener('click',async event=>{
