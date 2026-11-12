@@ -171,7 +171,7 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
     <aside class="trust-column">
       <div class="trust-card">
         <div class="trust-row"><span>⚡</span><div><b>Digital Products</b><small>Resources for everyday creativity</small></div></div>
-        <div class="trust-row"><span>🛡️</span><div><b>Secure Checkout Coming Soon</b><small>Payments will be enabled before purchases open</small></div></div>
+        <div class="trust-row"><span>🛡️</span><div><b>Secure Digital Delivery</b><small>Download access within 30 minutes after payment is received and verified</small></div></div>
         <div class="trust-row"><span>💚</span><div><b>Made for Curious Minds</b><small>Explore thoughtful digital resources</small></div></div>
       </div>
       <div class="grow-banner"><div><b>Let's grow together<br>with Bramble! 💚</b></div><span class="mini-owl">🦉</span></div>
@@ -186,7 +186,7 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
   <section class="lower-note" id="blog"><h2>Ideas worth sharing</h2><p>Helpful reads, creative inspiration and fresh finds are coming soon.</p></section>
   <section class="lower-note account-note" id="account">
     <h2>Check Order &amp; Download</h2>
-    <p>After Bramble verifies your payment, enter your Order ID and checkout email to get a secure download link.</p>
+    <p>After your payment reaches Bramble’s bank account and is verified, your secure download access is unlocked within 30 minutes. Enter your Order ID and checkout email below. Your files are delivered here on the website, not as email attachments.</p>
     <form id="orderLookupForm" class="order-lookup-form">
       <label>Order ID<input id="lookupOrderId" type="text" required maxlength="36" placeholder="Paste your Order ID"></label>
       <label>Email used at checkout<input id="lookupEmail" type="email" required maxlength="254" placeholder="you@example.com"></label>
@@ -213,17 +213,17 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
       </div></div>
       <div id="paymentInstructions" class="checkout-instructions" aria-live="polite">Loading payment instructions…</div>
       <label>Bank transaction ID / reference<input id="checkoutReference" type="text" required maxlength="80" autocomplete="off" placeholder="Enter your bank transaction/reference number"></label>
-      <p class="checkout-hint">Your order remains pending until Bramble Admin checks the transaction in the receiving account. Never send your PIN, password or OTP.</p>
+      <p class="checkout-hint">Your order stays pending until Bramble verifies that the money has reached the receiving bank account. Download access is unlocked within 30 minutes after the funds are credited and verified. International SWIFT transfers can take longer to reach Bangladesh; the 30-minute window starts only after the money is credited. Never send your PIN, password or OTP.</p>
       <p id="checkoutError" class="checkout-error" role="alert"></p>
       <button id="checkoutSubmit" class="checkout-submit" type="submit">Submit Order for Verification</button>
     </form>
     <div id="checkoutSuccess" class="checkout-success" hidden>
       <div class="success-icon">🌱</div><h3>Order submitted!</h3>
-      <p>Your payment is awaiting manual verification. The order is not marked as paid yet.</p>
+      <p>Your order has been submitted, but payment is not confirmed yet. Once the funds reach Bramble’s bank account and are verified, your download access will be unlocked within 30 minutes. SWIFT transfers may take longer to arrive; the 30-minute window starts after the funds are credited.</p>
       <div id="checkoutOrderId" class="checkout-order-id"></div>
       <p id="checkoutOrderTotal"></p>
-      <p>Keep this Order ID. Bramble Admin will confirm the payment after checking your transaction reference.</p>
-      <button id="checkoutTrackOrder" class="checkout-submit" type="button">Check downloads later</button>
+      <p><b>Keep your Order ID and checkout email.</b> When your payment is verified, tap the button below. You will be taken to Check Order &amp; Download, where your eBook or digital file will appear. Bramble does not currently email the file as an attachment.</p>
+      <button id="checkoutTrackOrder" class="checkout-submit" type="button">Go to Order Lookup / Downloads</button>
       <button id="checkoutDone" class="buy-now-btn" type="button">Back to Store</button>
     </div>
   </section>
@@ -646,10 +646,13 @@ async function lookupOrder(event) {
     if (!data.paid) {
       const pending = document.createElement("div");
       pending.className = "lookup-pending";
-      pending.textContent = "Status: " + String(data.status || "pending").replaceAll("_"," ") + ". Downloads will appear after payment verification.";
+      pending.textContent = "Status: " + String(data.status || "pending").replaceAll("_"," ") + ". Your download will unlock within 30 minutes after the funds reach Bramble’s bank account and payment is verified. For SWIFT transfers, arrival time depends on the sending and intermediary banks; the 30-minute window starts after the funds are credited.";
       result.appendChild(pending);
       return;
     }
+    const expiryNote = document.createElement("p");
+    expiryNote.textContent = "Your download access is ready. Download links remain valid for one hour. If a link expires, submit the same Order ID and checkout email again to generate a fresh link.";
+    result.appendChild(expiryNote);
     (data.downloads || []).forEach(file => {
       const link = document.createElement("a");
       link.className = "order-download-link";
