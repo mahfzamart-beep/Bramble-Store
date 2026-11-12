@@ -165,7 +165,7 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
       <p class="payment-settings-note">Never enter your ATM PIN, online banking password, bKash PIN, OTP or card CVV here. Only account receiving details are needed.</p>
     </section>
     <section class="admin-card admin-spaced">
-      <h3>Orders & Payment Verification</h3><p class="admin-hint">Check the TxID in your receiving bKash/bank account and confirm the amount before selecting “Verify & Mark Paid”.</p>
+      <h3>Orders & Payment Verification</h3><p class="admin-hint">Check the transaction reference and the credited amount in your receiving bank account before selecting “Verify & Mark Paid”. For SWIFT orders, confirm the net USD remittance was credited and converted to the expected BDT amount.</p>
       <div class="admin-order-table-wrap"><table class="admin-order-table"><thead><tr><th>Order</th><th>Customer</th><th>Payment</th><th>Transaction ID</th><th>Status</th><th>Total</th><th>Date</th><th>Admin action</th></tr></thead><tbody id="adminOrders"><tr><td colspan="8">No orders yet.</td></tr></tbody></table></div>
     </section>
   </div>
@@ -283,7 +283,7 @@ function renderAdminLists(){
   $("#categoryList").innerHTML=adminCategories.map(category=>`<div class="admin-row"><div><b>${escapeHtml(category.name)}</b><small>${category.is_active?'Visible on storefront':'Hidden from storefront'}</small></div><div><button data-rename-category="${category.id}">Rename</button> <button data-toggle-category="${category.id}">${category.is_active?'Hide':'Show'}</button> <button data-delete-category="${category.id}">Delete</button></div></div>`).join('')||'<p>No categories yet.</p>';
   renderProductRows();
   $("#adminOrders").innerHTML=adminOrders.map(order=>{
-    const method=order.payment_method==='bkash'?'bKash Personal':'Bank Transfer';
+    const method=order.payment_method==='swift_transfer'?'International SWIFT (USD)':order.payment_method==='bkash'?'bKash Personal':'Bangladesh Bank Transfer';
     const pending=['pending_payment_verification','pending'].includes(order.status);
     const customer=[order.customer_name,order.customer_email,order.customer_phone].filter(Boolean).map(escapeHtml).join('<br>');
     return `<tr><td>#${escapeHtml(String(order.id).slice(0,8))}<small>${escapeHtml(order.id)}</small></td><td>${customer||'Guest'}</td><td>${method}</td><td><span class="payment-ref">${escapeHtml(order.payment_reference||'—')}</span></td><td><span class="admin-order-status">${escapeHtml(order.status)}</span></td><td>${money(order.total,order.currency||'BDT')}</td><td>${order.created_at?new Date(order.created_at).toLocaleString():'—'}</td><td>${pending?`<button class="order-verify-btn" type="button" data-verify-payment="${order.id}">Verify &amp; Mark Paid</button>`:'—'}</td></tr>`;
