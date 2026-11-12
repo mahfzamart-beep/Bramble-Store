@@ -636,7 +636,7 @@ async function lookupOrder(event) {
     if (!data.paid) {
       const pending = document.createElement("div");
       pending.className = "lookup-pending";
-      pending.textContent = "Status: " + String(data.status || "pending").replaceAll("_"," ") + ". Your download will unlock within 30 minutes after the funds reach Bramble’s bank account and payment is verified. For SWIFT transfers, arrival time depends on the sending and intermediary banks; the 30-minute window starts after the funds are credited.";
+      pending.textContent = "Status: " + String(data.status || "pending").replaceAll("_"," ") + ". Your download will unlock within 30 minutes after Bramble verifies your Bangla QR payment.";
       result.appendChild(pending);
       return;
     }
