@@ -87,6 +87,23 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
 .lookup-pending{padding:14px;background:#fff7e7;border:1px solid #f0dfb9;border-radius:12px;color:#76521c}
 @media(max-width:520px){.order-lookup-form{grid-template-columns:1fr;padding:14px}.order-lookup-form button{grid-column:auto}}
 
+
+.sample-preview-btn{width:100%;border:1px solid #d9e5cf;background:#f2f7e9;color:#285b2d;border-radius:24px;padding:9px 10px;font:900 13px Nunito,sans-serif;cursor:pointer}
+.sample-preview-btn:hover{background:#e6f0dc}
+.sample-preview-modal{position:fixed;inset:0;z-index:70;background:#10251dcc;display:none;place-items:center;padding:16px}
+.sample-preview-modal.open{display:grid}
+.sample-preview-dialog{width:min(760px,100%);max-height:calc(100dvh - 32px);overflow:auto;background:#fffdf7;border-radius:20px;padding:18px;box-shadow:0 24px 80px #0005}
+.sample-preview-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.sample-preview-head h2{font-size:21px;margin:0}.sample-preview-head p{font-size:12px;color:var(--muted);margin:3px 0 0}
+.sample-preview-close{border:0;background:#f0eee5;border-radius:50%;width:38px;height:38px;font-size:24px;cursor:pointer}
+.sample-preview-stage{min-height:280px;display:grid;place-items:center;background:#f2eee3;border-radius:12px;padding:10px}
+.sample-preview-stage img{display:block;max-width:100%;max-height:min(66dvh,850px);object-fit:contain;box-shadow:0 4px 18px #0002;background:white}
+.sample-preview-controls{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+.sample-preview-controls button{border:0;border-radius:24px;padding:10px 17px;background:var(--green);color:white;font:900 14px Nunito,sans-serif;cursor:pointer}
+.sample-preview-controls button:disabled{opacity:.4;cursor:not-allowed}
+.sample-preview-count{font-weight:900;color:var(--green-dark);font-size:13px}
+.sample-preview-note{text-align:center;color:var(--muted);font-size:12px;margin:10px 0 0}
+@media(max-width:520px){.sample-preview-dialog{padding:12px}.sample-preview-stage{min-height:220px}.sample-preview-head h2{font-size:18px}}
 </style>
 </head>
 <body>
@@ -236,6 +253,15 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
   <div class="cart-footer"><small>Saved on this device only. Saving an item is not a purchase; downloads unlock after secure checkout is enabled.</small></div>
 </aside>
 
+
+<div class="sample-preview-modal" id="samplePreviewModal" role="dialog" aria-modal="true" aria-labelledby="samplePreviewTitle">
+  <div class="sample-preview-dialog">
+    <div class="sample-preview-head"><div><h2 id="samplePreviewTitle">Free sample preview</h2><p>Explore the first four pages before you buy.</p></div><button class="sample-preview-close" id="samplePreviewClose" type="button" aria-label="Close preview">×</button></div>
+    <div class="sample-preview-stage"><img id="samplePreviewImage" alt="Sample page preview" draggable="false"></div>
+    <div class="sample-preview-controls"><button id="samplePreviewPrev" type="button">← Previous</button><span class="sample-preview-count" id="samplePreviewCount">Page 1 of 4</span><button id="samplePreviewNext" type="button">Next →</button></div>
+    <p class="sample-preview-note">Free sample only · Full ebook available after purchase</p>
+  </div>
+</div>
 <div class="toast" id="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -418,6 +444,38 @@ function renderCategories(categories) {
     root.appendChild(button);
   });
 }
+
+function parsePreviewPages(value){
+  try{
+    const parsed=typeof value==="string"?JSON.parse(value):value;
+    const pages=Array.isArray(parsed)?parsed:parsed?.pages;
+    return Array.isArray(pages)?pages.slice(0,4).map(page=>typeof page==="string"?page:page?.url).filter(url=>safeImageUrl(url)):[];
+  }catch(error){return [];}
+}
+let activeSamplePreviewPages=[],activeSamplePreviewIndex=0;
+function showSamplePreviewPage(){
+  const total=activeSamplePreviewPages.length;
+  if(!total)return;
+  $("#samplePreviewImage").src=activeSamplePreviewPages[activeSamplePreviewIndex];
+  $("#samplePreviewCount").textContent="Page "+(activeSamplePreviewIndex+1)+" of "+total;
+  $("#samplePreviewPrev").disabled=activeSamplePreviewIndex===0;
+  $("#samplePreviewNext").disabled=activeSamplePreviewIndex===total-1;
+}
+function openSamplePreview(product){
+  activeSamplePreviewPages=parsePreviewPages(product?.preview_url);
+  if(!activeSamplePreviewPages.length){toast("Preview is not available for this product yet.");return;}
+  activeSamplePreviewIndex=0;
+  $("#samplePreviewTitle").textContent=(product.name||product.title||"Product")+" — Free Preview";
+  showSamplePreviewPage();
+  $("#samplePreviewModal").classList.add("open");
+  document.body.style.overflow="hidden";
+  $("#samplePreviewClose").focus();
+}
+function closeSamplePreview(){
+  $("#samplePreviewModal").classList.remove("open");
+  $("#samplePreviewImage").removeAttribute("src");
+  document.body.style.overflow="";
+}
 function productCard(product, index) {
   const id = escapeHtml(product.id);
   const name = escapeHtml(product.name || product.title || "Digital product");
@@ -433,7 +491,9 @@ function productCard(product, index) {
     '<div class="product-image">' + imageMarkup + '</div>' +
     '<div class="product-info"><h3>' + name + '</h3><p class="product-description">' + description + '</p>' +
     '<p class="price">' + escapeHtml(money(amount, product.currency)) + '</p>' +
-    '<div class="product-actions"><button class="add-btn" type="button" data-library="' + id + '">＋ Add to Library</button>' +
+    '<div class="product-actions">' +
+    (parsePreviewPages(product.preview_url).length ? '<button class="sample-preview-btn" type="button" data-preview-product="' + id + '">▣ Preview 4 Pages</button>' : '') +
+    '<button class="add-btn" type="button" data-library="' + id + '">＋ Add to Library</button>' +
     '<button class="buy-now-btn" type="button" data-buy-now="' + id + '"' + (canBuy ? '' : ' disabled') + '>Buy Now →</button></div></div></article>';
 }
 function renderProducts(products) {
@@ -668,6 +728,10 @@ async function lookupOrder(event) {
 }
 
 function bindEvents() {
+  $("#samplePreviewClose").addEventListener("click",closeSamplePreview);
+  $("#samplePreviewModal").addEventListener("click",event=>{if(event.target===$("#samplePreviewModal"))closeSamplePreview();});
+  $("#samplePreviewPrev").addEventListener("click",()=>{if(activeSamplePreviewIndex>0){activeSamplePreviewIndex--;showSamplePreviewPage();}});
+  $("#samplePreviewNext").addEventListener("click",()=>{if(activeSamplePreviewIndex<activeSamplePreviewPages.length-1){activeSamplePreviewIndex++;showSamplePreviewPage();}});
   $("#checkoutClose").addEventListener("click", closeCheckout);
   $("#checkoutDone").addEventListener("click", closeCheckout);
   $("#checkoutTrackOrder").addEventListener("click", () => {
@@ -738,6 +802,8 @@ function bindEvents() {
     $("#shop").scrollIntoView({behavior:"smooth"});
   });
   document.addEventListener("click", event => {
+    const previewButton=event.target.closest("[data-preview-product]");
+    if(previewButton){openSamplePreview(productsById[previewButton.dataset.previewProduct]);return;}
     const buyNow = event.target.closest("[data-buy-now]");
     if (buyNow) { openCheckout(buyNow.dataset.buyNow); return; }
     const add = event.target.closest("[data-library]");
@@ -763,7 +829,10 @@ function bindEvents() {
     }
   });
   document.addEventListener("keydown", event => {
+    if($("#samplePreviewModal").classList.contains("open")&&event.key==="ArrowLeft"&&activeSamplePreviewIndex>0){activeSamplePreviewIndex--;showSamplePreviewPage();}
+    if($("#samplePreviewModal").classList.contains("open")&&event.key==="ArrowRight"&&activeSamplePreviewIndex<activeSamplePreviewPages.length-1){activeSamplePreviewIndex++;showSamplePreviewPage();}
     if (event.key === "Escape") {
+      if($("#samplePreviewModal").classList.contains("open"))closeSamplePreview();
       closeLibrary();
       $("#mainNav").classList.remove("open");
       $("#libraryToggle").focus();
@@ -779,7 +848,7 @@ async function loadStorefront() {
   const [categoryResult, productResult] = await Promise.all([
     db.from("categories").select("id,name,slug,sort_order").eq("is_active", true).order("sort_order"),
     db.from("products")
-      .select("id,title,slug,short_description,description,cover_url,price,currency,product_type,category_id,is_featured,created_at")
+      .select("id,title,slug,short_description,description,cover_url,preview_url,price,currency,product_type,category_id,is_featured,created_at")
       .eq("status", "published")
       .order("is_featured", {ascending:false})
       .order("created_at", {ascending:false})
@@ -812,6 +881,7 @@ async function loadStorefront() {
       description:row.short_description || row.description || "",
       short_description:row.short_description || "",
       cover_url:row.cover_url || "",
+      preview_url:row.preview_url || "",
       product_type:row.product_type || "ebook",
       is_featured:Boolean(row.is_featured)
     };
