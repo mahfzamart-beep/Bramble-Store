@@ -139,7 +139,16 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
       <p class="admin-product-count" id="productResultCount" aria-live="polite">Loading products…</p>
       <div id="adminProducts" class="admin-products-list"></div>
     </section>
-    <div class="admin-grid"><section class="admin-card" id="productEditor"><h3>Complete Product Editor</h3><div id="editModeNotice" class="form-edit-state" hidden>Editing an existing product — save changes or cancel editing.</div><form id="productForm" class="admin-form"><input id="productId" type="hidden"><label>Product title<input id="productTitle" required placeholder="Product title"></label><label>URL slug (optional)<input id="productSlug" placeholder="auto-created-from-title"></label><label>Category<select id="productCategory" required></select></label><label>Product type<select id="productType"><option value="ebook">Ebook</option><option value="template">Template</option><option value="planner">Planner</option><option value="course">Course</option><option value="bundle">Bundle</option><option value="other">Other</option></select></label><label>Price (BDT)<input id="productPrice" type="number" min="0" step="0.01" required></label><label>Compare-at price (BDT, optional)<input id="productComparePrice" type="number" min="0" step="0.01" placeholder="Original price before discount"></label><label>Cover image — upload directly<div class="upload-control"><input id="coverImageFile" type="file" accept="image/jpeg,image/png,image/webp"><span class="upload-help">Choose JPG, PNG or WebP (max 10 MB). It uploads securely to Bramble Storage.</span><div class="upload-preview"><img id="coverImagePreview" alt="Cover image preview" hidden><span id="coverUploadStatus" class="upload-status" aria-live="polite">No image uploaded yet.</span></div></div><input id="productCover" type="url" placeholder="Uploaded image URL appears here; you can also paste a URL"></label><label>Preview pages (automatic for PDFs)<input id="productPreview" type="text" placeholder="Automatically generated when you upload a PDF"><small class="admin-hint">The first four PDF pages are converted to preview images. The original private PDF is never exposed to customers.</small></label><label>Digital product file — upload directly<div class="upload-control"><input id="digitalProductFile" type="file" accept=".pdf,.epub,.zip,application/pdf,application/epub+zip,application/zip"><span class="upload-help">PDF, EPUB or ZIP (max 100 MB). Stored privately; customers must have access before download.</span><div id="digitalFileUploadStatus" class="upload-status" aria-live="polite">No file uploaded yet.</div></div><input id="productFilePath" type="text" placeholder="Private storage path appears here"><small class="admin-hint">The uploaded file is stored in the private Bramble digital products bucket.</small><button class="admin-toolbar-btn" id="generateExistingPreviews" type="button">Generate / Refresh previews for existing PDFs</button><small id="previewBatchStatus" class="admin-hint" aria-live="polite">Use this once to create previews for PDF products already in your store.</small></label><label>Short description<textarea id="productDescription" rows="3" placeholder="Short summary shown in product cards"></textarea></label><label>Full product description<textarea id="productLongDescription" rows="6" placeholder="Full product details, contents, format and what customers receive"></textarea></label><label>Status<select id="productStatus"><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select></label><label class="check-row"><input id="productFeatured" type="checkbox"> Feature this product on the storefront</label><div class="auth-actions"><button class="primary-btn" id="saveProductButton" type="submit">Save Product</button><button class="admin-toolbar-btn" id="cancelProductEdit" type="button" hidden>Cancel editing</button></div></form></section>
+    <div class="admin-grid"><section class="admin-card" id="productEditor"><h3>Complete Product Editor</h3><div id="editModeNotice" class="form-edit-state" hidden>Editing an existing product — save changes or cancel editing.</div><div id="pdfRestorePanel" class="admin-card admin-spaced">
+  <h4 style="margin:0 0 8px">Restore existing PDF products</h4>
+  <p class="admin-hint">The original PDF files for some older products are missing from private storage. Download the Bramble recovery ZIP from this chat, select it here, then restore all three files and generate the first four preview pages automatically. Product titles, prices, orders and covers will stay unchanged.</p>
+  <div class="upload-control">
+    <input id="restorePdfZip" type="file" accept=".zip,application/zip">
+    <span class="upload-help">Choose the Bramble_PDF_Recovery_Pack.zip file (about 8 MB).</span>
+  </div>
+  <button class="admin-toolbar-btn" id="restorePdfZipButton" type="button">Restore PDFs & Generate Previews</button>
+  <small id="restorePdfStatus" class="admin-hint" aria-live="polite">No recovery ZIP selected.</small>
+</div><form id="productForm" class="admin-form"><input id="productId" type="hidden"><label>Product title<input id="productTitle" required placeholder="Product title"></label><label>URL slug (optional)<input id="productSlug" placeholder="auto-created-from-title"></label><label>Category<select id="productCategory" required></select></label><label>Product type<select id="productType"><option value="ebook">Ebook</option><option value="template">Template</option><option value="planner">Planner</option><option value="course">Course</option><option value="bundle">Bundle</option><option value="other">Other</option></select></label><label>Price (BDT)<input id="productPrice" type="number" min="0" step="0.01" required></label><label>Compare-at price (BDT, optional)<input id="productComparePrice" type="number" min="0" step="0.01" placeholder="Original price before discount"></label><label>Cover image — upload directly<div class="upload-control"><input id="coverImageFile" type="file" accept="image/jpeg,image/png,image/webp"><span class="upload-help">Choose JPG, PNG or WebP (max 10 MB). It uploads securely to Bramble Storage.</span><div class="upload-preview"><img id="coverImagePreview" alt="Cover image preview" hidden><span id="coverUploadStatus" class="upload-status" aria-live="polite">No image uploaded yet.</span></div></div><input id="productCover" type="url" placeholder="Uploaded image URL appears here; you can also paste a URL"></label><label>Preview pages (automatic for PDFs)<input id="productPreview" type="text" placeholder="Automatically generated when you upload a PDF"><small class="admin-hint">The first four PDF pages are converted to preview images. The original private PDF is never exposed to customers.</small></label><label>Digital product file — upload directly<div class="upload-control"><input id="digitalProductFile" type="file" accept=".pdf,.epub,.zip,application/pdf,application/epub+zip,application/zip"><span class="upload-help">PDF, EPUB or ZIP (max 100 MB). Stored privately; customers must have access before download.</span><div id="digitalFileUploadStatus" class="upload-status" aria-live="polite">No file uploaded yet.</div></div><input id="productFilePath" type="text" placeholder="Private storage path appears here"><small class="admin-hint">The uploaded file is stored in the private Bramble digital products bucket.</small></label><label>Short description<textarea id="productDescription" rows="3" placeholder="Short summary shown in product cards"></textarea></label><label>Full product description<textarea id="productLongDescription" rows="6" placeholder="Full product details, contents, format and what customers receive"></textarea></label><label>Status<select id="productStatus"><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select></label><label class="check-row"><input id="productFeatured" type="checkbox"> Feature this product on the storefront</label><div class="auth-actions"><button class="primary-btn" id="saveProductButton" type="submit">Save Product</button><button class="admin-toolbar-btn" id="cancelProductEdit" type="button" hidden>Cancel editing</button></div></form></section>
       <section class="admin-card">
         <h3>Manage Categories</h3><p class="admin-hint">These controls only rename or show/hide categories. Product editing is in Product Management above.</p>
         <form id="categoryForm" class="inline-form">
@@ -161,6 +170,7 @@ footer{text-align:center;padding:32px 15px 28px;background:#f0ebdc}footer p{marg
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <script>
 const SUPABASE_URL = "https://girewummmhdphwtoguke.supabase.co";
 const SUPABASE_KEY = "sb_publishable_bc2zSA8qnaD6pkEEie54_g_YFBBJTy7";
@@ -367,37 +377,52 @@ $('#digitalProductFile').addEventListener('change',async event=>{
 });
 
 
-async function generatePreviewsForExistingPdfs(){
+async function restoreExistingPdfProductsFromZip(){
   if(!isAdmin(currentSession))return;
-  const candidates=adminProducts.filter(product=>product.file_path&&String(product.file_path).toLowerCase().endsWith('.pdf'));
-  if(!candidates.length){toast('No PDF products with uploaded files were found.');return;}
-  if(!confirm('Generate first-four-page previews for '+candidates.length+' existing PDF product(s)? This updates only their preview data; original files and orders remain unchanged.'))return;
-  const button=$('#generateExistingPreviews'),status=$('#previewBatchStatus');
+  const input=$('#restorePdfZip'),status=$('#restorePdfStatus'),button=$('#restorePdfZipButton');
+  const zipFile=input.files?.[0];
+  if(!zipFile){status.textContent='Please select the Bramble recovery ZIP first.';return;}
+  if(!window.JSZip){status.textContent='ZIP reader did not load. Refresh the Admin Panel and try again.';return;}
+  const candidates=adminProducts.filter(product=>product.file_path&&/\.pdf$/i.test(String(product.file_path)));
+  if(!candidates.length){status.textContent='No existing PDF products were found.';return;}
   button.disabled=true;
-  let completed=0,failed=0;
-  for(const product of candidates){
-    status.textContent='Creating preview '+(completed+failed+1)+' of '+candidates.length+': '+product.title;
-    try{
-      const {data,error}=await db.storage.from('bramble-digital-products').createSignedUrl(product.file_path,180);
-      if(error)throw error;
-      const response=await fetch(data.signedUrl);
-      if(!response.ok)throw new Error('Could not retrieve the private PDF.');
-      const blob=await response.blob();
-      const file=new File([blob],String(product.file_path).split('/').pop()||'product.pdf',{type:'application/pdf'});
-      const preview=await createPdfPreviewPages(file,'products/previews');
-      const {error:updateError}=await db.from('products').update({preview_url:preview}).eq('id',product.id);
-      if(updateError)throw updateError;
-      product.preview_url=preview;
-      completed++;
-    }catch(error){
-      failed++;
-      console.warn('Preview generation failed for '+product.title,error);
+  let completed=0;
+  const failures=[];
+  try{
+    status.textContent='Reading recovery ZIP…';
+    const zip=await JSZip.loadAsync(zipFile);
+    const matched=candidates.filter(product=>zip.file(product.id+'.pdf'));
+    if(!matched.length)throw new Error('This ZIP does not contain the product-ID PDF files for this Bramble store.');
+    if(!confirm('Restore '+matched.length+' PDF product(s), upload the original PDFs to private storage, and create their first four preview pages? Existing product details, customer orders and payment records will not change.'))return;
+    for(let index=0;index<matched.length;index++){
+      const product=matched[index];
+      status.textContent='Restoring '+(index+1)+' of '+matched.length+': '+product.title;
+      try{
+        const entry=zip.file(product.id+'.pdf');
+        const blob=await entry.async('blob');
+        if(!blob.size)throw new Error('The PDF entry is empty.');
+        const restoredFile=new File([blob],safeUploadName(product.title)+'.pdf',{type:'application/pdf'});
+        const uploaded=await uploadAdminAsset('bramble-digital-products',restoredFile,'products');
+        const preview=await createPdfPreviewPages(restoredFile,'products/previews');
+        const {error:updateError}=await db.from('products').update({file_path:uploaded.path,preview_url:preview}).eq('id',product.id);
+        if(updateError)throw updateError;
+        product.file_path=uploaded.path;
+        product.preview_url=preview;
+        completed++;
+      }catch(error){
+        failures.push(product.title+': '+(error.message||'Unknown error'));
+        console.error('PDF restore failed for '+product.title,error);
+      }
     }
+    await refreshAdmin();
+    status.textContent='Restored '+completed+' of '+matched.length+' PDF product(s).'+(failures.length?' Failed: '+failures.join(' | '):' All four-page previews are saved.');
+    toast('Bramble PDF recovery: '+completed+' restored, '+failures.length+' failed.');
+  }catch(error){
+    status.textContent='Recovery failed: '+(error.message||'Please check the ZIP and try again.');
+    toast(status.textContent);
+  }finally{
+    button.disabled=false;
   }
-  button.disabled=false;
-  status.textContent='Finished: '+completed+' preview(s) created'+(failed?', '+failed+' failed.':' .');
-  await refreshAdmin();
-  toast('PDF preview generation complete: '+completed+' created, '+failed+' failed.');
 }
 function resetProductEditor(){
   $("#productForm").reset();$("#productId").value='';$("#productSlug").value='';$("#editModeNotice").hidden=true;$("#cancelProductEdit").hidden=true;$("#saveProductButton").textContent='Save Product';$("#coverImagePreview").hidden=true;$("#coverImagePreview").removeAttribute('src');$("#coverUploadStatus").textContent='No image uploaded yet.';$("#digitalFileUploadStatus").textContent='No file uploaded yet.';
@@ -430,7 +455,7 @@ $("#productSort").addEventListener('change',renderProductRows);
 $("#cancelProductEdit").addEventListener('click',()=>resetProductEditor());
 $("#addNewProduct").addEventListener('click',()=>{resetProductEditor();$("#productEditor").scrollIntoView({behavior:'smooth',block:'start'});$("#productTitle").focus();});
 document.addEventListener('click',event=>{if(event.target.closest('#emptyAddProduct')){$("#addNewProduct").click();}});
-$("#generateExistingPreviews").addEventListener('click',generatePreviewsForExistingPdfs);
+$("#restorePdfZipButton").addEventListener('click',restoreExistingPdfProductsFromZip);
 $("#refreshAdminData").addEventListener('click',()=>refreshAdmin());
 $("#exportProducts").addEventListener('click',()=>{
   if(!isAdmin(currentSession))return;
