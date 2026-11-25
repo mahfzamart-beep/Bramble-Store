@@ -107,6 +107,43 @@ footer{padding:45px 0 24px}
 @media(max-width:390px){.stories{grid-template-columns:1fr}.photo{height:185px}.lead h1{font-size:33px}.lang button{padding:6px 8px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
+
+/* Bramble products — preserved as a dedicated storefront section */
+.our-products{background:linear-gradient(145deg,#09152f 0%,#0d2040 100%);color:#fff;padding:62px 0 68px;margin-top:0;position:relative;overflow:hidden}
+.our-products:before{content:"BRAMBLE";position:absolute;right:-20px;top:10px;font:700 clamp(70px,13vw,180px)/1 'Space Grotesk';letter-spacing:-.1em;color:rgba(255,255,255,.025);pointer-events:none}
+.our-products .container{position:relative;z-index:1}
+.our-products .section-head{margin:0 0 9px;align-items:end}
+.our-products .section-head h2{color:#fff}
+.our-products .section-head small{color:#b5c3d8}
+.our-products .product-intro{color:#b9c6d8;font-size:11px;line-height:1.65;margin:9px 0 22px;max-width:640px}
+.shop-utility{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 17px;flex-wrap:wrap}
+.shop-count{font-size:8px;letter-spacing:.16em;font-weight:900;color:#c3d0e2;text-transform:uppercase}
+.library-toggle{border:1px solid #ffffff35;background:#ffffff0b;color:#fff;border-radius:99px;padding:9px 14px;font-size:9px;font-weight:900;cursor:pointer}
+.library-toggle:hover{border-color:var(--lime);color:var(--lime)}
+.shop-product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.shop-product-card{background:#fbfcf8;color:#111827;border:1px solid #ffffff20;min-width:0;display:flex;flex-direction:column;box-shadow:0 14px 36px #0002;transition:transform .2s,box-shadow .2s}
+.shop-product-card:hover{transform:translateY(-4px);box-shadow:0 20px 42px #0004}
+.shop-product-image{height:178px;background:#eef1e9;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.shop-product-image img{width:100%;height:100%;object-fit:contain;display:block}
+.shop-product-body{padding:15px;display:flex;flex:1;flex-direction:column}
+.shop-product-type{font-size:7px;letter-spacing:.17em;color:#60704f;text-transform:uppercase;font-weight:900}
+.shop-product-body h3{font:700 16px/1.3 'Space Grotesk','Noto Sans Bengali';letter-spacing:-.035em;margin:9px 0 7px;min-height:42px}
+.shop-product-price{font:700 19px 'Space Grotesk';color:#1e382b;margin:0 0 13px}
+.shop-product-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:auto}
+.shop-product-actions button,.shop-product-actions a{min-height:37px;border:0;display:flex;align-items:center;justify-content:center;border-radius:3px;padding:8px 5px;font-size:8px;font-weight:900;text-align:center;cursor:pointer;text-decoration:none}
+.shop-add{background:#e9f5d9;color:#1b392b}.shop-add:hover,.shop-add[aria-pressed=true]{background:var(--lime);color:#09152f}
+.shop-buy{background:var(--lime);color:#09152f}.shop-buy:hover{background:#a4ff6b}
+.library-panel{margin-top:14px;background:#ffffff0b;border:1px solid #ffffff25;padding:15px;display:none}
+.library-panel.open{display:block}
+.library-panel h3{font:700 14px 'Space Grotesk';margin:0 0 10px;color:#fff}
+.library-list{display:grid;gap:8px}
+.library-row{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#e6edf7;font-size:10px;border-top:1px solid #ffffff18;padding-top:8px}
+.library-row a{color:var(--lime);font-weight:900;white-space:nowrap}
+.library-empty{font-size:10px;color:#b9c6d8;margin:0}
+.our-products .shop-footnote{font-size:8px;color:#9eacc2;margin:20px 0 0;line-height:1.6}
+@media(max-width:900px){.shop-product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.our-products{padding:42px 0 48px}.shop-product-grid{gap:9px}.shop-product-image{height:135px}.shop-product-body{padding:10px}.shop-product-body h3{font-size:13px;min-height:48px}.shop-product-price{font-size:16px}.shop-product-actions{gap:5px}.shop-product-actions button,.shop-product-actions a{font-size:7px;padding:7px 3px;min-height:35px}.shop-utility{align-items:flex-start}}
+
 </style></head>
 <body>
 <div class="top"><div class="container"><span><b>INSIDER POST</b> &nbsp; THE STORIES BEHIND THE HEADLINES</span><span>BANGLADESH FIRST · INDEPENDENT PERSPECTIVE</span></div></div>
@@ -135,7 +172,39 @@ footer{padding:45px 0 24px}
 </main>
 <section class="category-band" id="sections"><div class="container"><div class="section-head"><div><small>FIND YOUR POINT OF VIEW</small><h2>Explore the sections</h2></div></div><div class="tiles"><a class="tile" href="#latest" data-jump="bangladesh"><span>Bangladesh<small>দেশের খবর ও প্রেক্ষাপট</small></span><em>↗</em></a><a class="tile" href="#latest" data-jump="world"><span>World<small>বিশ্বজুড়ে যা ঘটছে</small></span><em>↗</em></a><a class="tile" href="#latest" data-jump="business"><span>Business<small>ব্যবসা, বাজার ও অর্থনীতি</small></span><em>↗</em></a><a class="tile" href="#latest" data-jump="tech"><span>Technology<small>প্রযুক্তি ও উদ্ভাবন</small></span><em>↗</em></a></div></div></section>
 <div class="preview-note"><div class="container"><b>PREVIEW ONLY</b><span>All headlines and story cards are design placeholders, not current news. Real reports require verified sources, a named author and editorial approval. / এখানে সব শিরোনাম নমুনা মাত্র।</span></div></div>
-<footer><div class="container"><div class="foot-top"><div><div class="foot-brand">INSIDER <em>POST</em></div><div class="foot-tag">Stories that move us. / গল্প, যা আমাদের ভাবায়।</div></div><div class="foot-links"><a href="#sections">About</a><a href="#sections">Editorial policy</a><a href="#sections">Corrections</a><a href="#sections">Contact</a><a href="#sections">Privacy</a></div></div><div class="foot-bottom"><span>© 2026 Insider Post · Preview edition</span><span>Bangladesh first. Context always.</span></div></div></footer>
+
+<section class="our-products" id="our-products" aria-labelledby="ourProductsHeading">
+  <div class="container">
+    <div class="section-head">
+      <div><small data-en="A LITTLE SOMETHING FROM OUR ORIGINAL STORE" data-bn="আমাদের মূল স্টোর থেকে কিছু পছন্দের পণ্য">A LITTLE SOMETHING FROM OUR ORIGINAL STORE</small><h2 id="ourProductsHeading" data-en="Our Products" data-bn="আমাদের পণ্যসমূহ">Our Products</h2></div>
+      <span class="shop-count">BRAMBLE DIGITAL STORE</span>
+    </div>
+    <p class="product-intro" data-en="Insider Post brings you the stories. Bramble brings you ideas to read, create and grow. Explore the original Bramble digital collection below." data-bn="Insider Post আপনাদের সামনে তুলে ধরে খবর ও গল্প। আর Bramble নিয়ে আসে পড়া, তৈরি ও এগিয়ে যাওয়ার ডিজিটাল উপকরণ। নিচে Bramble-এর মূল সংগ্রহ দেখুন।">Insider Post brings you the stories. Bramble brings you ideas to read, create and grow. Explore the original Bramble digital collection below.</p>
+    <div class="shop-utility"><span class="shop-count">4 ORIGINAL PRODUCTS · GUMROAD CHECKOUT</span><button class="library-toggle" id="brambleLibraryToggle" type="button" aria-expanded="false">My Library · <span id="brambleLibraryCount">0</span></button></div>
+    <div class="shop-product-grid" id="brambleProducts">
+      <article class="shop-product-card">
+        <div class="shop-product-image"><img loading="lazy" src="https://public-files.gumroad.com/78hfadas6hr5nvv9ls0wlcz2m8vn" alt="Mara Ellery and the Sevenfold Stone cover"></div>
+        <div class="shop-product-body"><span class="shop-product-type">Fantasy · eBook</span><h3>Mara Ellery and the Sevenfold Stone</h3><p class="shop-product-price">$10.00</p><div class="shop-product-actions"><button class="shop-add" type="button" data-product-add="mara-ellery" aria-pressed="false">＋ Add to Library</button><a class="shop-buy" href="https://mahfuzshohel.gumroad.com/l/maraelleryandth?wanted=true" target="_blank" rel="noopener noreferrer">Buy Now ↗</a></div></div>
+      </article>
+      <article class="shop-product-card">
+        <div class="shop-product-image"><img loading="lazy" src="https://public-files.gumroad.com/qzswz0g30yz605d2amm8etc5q7fh" alt="My First Coloring Book cover"></div>
+        <div class="shop-product-body"><span class="shop-product-type">Kids · Activity Book</span><h3>My First Coloring Book</h3><p class="shop-product-price">$4.00</p><div class="shop-product-actions"><button class="shop-add" type="button" data-product-add="coloring-book" aria-pressed="false">＋ Add to Library</button><a class="shop-buy" href="https://mahfuzshohel.gumroad.com/l/Myfirstcoloringbook?wanted=true" target="_blank" rel="noopener noreferrer">Buy Now ↗</a></div></div>
+      </article>
+      <article class="shop-product-card">
+        <div class="shop-product-image"><img loading="lazy" src="https://public-files.gumroad.com/gvezyai17gt2u0vfy63pzaypifv2" alt="Dark Side of Female Nature cover"></div>
+        <div class="shop-product-body"><span class="shop-product-type">Psychology · eBook</span><h3>Dark Side of Female Nature</h3><p class="shop-product-price">$3.99</p><div class="shop-product-actions"><button class="shop-add" type="button" data-product-add="dark-side" aria-pressed="false">＋ Add to Library</button><a class="shop-buy" href="https://mahfuzshohel.gumroad.com/l/Dsofn?wanted=true" target="_blank" rel="noopener noreferrer">Buy Now ↗</a></div></div>
+      </article>
+      <article class="shop-product-card">
+        <div class="shop-product-image"><img loading="lazy" src="https://public-files.gumroad.com/ck5kcls1zvbzfjxv9i0zr0pvnpmc" alt="The Psychology of Attraction cover"></div>
+        <div class="shop-product-body"><span class="shop-product-type">Psychology · eBook</span><h3>The Psychology of Attraction (No Woman Wants You to Know)</h3><p class="shop-product-price">$5.99</p><div class="shop-product-actions"><button class="shop-add" type="button" data-product-add="psychology" aria-pressed="false">＋ Add to Library</button><a class="shop-buy" href="https://mahfuzshohel.gumroad.com/l/cgftqc?wanted=true" target="_blank" rel="noopener noreferrer">Buy Now ↗</a></div></div></div>
+      </article>
+    </div>
+    <div class="library-panel" id="brambleLibraryPanel" aria-live="polite"><h3>My Library</h3><div class="library-list" id="brambleLibraryList"></div></div>
+    <p class="shop-footnote">Bramble product listings, cover images, prices and Gumroad purchase links have been carried over from the original storefront. Payments and file delivery continue through Gumroad.</p>
+  </div>
+</section>
+
+<footer><div class="container"><div class="foot-top"><div><div class="foot-brand">INSIDER <em>POST</em></div><div class="foot-tag">Stories that move us. / গল্প, যা আমাদের ভাবায়।</div></div><div class="foot-links"><a href="#sections">Sections</a><a href="#our-products">Our Products</a><a href="#sections">Editorial policy</a><a href="#sections">Contact</a></div></div><div class="foot-bottom"><span>© 2026 Insider Post · Preview edition</span><span>Bangladesh first. Context always.</span></div></div></footer>
 <script>
 (()=>{let cat='all',q='';const btns=[...document.querySelectorAll('[data-cat]')],cards=[...document.querySelectorAll('.card')],search=document.getElementById('search'),empty=document.getElementById('empty');function apply(){let n=0;cards.forEach(c=>{let show=(cat==='all'||c.dataset.story===cat)&&(!q||c.innerText.toLowerCase().includes(q));c.style.display=show?'':'none';if(show)n++;});empty.style.display=n?'none':'block';btns.forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));}btns.forEach(b=>b.onclick=()=>{cat=b.dataset.cat;apply();});document.querySelectorAll('[data-jump]').forEach(a=>a.onclick=()=>{cat=a.dataset.jump;apply();});search.oninput=e=>{q=e.target.value.toLowerCase().trim();apply();};document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-lang]').forEach(x=>x.classList.toggle('active',x===b));let lang=b.dataset.lang;document.documentElement.lang=lang==='bn'?'bn':'en';document.querySelectorAll('[data-en]').forEach(el=>el.textContent=lang==='bn'?(el.dataset.bn||el.dataset.en):el.dataset.en);});apply();})();
 </script></body></html>
