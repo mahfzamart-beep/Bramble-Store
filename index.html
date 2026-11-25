@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#09152f">
+<meta name="description" content="Insider Post — Bangladesh, the world, and the stories behind the headlines."><title>Insider Post — Stories that move us.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#09152f;--ink:#111827;--muted:#697386;--lime:#76f20b;--paper:#f7f8f5;--white:#fff;--line:#e7e9e3;--shadow:0 18px 50px #09152f12}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans','Noto Sans Bengali',sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button,input{font:inherit}.container{width:min(1200px,calc(100% - 48px));margin:auto}
+.top{background:var(--navy);color:#e2e9f6;font-size:10px;letter-spacing:.06em}.top .container{height:32px;display:flex;align-items:center;justify-content:space-between}.top b{color:var(--lime);letter-spacing:.16em}.top span:last-child{opacity:.72}
+.masthead{border-bottom:1px solid var(--line)}.masthead .container{height:100px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:12px}.mark{width:42px;height:42px;background:var(--lime);display:grid;place-items:center;color:var(--navy);font:700 20px 'Space Grotesk';transform:skew(-8deg)}.brand-name{font:700 clamp(29px,4vw,40px)/.9 'Space Grotesk';letter-spacing:-.075em;color:var(--navy)}.brand-name span{font-weight:500}.tagline{margin-top:8px;color:var(--muted);font-size:9px;letter-spacing:.16em;text-transform:uppercase}
+.tools{display:flex;align-items:center;gap:10px}.search{height:40px;width:220px;border:1px solid #dfe3dc;background:white;border-radius:99px;display:flex;align-items:center;padding:0 13px;gap:8px}.search span{font-size:18px;color:#7a8493}.search input{width:100%;border:0;outline:0;background:none;font-size:11px}.lang{display:flex;padding:4px;border:1px solid #dfe3dc;background:white;border-radius:99px}.lang button{border:0;background:none;border-radius:99px;padding:7px 10px;font-size:10px;font-weight:800;color:#657084;cursor:pointer}.lang .active{background:var(--navy);color:white}
+.nav{border-bottom:1px solid var(--line)}.nav .container{min-height:47px;display:flex;align-items:center;justify-content:space-between;gap:18px}.nav-list{display:flex;align-items:center;gap:4px;overflow:auto;white-space:nowrap}.nav button{border:0;background:none;position:relative;padding:14px 11px;color:#596476;font-size:11px;font-weight:800;cursor:pointer}.nav button.active,.nav button:hover{color:var(--navy)}.nav button.active:after{content:"";height:3px;position:absolute;bottom:0;left:11px;right:11px;background:var(--lime)}.edition{font-size:9px;color:var(--muted);letter-spacing:.12em;white-space:nowrap}
+.ticker{background:var(--lime);color:var(--navy)}.ticker .container{min-height:37px;display:flex;align-items:center;gap:13px;font-size:10px;font-weight:700}.ticker strong{background:var(--navy);color:white;padding:6px 9px;font-size:8px;letter-spacing:.14em;text-transform:uppercase}.ticker small{font-size:9px;opacity:.7}
+.kicker{display:flex;align-items:center;gap:10px;margin:30px 0 16px;color:#687285;font-size:9px;font-weight:900;letter-spacing:.17em;text-transform:uppercase}.kicker:before{content:"";height:2px;width:19px;background:var(--lime)}.kicker b{color:var(--navy)}
+.hero{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(280px,.85fr);gap:21px}.lead{position:relative;min-height:480px;overflow:hidden;background:#1a2939;color:white;isolation:isolate}.lead img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform .6s}.lead:hover img{transform:scale(1.025)}.lead:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#07102200 5%,#07102222 35%,#071022e8 100%)}.lead-copy{position:absolute;left:clamp(22px,4vw,42px);right:30px;bottom:33px}.label{display:inline-flex;align-items:center;gap:7px;text-transform:uppercase;letter-spacing:.13em;font-size:8px;font-weight:900}.label:before{content:"";width:7px;height:7px;background:var(--lime)}.lead .label{color:#f0f5ed}.lead h1{font:700 clamp(32px,4.2vw,54px)/1.08 'Space Grotesk','Noto Sans Bengali';letter-spacing:-.055em;max-width:730px;margin:14px 0 12px}.lead p{color:#d5deeb;font-size:12px;line-height:1.7;max-width:560px;margin:0}.byline{display:flex;align-items:center;gap:11px;margin-top:20px;font-size:9px;color:#c3cfdf;letter-spacing:.07em}.byline b{color:var(--lime)}.dot{width:3px;height:3px;background:var(--lime);border-radius:50%}
+.rail{background:white;border:1px solid var(--line);padding:22px 22px 4px}.rail-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:14px}.rail-head h2{font:700 19px 'Space Grotesk';letter-spacing:-.04em;margin:0}.rail-head i{width:7px;height:7px;background:var(--lime)}.rail-item{display:grid;grid-template-columns:26px 1fr;gap:12px;padding:18px 0;border-bottom:1px solid var(--line)}.rail-item:last-child{border:0}.num{font:600 19px 'Space Grotesk';color:#c6ccd3}.rail-item .label{color:#727d8b;font-size:8px}.rail-item h3{font-size:15px;line-height:1.35;letter-spacing:-.025em;margin:7px 0 5px}.rail-item p{font-size:10px;color:var(--muted);line-height:1.55;margin:0}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:14px;margin:43px 0 17px}.section-head small{display:block;color:#778193;font-size:8px;font-weight:900;letter-spacing:.17em;text-transform:uppercase;margin-bottom:7px}.section-head h2{font:700 clamp(26px,3vw,34px)/1 'Space Grotesk','Noto Sans Bengali';letter-spacing:-.055em;color:var(--navy);margin:0}.section-head a{font-size:10px;font-weight:900;border-bottom:2px solid var(--lime);padding-bottom:5px}
+.content{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:22px;align-items:start}.stories{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.card{background:white;border:1px solid var(--line);min-width:0;transition:transform .2s,box-shadow .2s}.card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}.photo{height:167px;overflow:hidden;background:#e6e9e4}.photo img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s}.card:hover .photo img{transform:scale(1.04)}.card-body{padding:14px 14px 16px}.card-body .label{font-size:7px;color:#758091}.card h3{font:700 17px/1.27 'Space Grotesk','Noto Sans Bengali';letter-spacing:-.035em;margin:8px 0}.card p{font-size:10px;line-height:1.6;color:var(--muted);margin:0}.meta{display:flex;justify-content:space-between;margin-top:14px;color:#89919c;font-size:8px;font-weight:800}.meta b{color:#465164}
+.brief{background:var(--navy);color:white;padding:21px}.brief-head{display:flex;align-items:center;justify-content:space-between}.brief h3{font:700 19px 'Space Grotesk';letter-spacing:-.04em;margin:0}.live{width:7px;height:7px;background:var(--lime);border-radius:50%;box-shadow:0 0 0 5px #76f20b18}.brief-intro{font-size:10px;line-height:1.6;color:#b8c4d5;margin:8px 0 12px}.brief-item{border-top:1px solid #ffffff20;padding:12px 0}.brief-item small{color:var(--lime);font-size:8px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.brief-item p{font-size:11px;line-height:1.45;font-weight:700;margin:5px 0 0}.brief-foot{border-top:1px solid #ffffff20;padding-top:13px;color:#98a8bf;font-size:8px}
+.category-band{margin-top:47px;padding:27px 0 31px;background:#edf0e9}.category-band .section-head{margin:0 0 17px}.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;border:1px solid #dfe4da;background:#dfe4da}.tile{min-height:80px;background:var(--paper);padding:16px;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:800}.tile small{display:block;font-size:8px;color:var(--muted);font-weight:600;margin-top:5px}.tile em{font-style:normal;color:#a2aab3;font-size:18px}.tile:hover em{color:var(--navy)}
+.preview-note{background:#fff8e6;border-top:1px solid #f1e0b0;padding:10px 0;color:#705c2d;font-size:9px;line-height:1.5}.preview-note .container{display:flex;gap:10px}.preview-note b{white-space:nowrap}
+footer{background:var(--navy);color:white;padding:35px 0 22px}.foot-top{display:flex;align-items:start;justify-content:space-between;gap:28px}.foot-brand{font:700 30px 'Space Grotesk';letter-spacing:-.07em}.foot-brand em{font-style:normal;color:var(--lime)}.foot-tag{font-size:10px;color:#aebbd0;margin-top:6px}.foot-links{display:flex;flex-wrap:wrap;gap:17px;font-size:10px;color:#d3ddeb}.foot-bottom{border-top:1px solid #ffffff20;margin-top:26px;padding-top:14px;display:flex;justify-content:space-between;gap:10px;color:#91a0b8;font-size:8px}
+.no-results{display:none;background:white;border:1px solid var(--line);padding:28px;text-align:center;color:var(--muted);font-size:11px;grid-column:1/-1}
+@media(max-width:980px){.hero{grid-template-columns:1fr}.lead{min-height:430px}.rail{display:grid;grid-template-columns:repeat(2,1fr);column-gap:20px}.rail-head{grid-column:1/-1}.content{grid-template-columns:1fr}.brief{display:grid;grid-template-columns:repeat(3,1fr);gap:0 16px}.brief-head,.brief-intro,.brief-foot{grid-column:1/-1}.brief-item:nth-child(3){border-top:1px solid #ffffff20}}
+@media(max-width:650px){.container{width:calc(100% - 28px)}.top .container{height:30px;font-size:8px}.top span:last-child{display:none}.masthead .container{height:auto;padding:16px 0;align-items:flex-start;flex-direction:column;gap:14px}.mark{width:36px;height:36px;font-size:17px}.brand-name{font-size:32px}.tools{width:100%;justify-content:space-between}.search{width:auto;flex:1}.nav .container{min-height:43px}.nav button{padding:13px 10px;font-size:10px}.edition{display:none}.ticker .container{font-size:9px;min-height:35px}.ticker small{display:none}.kicker{margin-top:24px}.lead{min-height:420px}.lead-copy{left:19px;right:19px;bottom:24px}.lead h1{font-size:33px}.lead p{font-size:11px}.rail{display:block;padding:17px}.rail-item{padding:15px 0}.section-head{margin-top:34px}.section-head h2{font-size:26px}.stories{grid-template-columns:1fr 1fr;gap:10px}.photo{height:125px}.card-body{padding:11px}.card h3{font-size:14px}.card p{font-size:9px}.meta{font-size:7px}.brief{display:block;padding:18px}.category-band{margin-top:35px}.tiles{grid-template-columns:repeat(2,1fr)}.tile{min-height:70px;padding:12px;font-size:11px}.foot-top{flex-direction:column}.foot-links{gap:12px}.foot-bottom{flex-direction:column}}
+@media(max-width:370px){.stories{grid-template-columns:1fr}.photo{height:175px}.lang button{padding:6px 8px}}
+
+/* INSIDER POST / EDITION 02 — elevated art direction */
+:root{--navy:#07132e;--ink:#101725;--muted:#687386;--lime:#7cf51a;--paper:#f9faf7;--line:#e4e8e0;--shadow:0 22px 65px rgba(7,19,46,.10)}
+::selection{background:var(--lime);color:var(--navy)}
+body{background:radial-gradient(ellipse at 82% 0%,rgba(124,245,26,.045),transparent 31%),var(--paper)}
+.container{width:min(1280px,calc(100% - 56px))}
+.top{font-size:9px;letter-spacing:.1em}.top .container{height:35px}
+.masthead{background:rgba(249,250,247,.94);backdrop-filter:blur(16px)}
+.masthead .container{height:112px}
+.mark{width:48px;height:48px;transform:rotate(-6deg);border:1px solid rgba(7,19,46,.12);box-shadow:5px 5px 0 var(--navy);font-size:21px;letter-spacing:-.08em}
+.brand-name{font-size:clamp(32px,4vw,45px);letter-spacing:-.09em}
+.tagline{font-size:8px;letter-spacing:.2em}
+.search{height:43px;border-color:#dce2d8;box-shadow:0 4px 14px rgba(7,19,46,.035);transition:border-color .2s,box-shadow .2s}
+.search:focus-within{border-color:var(--navy);box-shadow:0 0 0 3px rgba(124,245,26,.22)}
+.lang{box-shadow:0 4px 14px rgba(7,19,46,.035)}
+.nav{position:sticky;top:0;z-index:20;background:rgba(249,250,247,.94);backdrop-filter:blur(14px)}
+.nav .container{min-height:50px}
+.nav button{font-size:10px;letter-spacing:.015em;padding:16px 13px}
+.nav button.active:after{height:3px;left:13px;right:13px}
+.ticker{background:linear-gradient(90deg,#7cf51a,#a3ff64 55%,#7cf51a)}
+.ticker .container{min-height:39px;font-size:10px}
+.kicker{margin:38px 0 18px;font-size:8px;letter-spacing:.22em}
+.kicker:before{width:25px;height:3px}
+.hero{grid-template-columns:minmax(0,1.85fr) minmax(300px,.82fr);gap:23px}
+.lead{min-height:530px;box-shadow:0 24px 70px rgba(7,19,46,.13)}
+.lead:after{background:linear-gradient(180deg,rgba(4,11,25,.02) 0%,rgba(4,11,25,.08) 30%,rgba(4,11,25,.84) 72%,rgba(4,11,25,.94) 100%)}
+.lead-copy{left:clamp(26px,4vw,50px);right:clamp(24px,4vw,44px);bottom:42px;max-width:760px}
+.lead .label{background:rgba(124,245,26,.12);border:1px solid rgba(124,245,26,.34);padding:8px 10px;color:#dfffcd;backdrop-filter:blur(12px)}
+.lead .label:before{box-shadow:0 0 0 4px rgba(124,245,26,.12)}
+.lead h1{font-size:clamp(36px,4.5vw,62px);line-height:1.02;letter-spacing:-.065em;margin:17px 0 15px;max-width:680px;text-wrap:balance}
+.lead p{font-size:13px;max-width:570px}
+.byline{margin-top:25px;font-size:8px;letter-spacing:.11em}
+.rail{padding:25px 25px 7px;box-shadow:0 16px 48px rgba(7,19,46,.035)}
+.rail-head h2{font-size:20px}
+.rail-item{padding:22px 0;grid-template-columns:29px 1fr;gap:14px}
+.rail-item h3{font-size:16px;line-height:1.32;letter-spacing:-.035em;margin:9px 0 7px}
+.rail-item p{font-size:10px}
+.num{font-size:21px;color:#bdc5ce}
+.section-head{margin:55px 0 21px}
+.section-head small{font-size:8px;letter-spacing:.2em}
+.section-head h2{font-size:clamp(29px,3.4vw,39px);letter-spacing:-.065em}
+.section-head a{font-size:9px;letter-spacing:.12em}
+.content{grid-template-columns:minmax(0,1fr) 294px;gap:25px}
+.stories{grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.card{border-color:#e7eae4;box-shadow:0 4px 18px rgba(7,19,46,.025);border-radius:5px;overflow:hidden}
+.card:hover{box-shadow:0 18px 42px rgba(7,19,46,.10)}
+.photo{height:185px;background:#e7ebe4}
+.photo img{filter:saturate(.86);transition:transform .65s,filter .4s}
+.card:hover .photo img{filter:saturate(1.08)}
+.card-body{padding:17px 17px 18px}
+.card-body .label{font-size:7px;letter-spacing:.17em}
+.card h3{font-size:18px;line-height:1.24;letter-spacing:-.045em;margin:10px 0}
+.card p{font-size:10px;line-height:1.7}
+.meta{margin-top:17px;font-size:7px;letter-spacing:.12em}
+.brief{padding:25px;background:linear-gradient(148deg,#0c1a39 0%,#07132e 68%,#0d2041 100%);position:relative;overflow:hidden}
+.brief:after{content:"IP";position:absolute;right:-8px;bottom:-35px;font:700 125px 'Space Grotesk';color:rgba(255,255,255,.035);letter-spacing:-.12em;pointer-events:none}
+.brief-head,.brief-intro,.brief-item,.brief-foot{position:relative;z-index:1}
+.brief h3{font-size:20px}
+.brief-intro{font-size:10px}
+.brief-item{padding:15px 0}
+.brief-item small{font-size:7px;letter-spacing:.18em}
+.brief-item p{font-size:12px;line-height:1.5}
+.brief-foot{font-size:8px;letter-spacing:.06em}
+.category-band{margin-top:58px;padding:34px 0 38px;background:linear-gradient(180deg,#eff2eb,#f4f6f1)}
+.category-band .section-head{margin:0 0 20px}
+.tiles{gap:1px;border-color:#dce2d8;box-shadow:0 9px 30px rgba(7,19,46,.025)}
+.tile{min-height:92px;padding:20px;font-size:13px;transition:background .2s,transform .2s}
+.tile:hover{background:white}
+.tile em{font-size:22px;transition:transform .2s}
+.preview-note{padding:12px 0;font-size:8px;letter-spacing:.01em}
+.preview-note b{color:var(--navy);letter-spacing:.13em;font-size:8px}
+footer{padding:45px 0 24px}
+.foot-brand{font-size:34px;letter-spacing:-.09em}
+.foot-tag{font-size:9px;letter-spacing:.04em}
+.foot-links{font-size:9px;letter-spacing:.03em}
+.foot-links a{transition:color .2s}.foot-links a:hover{color:var(--lime)}
+.foot-bottom{font-size:8px;letter-spacing:.06em}
+@media(max-width:980px){.container{width:min(100% - 40px,1280px)}.hero{grid-template-columns:1fr}.lead{min-height:480px}.content{grid-template-columns:1fr}.brief{display:block}.stories{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.container{width:calc(100% - 30px)}.masthead .container{padding:18px 0}.mark{width:39px;height:39px;font-size:18px;box-shadow:4px 4px 0 var(--navy)}.brand-name{font-size:35px}.tagline{font-size:7px}.nav{position:sticky}.nav .container{min-height:43px}.nav button{font-size:9px;padding:13px 9px}.nav button.active:after{left:9px;right:9px}.ticker .container{font-size:9px}.kicker{margin:27px 0 15px;font-size:7px}.hero{gap:15px}.lead{min-height:445px}.lead-copy{left:20px;right:18px;bottom:26px}.lead .label{font-size:7px;padding:7px 8px}.lead h1{font-size:37px;line-height:1.02;margin:14px 0 11px}.lead p{font-size:11px}.byline{font-size:7px;gap:8px}.rail{padding:18px 18px 4px}.rail-item{padding:16px 0}.rail-item h3{font-size:15px}.section-head{margin:38px 0 17px}.section-head h2{font-size:29px}.stories{gap:11px}.photo{height:135px}.card-body{padding:12px}.card h3{font-size:15px}.card p{font-size:9px}.brief{padding:20px}.category-band{margin-top:40px;padding:26px 0 30px}.tile{min-height:75px;padding:14px;font-size:11px}.preview-note{font-size:8px}.foot-top{gap:20px}.foot-brand{font-size:31px}}
+@media(max-width:390px){.stories{grid-template-columns:1fr}.photo{height:185px}.lead h1{font-size:33px}.lang button{padding:6px 8px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* Bramble products — preserved as a dedicated storefront section */
+.our-products{background:linear-gradient(145deg,#09152f 0%,#0d2040 100%);color:#fff;padding:62px 0 68px;margin-top:0;position:relative;overflow:hidden}
+.our-products:before{content:"BRAMBLE";position:absolute;right:-20px;top:10px;font:700 clamp(70px,13vw,180px)/1 'Space Grotesk';letter-spacing:-.1em;color:rgba(255,255,255,.025);pointer-events:none}
+.our-products .container{position:relative;z-index:1}
+.our-products .section-head{margin:0 0 9px;align-items:end}
+.our-products .section-head h2{color:#fff}
+.our-products .section-head small{color:#b5c3d8}
+.our-products .product-intro{color:#b9c6d8;font-size:11px;line-height:1.65;margin:9px 0 22px;max-width:640px}
+.shop-utility{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 17px;flex-wrap:wrap}
+.shop-count{font-size:8px;letter-spacing:.16em;font-weight:900;color:#c3d0e2;text-transform:uppercase}
+.library-toggle{border:1px solid #ffffff35;background:#ffffff0b;color:#fff;border-radius:99px;padding:9px 14px;font-size:9px;font-weight:900;cursor:pointer}
+.library-toggle:hover{border-color:var(--lime);color:var(--lime)}
+.shop-product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.shop-product-card{background:#fbfcf8;color:#111827;border:1px solid #ffffff20;min-width:0;display:flex;flex-direction:column;box-shadow:0 14px 36px #0002;transition:transform .2s,box-shadow .2s}
+.shop-product-card:hover{transform:translateY(-4px);box-shadow:0 20px 42px #0004}
+.shop-product-image{height:178px;background:#eef1e9;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.shop-product-image img{width:100%;height:100%;object-fit:contain;display:block}
+.shop-product-body{padding:15px;display:flex;flex:1;flex-direction:column}
+.shop-product-type{font-size:7px;letter-spacing:.17em;color:#60704f;text-transform:uppercase;font-weight:900}
+.shop-product-body h3{font:700 16px/1.3 'Space Grotesk','Noto Sans Bengali';letter-spacing:-.035em;margin:9px 0 7px;min-height:42px}
+.shop-product-price{font:700 19px 'Space Grotesk';color:#1e382b;margin:0 0 13px}
+.shop-product-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:auto}
+.shop-product-actions button,.shop-product-actions a{min-height:37px;border:0;display:flex;align-items:center;justify-content:center;border-radius:3px;padding:8px 5px;font-size:8px;font-weight:900;text-align:center;cursor:pointer;text-decoration:none}
+.shop-add{background:#e9f5d9;color:#1b392b}.shop-add:hover,.shop-add[aria-pressed=true]{background:var(--lime);color:#09152f}
+.shop-buy{background:var(--lime);color:#09152f}.shop-buy:hover{background:#a4ff6b}
+.library-panel{margin-top:14px;background:#ffffff0b;border:1px solid #ffffff25;padding:15px;display:none}
+.library-panel.open{display:block}
+.library-panel h3{font:700 14px 'Space Grotesk';margin:0 0 10px;color:#fff}
+.library-list{display:grid;gap:8px}
+.library-row{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#e6edf7;font-size:10px;border-top:1px solid #ffffff18;padding-top:8px}
+.library-row a{color:var(--lime);font-weight:900;white-space:nowrap}
+.library-empty{font-size:10px;color:#b9c6d8;margin:0}
+.our-products .shop-footnote{font-size:8px;color:#9eacc2;margin:20px 0 0;line-height:1.6}
+@media(max-width:900px){.shop-product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.our-products{padding:42px 0 48px}.shop-product-grid{gap:9px}.shop-product-image{height:135px}.shop-product-body{padding:10px}.shop-product-body h3{font-size:13px;min-height:48px}.shop-product-price{font-size:16px}.shop-product-actions{gap:5px}.shop-product-actions button,.shop-product-actions a{font-size:7px;padding:7px 3px;min-height:35px}.shop-utility{align-items:flex-start}}
+
+</style></head>
+<body>
+<div class="top"><div class="container"><span><b>INSIDER POST</b> &nbsp; THE STORIES BEHIND THE HEADLINES</span><span>BANGLADESH FIRST · INDEPENDENT PERSPECTIVE</span></div></div>
+<header class="masthead"><div class="container"><a class="brand" href="#"><span class="mark">IP</span><span><span class="brand-name">INSIDER<span> POST</span></span><span class="tagline">News · Context · Perspective</span></span></a><div class="tools"><label class="search"><span>⌕</span><input id="search" type="search" placeholder="Search stories / খবর খুঁজুন"></label><div class="lang"><button class="active" data-lang="en">EN</button><button data-lang="bn">বাং</button></div></div></div></header>
+<nav class="nav"><div class="container"><div class="nav-list"><button class="active" data-cat="all" data-en="For you" data-bn="আপনার জন্য">For you</button><button data-cat="bangladesh" data-en="Bangladesh" data-bn="বাংলাদেশ">Bangladesh</button><button data-cat="politics" data-en="Politics" data-bn="রাজনীতি">Politics</button><button data-cat="world" data-en="World" data-bn="বিশ্ব">World</button><button data-cat="business" data-en="Business" data-bn="ব্যবসা">Business</button><button data-cat="tech" data-en="Tech" data-bn="প্রযুক্তি">Tech</button><button data-cat="sports" data-en="Sports" data-bn="খেলাধুলা">Sports</button><button data-cat="culture" data-en="Culture" data-bn="সংস্কৃতি">Culture</button></div><span class="edition">DHAKA · BD EDITION</span></div></nav>
+<div class="ticker"><div class="container"><strong>EDITOR'S NOTE</strong><span>Stories that matter, told with context.</span><small>নমুনা কনটেন্ট · যাচাই ছাড়া কোনো সংবাদ প্রকাশিত নয়</small></div></div>
+<main class="container">
+<div class="kicker"><b>01</b> THE BIG PICTURE / বড় খবরের জায়গা</div>
+<section class="hero"><a class="lead" href="#latest"><img src="https://images.unsplash.com/photo-1706640254398-3b04782e8c76?auto=format&fit=crop&w=1800&q=85" alt="Aerial view of Dhaka city and river"><div class="lead-copy"><span class="label">Bangladesh · Feature preview</span><h1 data-en="A clearer view of the stories shaping Bangladesh." data-bn="বাংলাদেশকে বদলে দেওয়া গল্পগুলো, আরও পরিষ্কার দৃষ্টিতে।">A clearer view of the stories shaping Bangladesh.</h1><p data-en="Beyond the noise. A thoughtful look at the people, ideas and decisions moving the country forward." data-bn="শোরগোলের বাইরে—মানুষ, ভাবনা ও সিদ্ধান্তের গল্প, যা দেশকে এগিয়ে নেয়।">Beyond the noise. A thoughtful look at the people, ideas and decisions moving the country forward.</p><div class="byline"><b>INSIDER POST DESK</b><i class="dot"></i> EDITORIAL PREVIEW <i class="dot"></i> NOT A LIVE REPORT</div></div></a>
+<aside class="rail"><div class="rail-head"><h2>Worth your attention</h2><i></i></div>
+<article class="rail-item" data-story="politics"><span class="num">01</span><div><span class="label">Politics · Preview</span><h3 data-en="The questions every public decision should answer" data-bn="প্রতিটি জনসিদ্ধান্তের যে প্রশ্নগুলোর উত্তর থাকা দরকার">The questions every public decision should answer</h3><p>Context first. Noise second. / আগে প্রেক্ষাপট, পরে শোরগোল।</p></div></article>
+<article class="rail-item" data-story="business"><span class="num">02</span><div><span class="label">Business · Preview</span><h3 data-en="The economy, explained beyond the numbers" data-bn="সংখ্যার বাইরে অর্থনীতির সহজ ব্যাখ্যা">The economy, explained beyond the numbers</h3><p>Ideas, impact and everyday life. / ভাবনা, প্রভাব ও জীবনযাপন।</p></div></article>
+<article class="rail-item" data-story="tech"><span class="num">03</span><div><span class="label">Technology · Preview</span><h3 data-en="A digital future built around real people" data-bn="মানুষকে ঘিরে তৈরি হোক ডিজিটাল ভবিষ্যৎ">A digital future built around real people</h3><p>What changes, who benefits, what comes next.</p></div></article>
+</aside></section>
+<div class="section-head" id="latest"><div><small>FRESH PERSPECTIVE · নতুন দৃষ্টিভঙ্গি</small><h2 data-en="The latest / সর্বশেষ" data-bn="সর্বশেষ / The latest">The latest / সর্বশেষ</h2></div><a href="#sections">EXPLORE SECTIONS ↗</a></div>
+<div class="content"><section class="stories" id="stories">
+<article class="card" data-story="bangladesh"><div class="photo"><img loading="lazy" src="https://images.unsplash.com/photo-1633788989414-8a8d43ff985e?auto=format&fit=crop&w=900&q=80" alt="A busy street in Bangladesh"></div><div class="card-body"><span class="label">Bangladesh · Preview</span><h3 data-en="The city is always moving. The story is in the details." data-bn="শহর থেমে থাকে না। গল্প লুকিয়ে থাকে ছোট ছোট বিবরণে।">The city is always moving. The story is in the details.</h3><p>Street-level perspectives, with the bigger picture in frame.</p><div class="meta"><b>INSIDER DESK</b><span>DEMO STORY</span></div></div></article>
+<article class="card" data-story="world"><div class="photo"><img loading="lazy" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=900&q=80" alt="Planet earth from space"></div><div class="card-body"><span class="label">World · Preview</span><h3 data-en="A connected world needs more than quick headlines." data-bn="সংযুক্ত পৃথিবী বুঝতে শুধু দ্রুত শিরোনাম যথেষ্ট নয়।">A connected world needs more than quick headlines.</h3><p>Global shifts, local meaning. / বিশ্ব বদলের স্থানীয় প্রভাব।</p><div class="meta"><b>INSIDER DESK</b><span>DEMO STORY</span></div></div></article>
+<article class="card" data-story="business"><div class="photo"><img loading="lazy" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80" alt="Modern city office buildings"></div><div class="card-body"><span class="label">Business · Preview</span><h3 data-en="Business is more than the bottom line." data-bn="ব্যবসার গল্প শুধু লাভ-ক্ষতির হিসাব নয়।">Business is more than the bottom line.</h3><p>People, work and the ideas moving markets.</p><div class="meta"><b>INSIDER DESK</b><span>DEMO STORY</span></div></div></article>
+<article class="card" data-story="politics"><div class="photo"><img loading="lazy" src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=900&q=80" alt="Government building and public square"></div><div class="card-body"><span class="label">Politics · Preview</span><h3 data-en="Public decisions deserve public understanding." data-bn="জনসিদ্ধান্ত সম্পর্কে মানুষের পরিষ্কার ধারণা থাকা জরুরি।">Public decisions deserve public understanding.</h3><p>Policy, accountability and civic life—clearly explained.</p><div class="meta"><b>INSIDER DESK</b><span>DEMO STORY</span></div></div></article>
+<article class="card" data-story="tech"><div class="photo"><img loading="lazy" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80" alt="Technology circuit board"></div><div class="card-body"><span class="label">Technology · Preview</span><h3 data-en="Technology should make everyday life better." data-bn="প্রযুক্তির লক্ষ্য হোক মানুষের প্রতিদিনের জীবন সহজ করা।">Technology should make everyday life better.</h3><p>Innovation, digital culture and the people behind it.</p><div class="meta"><b>INSIDER DESK</b><span>DEMO STORY</span></div></div></article>
+<article class="card" data-story="sports"><div class="photo"><img loading="lazy" src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=900&q=80" alt="Athletics track"></div><div class="card-body"><span class="label">Sports · Preview</span><h3 data-en="More than a score: the moments behind the game." data-bn="স্কোরের বাইরেও থাকে খেলার আসল গল্প।">More than a score: the moments behind the game.</h3><p>Performance, people and the pulse of sport.</p><div class="meta"><b>INSIDER DESK</b><span>DEMO STORY</span></div></div></article>
+<article class="card" data-story="culture"><div class="photo"><img loading="lazy" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80" alt="Live music and culture"></div><div class="card-body"><span class="label">Culture · Preview</span><h3 data-en="The artists and ideas shaping what comes next." data-bn="আগামীর সংস্কৃতি গড়ছেন যাঁরা, তাঁদের গল্প।">The artists and ideas shaping what comes next.</h3><p>Art, entertainment and the culture around us.</p><div class="meta"><b>INSIDER DESK</b><span>DEMO STORY</span></div></div></article>
+<div id="empty" class="no-results">No matching preview stories. / কোনো নমুনা সংবাদ পাওয়া যায়নি।</div>
+</section><aside class="brief"><div class="brief-head"><h3>The Daily Brief</h3><span class="live"></span></div><p class="brief-intro">A quick read on what deserves a closer look. / কোন বিষয়গুলো আরও মনোযোগ চায়, তার সংক্ষিপ্ত তালিকা।</p><div class="brief-item"><small>01 / Understand</small><p data-en="Facts before reactions." data-bn="প্রতিক্রিয়ার আগে তথ্য।">Facts before reactions.</p></div><div class="brief-item"><small>02 / Question</small><p data-en="Ask who, why and what changes." data-bn="কে, কেন, আর কী বদলাবে—জিজ্ঞেস করুন।">Ask who, why and what changes.</p></div><div class="brief-item"><small>03 / Verify</small><p data-en="Every claim needs a source." data-bn="প্রতিটি দাবির পেছনে সূত্র থাকা চাই।">Every claim needs a source.</p></div><div class="brief-foot">EDITORIAL PRINCIPLE · যাচাই আগে, প্রকাশ পরে</div></aside></div>
+</main>
+<section class="category-band" id="sections"><div class="container"><div class="section-head"><div><small>FIND YOUR POINT OF VIEW</small><h2>Explore the sections</h2></div></div><div class="tiles"><a class="tile" href="#latest" data-jump="bangladesh"><span>Bangladesh<small>দেশের খবর ও প্রেক্ষাপট</small></span><em>↗</em></a><a class="tile" href="#latest" data-jump="world"><span>World<small>বিশ্বজুড়ে যা ঘটছে</small></span><em>↗</em></a><a class="tile" href="#latest" data-jump="business"><span>Business<small>ব্যবসা, বাজার ও অর্থনীতি</small></span><em>↗</em></a><a class="tile" href="#latest" data-jump="tech"><span>Technology<small>প্রযুক্তি ও উদ্ভাবন</small></span><em>↗</em></a></div></div></section>
+<div class="preview-note"><div class="container"><b>EDITORIAL NOTE</b><span>All headlines and story cards are design placeholders, not current news. Real reports require verified sources, a named author and editorial approval. / এখানে সব শিরোনাম নমুনা মাত্র।</span></div></div>
+
+<section class="our-products" id="our-products" aria-labelledby="ourProductsHeading">
+  <div class="container">
+    <div class="section-head">
+      <div><small data-en="A LITTLE SOMETHING FROM OUR ORIGINAL STORE" data-bn="আমাদের মূল স্টোর থেকে কিছু পছন্দের পণ্য">A LITTLE SOMETHING FROM OUR ORIGINAL STORE</small><h2 id="ourProductsHeading" data-en="Our Products" data-bn="আমাদের পণ্যসমূহ">Our Products</h2></div>
+      <span class="shop-count">BRAMBLE DIGITAL STORE</span>
+    </div>
+    <p class="product-intro" data-en="Insider Post brings you the stories. Bramble brings you ideas to read, create and grow. Explore the original Bramble digital collection below." data-bn="Insider Post আপনাদের সামনে তুলে ধরে খবর ও গল্প। আর Bramble নিয়ে আসে পড়া, তৈরি ও এগিয়ে যাওয়ার ডিজিটাল উপকরণ। নিচে Bramble-এর মূল সংগ্রহ দেখুন।">Insider Post brings you the stories. Bramble brings you ideas to read, create and grow. Explore the original Bramble digital collection below.</p>
+    <div class="shop-utility"><span class="shop-count">4 ORIGINAL PRODUCTS · GUMROAD CHECKOUT</span><button class="library-toggle" id="brambleLibraryToggle" type="button" aria-expanded="false">My Library · <span id="brambleLibraryCount">0</span></button></div>
+    <div class="shop-product-grid" id="brambleProducts">
+      <article class="shop-product-card">
+        <div class="shop-product-image"><img loading="lazy" src="https://public-files.gumroad.com/78hfadas6hr5nvv9ls0wlcz2m8vn" alt="Mara Ellery and the Sevenfold Stone cover"></div>
+        <div class="shop-product-body"><span class="shop-product-type">Fantasy · eBook</span><h3>Mara Ellery and the Sevenfold Stone</h3><p class="shop-product-price">$10.00</p><div class="shop-product-actions"><button class="shop-add" type="button" data-product-add="mara-ellery" aria-pressed="false">＋ Add to Library</button><a class="shop-buy" href="https://mahfuzshohel.gumroad.com/l/maraelleryandth?wanted=true" target="_blank" rel="noopener noreferrer">Buy Now ↗</a></div></div>
+      </article>
+      <article class="shop-product-card">
+        <div class="shop-product-image"><img loading="lazy" src="https://public-files.gumroad.com/qzswz0g30yz605d2amm8etc5q7fh" alt="My First Coloring Book cover"></div>
+        <div class="shop-product-body"><span class="shop-product-type">Kids · Activity Book</span><h3>My First Coloring Book</h3><p class="shop-product-price">$4.00</p><div class="shop-product-actions"><button class="shop-add" type="button" data-product-add="coloring-book" aria-pressed="false">＋ Add to Library</button><a class="shop-buy" href="https://mahfuzshohel.gumroad.com/l/Myfirstcoloringbook?wanted=true" target="_blank" rel="noopener noreferrer">Buy Now ↗</a></div></div>
+      </article>
+      <article class="shop-product-card">
+        <div class="shop-product-image"><img loading="lazy" src="https://public-files.gumroad.com/gvezyai17gt2u0vfy63pzaypifv2" alt="Dark Side of Female Nature cover"></div>
+        <div class="shop-product-body"><span class="shop-product-type">Psychology · eBook</span><h3>Dark Side of Female Nature</h3><p class="shop-product-price">$3.99</p><div class="shop-product-actions"><button class="shop-add" type="button" data-product-add="dark-side" aria-pressed="false">＋ Add to Library</button><a class="shop-buy" href="https://mahfuzshohel.gumroad.com/l/Dsofn?wanted=true" target="_blank" rel="noopener noreferrer">Buy Now ↗</a></div></div>
+      </article>
+      <article class="shop-product-card">
+        <div class="shop-product-image"><img loading="lazy" src="https://public-files.gumroad.com/ck5kcls1zvbzfjxv9i0zr0pvnpmc" alt="The Psychology of Attraction cover"></div>
+        <div class="shop-product-body"><span class="shop-product-type">Psychology · eBook</span><h3>The Psychology of Attraction (No Woman Wants You to Know)</h3><p class="shop-product-price">$5.99</p><div class="shop-product-actions"><button class="shop-add" type="button" data-product-add="psychology" aria-pressed="false">＋ Add to Library</button><a class="shop-buy" href="https://mahfuzshohel.gumroad.com/l/cgftqc?wanted=true" target="_blank" rel="noopener noreferrer">Buy Now ↗</a></div></div>
+      </article>
+    </div>
+    <div class="library-panel" id="brambleLibraryPanel" aria-live="polite"><h3>My Library</h3><div class="library-list" id="brambleLibraryList"></div></div>
+    <p class="shop-footnote">Bramble product listings, cover images, prices and Gumroad purchase links have been carried over from the original storefront. Payments and file delivery continue through Gumroad.</p>
+  </div>
+</section>
+
+<footer><div class="container"><div class="foot-top"><div><div class="foot-brand">INSIDER <em>POST</em></div><div class="foot-tag">Stories that move us. / গল্প, যা আমাদের ভাবায়।</div></div><div class="foot-links"><a href="#sections">Sections</a><a href="#our-products">Our Products</a><a href="#sections">Editorial policy</a><a href="#sections">Contact</a></div></div><div class="foot-bottom"><span>© 2026 Insider Post · Editorial desk</span><span>Bangladesh first. Context always.</span></div></div></footer>
+<script>
+(()=>{let cat='all',q='';const btns=[...document.querySelectorAll('[data-cat]')],cards=[...document.querySelectorAll('.card')],search=document.getElementById('search'),empty=document.getElementById('empty');function apply(){let n=0;cards.forEach(c=>{let show=(cat==='all'||c.dataset.story===cat)&&(!q||c.innerText.toLowerCase().includes(q));c.style.display=show?'':'none';if(show)n++;});empty.style.display=n?'none':'block';btns.forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));}btns.forEach(b=>b.onclick=()=>{cat=b.dataset.cat;apply();});document.querySelectorAll('[data-jump]').forEach(a=>a.onclick=()=>{cat=a.dataset.jump;apply();});search.oninput=e=>{q=e.target.value.toLowerCase().trim();apply();};document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-lang]').forEach(x=>x.classList.toggle('active',x===b));let lang=b.dataset.lang;document.documentElement.lang=lang==='bn'?'bn':'en';document.querySelectorAll('[data-en]').forEach(el=>el.textContent=lang==='bn'?(el.dataset.bn||el.dataset.en):el.dataset.en);});apply();})();
+</script></body></html>
