@@ -28,8 +28,8 @@
 </head>
 <body>
 <div class="topbar"><div class="wrap"><span><strong>INSIDER POST</strong> &nbsp; NEWS. BEYOND THE HEADLINES.</span><span>বাংলা | English</span></div></div>
-<header class="brandbar"><div class="wrap brandrow"><div><a class="brand" href="#">INSIDER<em>POST</em></a><div class="tagline">Bangladesh &amp; the World — Stories that matter.</div></div><div class="actions"><input class="search" placeholder="Search news / সংবাদ খুঁজুন" aria-label="Search"><button class="subscribe">Follow Insider Post</button></div></div></header>
-<nav class="nav"><div class="wrap navlist"><a href="#">Home</a><a href="#">Bangladesh</a><a href="#">Politics</a><a href="#">World</a><a href="#">Business</a><a href="#">Technology</a><a href="#">Sports</a><a href="#">Entertainment</a><a href="#">Opinion</a></div></nav>
+<header class="brandbar"><div class="wrap brandrow"><div><a class="brand" href="#">INSIDER<em>POST</em></a><div class="tagline">Bangladesh &amp; the World — Stories that matter.</div></div><div class="actions"><input class="search" placeholder="Search news / সংবাদ খুঁজুন" aria-label="Search"><a class="subscribe" href="admin.html" style="display:inline-block">Newsroom Login Preview</a></div></div></header>
+<nav class="nav"><div class="wrap navlist"><a href="#" data-filter="all">Home</a><a href="#" data-filter="Bangladesh">Bangladesh</a><a href="#" data-filter="Politics">Politics</a><a href="#" data-filter="World">World</a><a href="#" data-filter="Business">Business</a><a href="#" data-filter="Technology">Technology</a><a href="#" data-filter="Sports">Sports</a><a href="#" data-filter="Entertainment">Entertainment</a><a href="#" data-filter="Opinion">Opinion</a></div></nav>
 <div class="breaking"><div class="wrap"><span class="breaking-label">Breaking</span><span>News updates will appear here after editorial verification. &nbsp; | &nbsp; সর্বশেষ সংবাদ এখানে প্রকাশিত হবে যাচাই শেষে।</span></div></div>
 <main class="wrap">
 <div class="section-label">Editor's picks &nbsp; / &nbsp; সম্পাদকীয় বাছাই</div>
@@ -47,4 +47,35 @@
 <div class="notice">Prototype notice: Headlines and summaries on this page are illustrative placeholders—not real news. Production articles will require source links, verification, authorship, and editorial approval.</div>
 </main>
 <footer class="footer"><div class="wrap"><a class="brand" href="#">INSIDER<em>POST</em></a><p>News. Beyond the Headlines. &nbsp; · &nbsp; খবর, তথ্য, প্রেক্ষাপট।</p><p>Editorial independence · Corrections · Contact · Privacy</p></div></footer>
+<script>
+(function(){
+ const nav=document.querySelectorAll('[data-filter]');
+ const stories=[...document.querySelectorAll('.story,.side-story')];
+ const search=document.querySelector('.search');
+ let filter='all',query='';
+ function apply(){
+  let count=0;
+  stories.forEach(el=>{
+   const cat=(el.querySelector('.category')?.textContent||'').toLowerCase();
+   const text=el.textContent.toLowerCase();
+   const catOk=filter==='all'||cat.includes(filter.toLowerCase());
+   const queryOk=!query||text.includes(query);
+   el.style.display=catOk&&queryOk?'':'none';
+   if(catOk&&queryOk)count++;
+  });
+  let empty=document.getElementById('noStories');
+  if(!empty){empty.style.display=count?'none':'block';}
+  nav.forEach(a=>a.classList.toggle('selected',a.dataset.filter===filter));
+ }
+ nav.forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault();filter=a.dataset.filter||'all';apply();
+  document.querySelector('.section-label')?.scrollIntoView({behavior:'smooth',block:'start'});
+ }));
+ if(search){search.addEventListener('input',e=>{query=e.target.value.trim().toLowerCase();apply()})}
+ const host=document.querySelector('.news-grid');
+ if(host){const empty=document.createElement('div');empty.id='noStories';empty.style.cssText='display:none;grid-column:1/-1;background:white;border:1px solid #e6e8ec;padding:28px;text-align:center;color:#657082;font-weight:700';empty.textContent='No matching demo stories. / কোনো নমুনা সংবাদ পাওয়া যায়নি।';host.appendChild(empty);}
+ const style=document.createElement('style');style.textContent='.nav a.selected{outline:2px solid var(--navy);outline-offset:-3px}.subscribe{cursor:pointer}';document.head.appendChild(style);
+ apply();
+})();
+</script>
 </body></html>
