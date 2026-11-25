@@ -85,13 +85,19 @@ using (public.current_editor_role() in ('reporter','editor','admin'));
 drop policy if exists "newsroom create" on public.news_articles;
 create policy "newsroom create" on public.news_articles
 for insert to authenticated
-with check (public.current_editor_role() in ('reporter','editor','admin'));
+with check (
+  public.current_editor_role() in ('editor','admin')
+  or (public.current_editor_role() = 'reporter' and status in ('draft','review'))
+);
 
 drop policy if exists "newsroom update" on public.news_articles;
 create policy "newsroom update" on public.news_articles
 for update to authenticated
 using (public.current_editor_role() in ('reporter','editor','admin'))
-with check (public.current_editor_role() in ('reporter','editor','admin'));
+with check (
+  public.current_editor_role() in ('editor','admin')
+  or (public.current_editor_role() = 'reporter' and status in ('draft','review'))
+);
 
 drop policy if exists "newsroom delete" on public.news_articles;
 create policy "newsroom delete" on public.news_articles
