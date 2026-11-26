@@ -301,6 +301,7 @@ $('#showSignup').onclick=()=>{state.authMode='signup';$('#nameWrap').classList.r
 $('#authForm').addEventListener('submit',e=>{e.preventDefault();signIn()});$('#createChannel').onclick=createChannel;$('#publishVideo').onclick=publishVideo;$('#addProduct').onclick=addProduct;$('#createPlaylist').onclick=createPlaylist;$('#closePlaylist').onclick=()=>$('#playlistDetail').classList.add('hidden');
 $('#videoSource').onchange=()=>{const upload=$('#videoSource').value==='upload';$('#videoFileWrap').classList.toggle('hidden',!upload);$('#videoUrlWrap').classList.toggle('hidden',upload)};
 $('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));document.addEventListener('keydown',e=>{if(e.key==='Escape'){const opened=$('.modal-backdrop.open').pop();if(opened)closeModal(opened.id)}});
+if(location.pathname.replace(/\/+$/,'')==='/admin')setPage('admin');
 if(!db){toast('Bramble could not connect to its database. Please refresh.');return}
 db.auth.getSession().then(({data})=>refreshAuth(data.session));db.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>refreshAuth(session),0)});
 loadVideos().then(()=>{const match=location.hash.match(/watch=([^&]+)/);if(match){const id=decodeURIComponent(match[1]);openWatch(id)}});loadProducts();
