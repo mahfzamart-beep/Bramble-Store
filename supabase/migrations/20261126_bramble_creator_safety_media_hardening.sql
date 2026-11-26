@@ -1,0 +1,16 @@
+-- Bramble creator safety and private video playback.
+-- Additive only; existing commerce and Insider Post tables are untouched.
+update storage.buckets set public=false where id='bramble-videos';
+drop policy if exists "Bramble viewers read approved video files" on storage.objects;
+create policy "Bramble viewers read approved video files" on storage.objects for select to anon, authenticated using (bucket_id='bramble-videos' and exists (select 1 from public.bramble_videos v where v.storage_path=objects.name and ((v.status='published' and v.visibility='public') or (auth.uid() is not null and (exists (select 1 from public.creator_channels c where c.id=v.channel_id and c.owner_id=(select auth.uid())) or public.is_bramble_admin())))));
+create or replace function public.enforce_bramble_video_moderation() returns trigger language plpgsql security invoker set search_path=pg_catalog as $function$ begin if public.is_bramble_admin() then return new; end if; if tg_op='INSERT' then new.status:='draft'; new.visibility:='public'; return new; end if; if new.status is distinct from old.status or new.visibility is distinct from old.visibility then raise exception 'Only Bramble moderators can publish or change video visibility'; end if; return new; end; $function$;
+drop trigger if exists bramble_video_moderation_guard on public.bramble_videos;
+create trigger bramble_video_moderation_guard before insert or update on public.bramble_videos for each row execute function public.enforce_bramble_video_moderation();
+create or replace function public.sync_bramble_video_likes() returns trigger language plpgsql security definer set search_path=pg_catalog as $function$ begin if tg_op='INSERT' then if new.reaction='like' then update public.bramble_videos set likes_count=likes_count+1 where id=new.video_id; end if; return new; elsif tg_op='DELETE' then if old.reaction='like' then update public.bramble_videos set likes_count=greatest(0,likes_count-1) where id=old.video_id; end if; return old; elsif tg_op='UPDATE' then if old.reaction is distinct from new.reaction then if old.reaction='like' then update public.bramble_videos set likes_count=greatest(0,likes_count-1) where id=old.video_id; end if; if new.reaction='like' then update public.bramble_videos set likes_count=likes_count+1 where id=new.video_id; end if; end if; return new; end if; return null; end; $function$;
+drop trigger if exists bramble_video_like_count_trigger on public.bramble_video_reactions;
+create trigger bramble_video_like_count_trigger after insert or update or delete on public.bramble_video_reactions for each row execute function public.sync_bramble_video_likes();
+create index if not exists bramble_videos_public_feed_idx on public.bramble_videos(status,visibility,created_at desc);
+create index if not exists bramble_videos_channel_feed_idx on public.bramble_videos(channel_id,created_at desc);
+create index if not exists bramble_comments_video_feed_idx on public.bramble_video_comments(video_id,created_at desc);
+create index if not exists bramble_subscriptions_channel_idx on public.bramble_channel_subscriptions(channel_id,created_at desc);
+create index if not exists bramble_playlist_videos_playlist_position_idx on public.bramble_playlist_videos(playlist_id,position,added_at);
