@@ -222,6 +222,120 @@ footer strong{font-size:24px;font-weight:900;letter-spacing:-1px;color:#1d482d}
 }
 @media(max-width:390px){.brand-word{font-size:17px}.head{gap:6px}.video-meta h3{font-size:12px}}
 
+ 
+/* BRAMBLE REDESIGN — MODERN STREAMING / HYBRID */
+:root{--forest:#08271d;--forest-2:#103c2c;--leaf:#4b9668;--cream:#f7f3e9;--paper:#fffdf7;--ink:#17241d;--muted:#6d776f;--line:#e6e1d5;--purple:#b9cfae;--shadow:0 12px 35px #10251b12}
+html{scroll-padding-top:68px}
+body{background:var(--cream);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+.topbar{height:68px;background:#071e17f2;color:#f7f3e9;border:0;backdrop-filter:blur(18px)}
+.head{height:68px;max-width:none;padding:0 24px 0 20px;gap:24px}
+.brand{min-width:190px;gap:10px}
+.brand img{width:34px;height:34px;max-height:34px;object-fit:contain;filter:brightness(1.2);mix-blend-mode:screen;border-radius:50%}
+.brand-word{font-family:Georgia,serif;font-size:27px;font-weight:500;letter-spacing:-.7px;color:#fffdf7}
+.brand-word span{color:#b9cfae}
+.mainnav{position:fixed;z-index:22;left:0;top:68px;bottom:0;width:220px;margin:0;padding:18px 12px;background:#08271d;color:#f7f3e9;border:0;display:flex;flex-direction:column;align-items:stretch;gap:5px;overflow-y:auto}
+.navbtn{width:100%;text-align:left;padding:12px 15px;border-radius:11px;color:#d6e1d8;font-size:13px;font-weight:650;letter-spacing:.1px}
+.navbtn.active,.navbtn:hover{background:#174b35;color:#fff}
+.navbtn:nth-child(5){margin-top:12px}
+.navbtn:nth-child(8){margin-top:14px;border-top:1px solid #ffffff20;padding-top:20px}
+.navbtn:nth-child(9){margin-top:0}
+.header-search{width:min(560px,48vw);height:42px;border:1px solid #547061;border-radius:28px;background:#102e23}
+.header-search input{color:#fffdf7;font-size:14px}.header-search input::placeholder{color:#b6c6bb}
+.header-search button{width:52px;background:#174331;color:#f7f3e9;border-left:1px solid #547061}
+.head-right{min-width:110px}.avatarbtn{background:#f7f3e9;color:#0b2b20;border:0;border-radius:24px;padding:10px 17px;font-weight:750}
+.iconbtn{background:#174331;color:#fff;border:1px solid #547061}
+main.wrap{max-width:none;margin:0 0 0 220px;padding:0 30px;background:var(--cream);min-height:calc(100vh - 68px)}
+.hero{position:relative;display:flex!important;align-items:center;min-height:390px;margin:0 -30px 22px;padding:48px 6%;overflow:hidden;background:#09251b;color:#fffdf7;border-radius:0 0 22px 22px;isolation:isolate}
+.hero-backdrop{position:absolute;inset:0;z-index:-2;background-image:linear-gradient(90deg,#061d16 0%,#08271de8 32%,#08271d80 57%,#08271d20 100%),url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2000&q=85");background-size:cover;background-position:center 48%}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#061d1666,transparent 48%);pointer-events:none}
+.hero-copy{max-width:570px;position:relative;z-index:1}
+.hero .eyebrow{color:#c1d9b7;font-size:10px;letter-spacing:2.1px;margin:0 0 14px}
+.hero h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(46px,5.6vw,76px);line-height:.98;letter-spacing:-2.2px;color:#fffdf7;margin:0 0 17px;font-weight:600}
+.hero h1 em{color:#c3d9b8;font-style:normal}
+.hero p:not(.eyebrow){max-width:475px;color:#e0e9e2;font-size:16px;line-height:1.65;margin:0}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.hero .btn{border-radius:28px;padding:13px 20px;font-size:13px}
+.hero .btn-primary{background:#f7f3e9;color:#09271d;box-shadow:none}
+.hero .btn-primary:hover{background:#dce9d4;color:#09271d}
+.hero .btn-light{background:#ffffff18;color:#fffdf7;border:1px solid #ffffff70}
+.hero .btn-light:hover{background:#ffffff2b}
+.hero-tags{display:flex;gap:9px;flex-wrap:wrap;margin-top:27px}
+.hero-tags span{border:1px solid #ffffff35;background:#ffffff13;color:#edf4ee;border-radius:22px;padding:7px 13px;font-size:11px}
+.hero-tags span:first-child{background:#24583d;border-color:#397c56}
+.hero-note{position:absolute;right:5%;bottom:28px;display:flex;align-items:center;gap:11px;padding:11px 15px;border:1px solid #ffffff38;border-radius:14px;background:#08271d88;backdrop-filter:blur(12px)}
+.hero-note-mark{font-size:23px;color:#c1d9b7}.hero-note b,.hero-note small{display:block}.hero-note b{font-size:12px}.hero-note small{color:#c4d1c8;font-size:10px;margin-top:3px}
+.section{padding:23px 0 31px}
+.section-head{align-items:center;margin-bottom:15px}
+.section-head h2{font-size:22px;letter-spacing:-.45px;color:#17241d;font-weight:750}
+.section-head p{color:var(--muted)}
+.section-head .btn{border-radius:22px}
+.pillrow{padding:3px 0 17px;gap:8px}
+.pill{background:#ece8dc;border:1px solid transparent;color:#3c4a40;border-radius:22px;padding:8px 14px;font-size:12px;font-weight:700}
+.pill.active,.pill:hover{background:#174b35;color:#fff;border-color:#174b35}
+.video-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:25px 17px}
+.thumb{border-radius:13px;background:#e8e5d9;box-shadow:0 5px 16px #15251b10}
+.video-card:hover .thumb{transform:translateY(-2px);box-shadow:0 12px 25px #15251b18}
+.video-meta h3{font-size:14px;color:#17241d;font-weight:750}
+.video-meta p{color:#737d74}
+.channel-avatar{background:#dce8d7;color:#174b35}
+.kind{background:#174b35;border-radius:20px}
+.duration{border-radius:5px}
+.short-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:13px}
+.short-card{border-radius:14px;box-shadow:0 5px 16px #15251b12}
+.shop-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.product{background:#fffdf7;border:1px solid #e7e1d4;border-radius:15px;box-shadow:0 4px 14px #17251e08}
+.product-cover{border-radius:10px;background:#f0eadb}
+.product h3,.product .price{color:#173a2a}
+.feature{background:#eaeede;border-radius:15px}
+.panel{background:#fffdf7;border-color:#e8e1d4;border-radius:16px;box-shadow:0 8px 24px #17251e08}
+.panel h3{color:#173a2a}
+.field{background:#fffefb;border-color:#e5dfd2;border-radius:10px}
+.notice{background:#edf2e6;color:#214631}.notice.warn{background:#fff1df;color:#78502a}
+.empty{border-color:#dcd7ca;border-radius:14px;color:#737d74}
+footer{margin:28px -30px 0;background:#08271d;color:#c9d6cd;padding:28px 5%;text-align:left}
+.footer-brand{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.footer-leaf{font-size:28px;color:#a9c99e}
+footer strong{font-family:Georgia,serif;font-size:25px;font-weight:500;color:#fffdf7;display:inline}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:16px}
+.footer-links a{font-size:12px;color:#d2ddd4}.footer-links a:hover{color:#fff;text-decoration:underline}
+footer small{font-size:11px;color:#aabbb0}
+.btn{border-radius:9px;font-weight:750}
+.btn-primary{background:#174b35;color:#fff;box-shadow:none}
+.btn-primary:hover{background:#0d3827}
+.btn-soft{background:#e9eddf;color:#173a2a}
+.btn-purple{background:#617e65;color:#fff}
+.btn-outline{background:#fffdf7;border:1px solid #ddd7ca;color:#243b2e}
+.modal{border-radius:17px}
+.modal-head h2{color:#173a2a}
+.toast{background:#08271d;border-radius:10px}
+:focus-visible{outline:3px solid #a6c99c;outline-offset:3px}
+@media(min-width:1500px){.video-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:29px 20px}}
+@media(max-width:1100px){main.wrap{padding:0 22px}.hero{margin-left:-22px;margin-right:-22px}.video-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.short-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(max-width:760px){
+ .head{padding:0 12px;gap:9px}.brand{min-width:auto}.brand img{width:29px;height:29px}
+ .brand-word{font-size:23px}.header-search{width:auto;flex:1;height:38px;margin:0 2px}.header-search input{font-size:13px;padding:0 10px}.header-search button{width:40px;font-size:18px}
+ .head-right{min-width:0;gap:4px}.avatarbtn{font-size:11px;padding:8px 10px;white-space:nowrap}
+ .mobile-menu{display:block;width:35px;height:35px;border-radius:50%;font-size:15px}
+ .mainnav{display:none;top:68px;left:0;right:auto;bottom:0;width:min(82vw,280px);padding:14px 12px;border-right:1px solid #ffffff20;box-shadow:10px 0 30px #0003}
+ .mainnav.open{display:flex}
+ main.wrap{margin:0;padding:0 14px}
+ .hero{min-height:430px;margin:0 -14px 12px;padding:38px 22px 32px;border-radius:0 0 17px 17px;align-items:flex-end}
+ .hero-backdrop{background-image:linear-gradient(90deg,#061d16ee 0%,#08271dbb 65%,#08271d55 100%),url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1100&q=80");background-position:center}
+ .hero-copy{max-width:100%}.hero h1{font-size:48px}.hero p:not(.eyebrow){font-size:14px;max-width:370px}
+ .hero-note{display:none}.hero-tags{margin-top:20px}
+ .section{padding:18px 0 26px}.section-head{align-items:flex-start;flex-direction:column}
+ .section-head h2{font-size:19px}
+ .tools{width:100%;flex-wrap:nowrap}.tools .searchbox{width:auto;flex:1}.sortbox{max-width:145px;flex:0 0 145px}
+ .video-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 11px}
+ .video-meta{gap:8px}.channel-avatar{width:32px;height:32px;flex-basis:32px}.video-meta h3{font-size:12px}
+ .short-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+ .shop-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .product{padding:8px}.product h3{font-size:13px}
+ footer{margin:20px -14px 0;padding:25px 20px}
+ .footer-links{gap:13px}
+}
+@media(max-width:390px){.brand img{width:25px;height:25px}.head{gap:6px}.header-search{min-width:80px}.header-search button{width:34px}.avatarbtn{padding:7px 8px}.hero h1{font-size:42px}.video-grid{gap:17px 9px}}
+
 </style>
 </head>
 <body>
@@ -231,9 +345,22 @@ footer strong{font-size:24px;font-weight:900;letter-spacing:-1px;color:#1d482d}
 <div class="header-search"><input id="headerSearch" type="search" placeholder="Search" aria-label="Search Bramble"><button id="searchFocus" aria-label="Search">⌕</button></div><div class="head-right"><button class="avatarbtn" id="accountBtn">Sign in</button><button class="iconbtn mobile-menu" id="menuBtn" aria-label="Open menu">☰</button></div>
 </div></header>
 <main class="wrap">
-<section class="hero hidden" id="hero" aria-hidden="true"></section>
+<section class="hero" id="hero" aria-label="Featured on Bramble">
+  <div class="hero-backdrop" role="img" aria-label="Sunlight falling through a deep green forest"></div>
+  <div class="hero-copy">
+    <p class="eyebrow">A world of stories, ideas & discovery</p>
+    <h1>Stories worth<br><em>staying for.</em></h1>
+    <p>Discover films, thoughtful ideas and digital worlds made to inspire your next curious moment.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary" data-go="watch">▶ Start watching</button>
+      <button class="btn btn-light" data-go="shop">Explore the library <span aria-hidden="true">→</span></button>
+    </div>
+    <div class="hero-tags"><span>● Featured</span><span>Documentaries</span><span>Learning</span></div>
+  </div>
+  <div class="hero-note"><span class="hero-note-mark">✳</span><span><b>Find your next favourite</b><small>Watch · Learn · Collect</small></span></div>
+</section>
 <section id="watchPage" class="page">
-<div class="section"><div class="section-head"><div><h2>Recommended</h2></div><div class="tools"><input id="videoSearch" class="searchbox" type="search" placeholder="Search videos or creators..." aria-label="Search videos"><select id="videoSort" class="searchbox sortbox" aria-label="Sort videos"><option value="newest">Newest</option><option value="popular">Most viewed</option><option value="liked">Most liked</option></select></div></div>
+<div class="section"><div class="section-head"><div><h2>Trending now</h2></div><div class="tools"><input id="videoSearch" class="searchbox" type="search" placeholder="Search videos or creators..." aria-label="Search videos"><select id="videoSort" class="searchbox sortbox" aria-label="Sort videos"><option value="newest">Newest</option><option value="popular">Most viewed</option><option value="liked">Most liked</option></select></div></div>
 <div class="pillrow" id="videoFilters"><button class="pill active" data-filter="All">All</button><button class="pill" data-filter="Education">Education</button><button class="pill" data-filter="Entertainment">Entertainment</button><button class="pill" data-filter="Technology">Technology</button><button class="pill" data-filter="Lifestyle">Lifestyle</button><button class="pill" data-filter="Gaming">Gaming</button><button class="pill" data-filter="Business">Business</button><button class="pill" data-filter="Art & Design">Art & Design</button></div>
 <div class="video-grid" id="videoGrid"><div class="empty"><b>Welcome to Bramble Watch</b>Loading videos…</div></div></div>
 <div class="section" id="shortsPreview"><div class="section-head"><div><h2>Shorts</h2></div><button class="btn btn-soft" data-go="shorts">See all shorts ↗</button></div><div class="short-grid" id="shortPreviewGrid"><div class="empty">Short videos will appear here.</div></div></div>
@@ -254,7 +381,7 @@ footer strong{font-size:24px;font-weight:900;letter-spacing:-1px;color:#1d482d}
 <div class="panel"><h3>Video moderation</h3><div id="adminVideos"></div></div><div class="panel" style="margin-top:15px"><h3>Community reports</h3><div id="adminReports"></div></div><div class="panel" style="margin-top:15px"><h3>Product catalogue</h3><div id="adminProducts"></div></div>
 <div class="panel" style="margin-top:15px"><h3>Add a digital product</h3><div class="form-grid"><div class="full"><label class="field-label">Product title</label><input class="field" id="newProductTitle" placeholder="Product name"></div><div><label class="field-label">Price</label><input class="field" id="newProductPrice" type="number" min="0" step="0.01" placeholder="0.00"></div><div><label class="field-label">Currency</label><select class="field" id="newProductCurrency"><option>USD</option><option>BDT</option></select></div><div><label class="field-label">Cover image URL</label><input class="field" id="newProductCover" type="url" placeholder="https://..."></div><div><label class="field-label">Gumroad buy URL</label><input class="field" id="newProductBuy" type="url" placeholder="https://..."></div><div class="full"><label class="field-label">Short description</label><textarea class="field" id="newProductDesc" maxlength="1000" placeholder="Describe the product"></textarea></div><div class="full"><button class="btn btn-primary" id="addProduct">Add product</button></div></div></div></div></div></section>
 </main>
-<footer><strong>bramble</strong><small>© 2026 Bramble</small></footer>
+<footer><div class="footer-brand"><span class="footer-leaf">❧</span><strong>Bramble</strong></div><div class="footer-links"><a href="#home" data-go="watch">Home</a><a href="#home" data-go="studio">Creator Studio</a><a href="#home" data-go="shop">Shop</a><a href="#home" data-go="library">My Library</a></div><small>© 2026 Bramble. A premium space for curious minds.</small></footer>
 <div class="modal-backdrop" id="authModal"><div class="modal auth-modal"><div class="modal-head"><h2>Welcome to Bramble</h2><button class="close" data-close="authModal">×</button></div><div class="modal-body"><div class="auth-tabs"><button class="btn btn-primary" id="showLogin">Sign in</button><button class="btn btn-soft" id="showSignup">Create account</button></div><form id="authForm"><label class="field-label">Email address</label><input class="field" id="authEmail" type="email" required placeholder="you@example.com"><label class="field-label">Password</label><input class="field" id="authPassword" type="password" minlength="8" required placeholder="At least 8 characters"><div id="nameWrap" class="hidden"><label class="field-label">Display name</label><input class="field" id="authName" maxlength="60" placeholder="Your name"></div><button class="btn btn-primary" id="authSubmit" style="width:100%">Sign in</button></form><p class="muted small">By continuing, you agree to use Bramble respectfully and follow community rules.</p></div></div></div>
 <div class="modal-backdrop" id="watchModal"><div class="modal"><div class="modal-head"><h2 id="watchModalTitle">Now watching</h2><button class="close" data-close="watchModal">×</button></div><div class="modal-body" id="watchModalBody"></div></div></div>
 <div class="toast" id="toast" role="status"></div>
