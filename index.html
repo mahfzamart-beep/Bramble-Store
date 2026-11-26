@@ -302,7 +302,7 @@ $('#authForm').addEventListener('submit',e=>{e.preventDefault();signIn()});$('#c
 $('#videoSource').onchange=()=>{const upload=$('#videoSource').value==='upload';$('#videoFileWrap').classList.toggle('hidden',!upload);$('#videoUrlWrap').classList.toggle('hidden',upload)};
 $('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));document.addEventListener('keydown',e=>{if(e.key==='Escape'){const opened=$('.modal-backdrop.open').pop();if(opened)closeModal(opened.id)}});
 if(location.pathname.replace(/\/+$/,'')==='/admin')setPage('admin');
-if(!db){toast('Bramble could not connect to its database. Please refresh.');return}
+if(!db){state.products=legacyProducts;renderProducts();$('#videoGrid').innerHTML='<div class="empty" style="grid-column:1/-1"><b>Video service is temporarily unavailable</b>Refresh when the Bramble connection is restored.</div>';$('#shortPreviewGrid').innerHTML='<div class="empty">Short videos are temporarily unavailable.</div>';$('#shortsGrid').innerHTML='<div class="empty" style="grid-column:1/-1">Short videos are temporarily unavailable.</div>';toast('Bramble could not connect to its database. Please refresh.');return}
 db.auth.getSession().then(({data})=>refreshAuth(data.session));db.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>refreshAuth(session),0)});
 loadVideos().then(()=>{const match=location.hash.match(/watch=([^&]+)/);if(match){const id=decodeURIComponent(match[1]);openWatch(id)}});loadProducts();
 })();
