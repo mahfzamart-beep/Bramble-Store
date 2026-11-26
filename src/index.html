@@ -23,6 +23,9 @@
 .modal-backdrop{position:fixed;inset:0;z-index:50;background:#0d1c15b8;display:none;align-items:center;justify-content:center;padding:18px}.modal-backdrop.open{display:flex}.modal{background:var(--paper);border-radius:20px;width:min(850px,100%);max-height:92dvh;overflow:auto;box-shadow:0 25px 90px #0005}.modal-head{display:flex;align-items:center;justify-content:space-between;padding:15px 19px;border-bottom:1px solid var(--line)}.modal-head h2{margin:0;color:var(--forest);font-size:20px}.close{border:0;background:#f0ecdf;width:36px;height:36px;border-radius:50%;font-size:23px}.modal-body{padding:18px}.auth-modal{width:min(450px,100%)}.auth-tabs{display:flex;gap:8px;margin-bottom:15px}.auth-tabs button{flex:1}.player{width:100%;aspect-ratio:16/9;background:#101712;border-radius:14px;overflow:hidden}.player video,.player iframe{width:100%;height:100%;border:0}.watch-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,.8fr);gap:17px}.watch-title{font-size:22px;margin:12px 0 5px}.watch-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.comment{padding:11px 0;border-bottom:1px solid var(--line)}.comment b{font-size:13px}.comment p{margin:4px 0 0;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
 .admin-table{width:100%;border-collapse:collapse;font-size:13px}.admin-table th,.admin-table td{padding:10px;border-bottom:1px solid var(--line);text-align:left}.admin-table th{color:var(--muted)}
 footer{margin-top:25px;background:#eee9db;padding:30px 3.5%;text-align:center;color:var(--muted)}footer strong{font-size:26px;color:var(--forest)}footer strong span{color:var(--purple)}
+:focus-visible{outline:3px solid #743bb1;outline-offset:3px}.btn:disabled,.navbtn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+#adminVideos,#adminProducts,#adminReports,#myVideos{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}.admin-table{min-width:600px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
 .toast{position:fixed;z-index:80;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--forest);color:#fff;border-radius:30px;padding:12px 18px;transition:.2s;max-width:90vw;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
 .tools{display:flex;gap:8px;align-items:center;width:min(520px,100%)}.tools .searchbox{min-width:0;flex:1}.sortbox{max-width:165px;flex:0 0 165px}.creator-link{border:0;background:transparent;color:var(--muted);padding:0;font:inherit;font-weight:800;text-align:left}.creator-link:hover{color:var(--leaf);text-decoration:underline}.short-card{aspect-ratio:9/16;min-height:240px;border-radius:17px;overflow:hidden;position:relative;background:#dfe8d4;cursor:pointer;min-width:0}.short-card img{width:100%;height:100%;object-fit:cover;display:block}.short-card .short-title{position:absolute;left:9px;right:9px;bottom:9px;color:#fff;font-weight:1000;text-shadow:0 2px 8px #000;background:linear-gradient(transparent,#000b);padding:42px 2px 3px;font-size:13px}.playlist-tile{background:var(--paper);border:1px solid var(--line);border-radius:17px;padding:16px;min-width:0}.playlist-tile h3{margin:0 0 5px;color:var(--forest)}.creator-stat{background:#edf3df;border-radius:17px;padding:14px 18px;flex:1;min-width:120px}.creator-stat b{font-size:23px;color:var(--forest);display:block}.creator-stat small{color:var(--muted)}.comment-delete{border:0;background:none;color:#8a4d4d;padding:4px 8px;font-size:12px;font-weight:900}.video-actions-inline{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.video-actions-inline .btn{padding:7px 10px;font-size:11px}
 @media(max-width:1050px){.video-grid{grid-template-columns:repeat(3,1fr)}.shop-grid{grid-template-columns:repeat(3,1fr)}.short-grid{grid-template-columns:repeat(4,1fr)}.hero-art{height:220px}}
@@ -75,16 +78,16 @@ const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll
 const state={user:null,session:null,channel:null,videos:[],products:[],reports:[],filter:'All',page:'watch',authMode:'login',currentVideo:null,admin:false};
 const legacyProducts=[
 {id:'legacy-mara',title:'Mara Ellery and the Sevenfold Stone',price:10,currency:'USD',cover_url:'https://public-files.gumroad.com/78hfadas6hr5nvv9ls0wlcz2m8vn',external_buy_url:'https://mahfuzshohel.gumroad.com/l/maraelleryandth?wanted=true',short_description:'A fantasy digital book.'},
-{id:'legacy-coloring',title:'My First Coloring Book',price:4,currency:'USD',cover_url:'https://public-files.gumroad.com/qzswz0g30yz605d2amm8etc5q7fh',external_buy_url:'https://mahfuzshohel.gumroad.com/l/Myfirstcoloringbook?wanted=true',short_description:'A fun colouring book for young learners.'},
-{id:'legacy-dark',title:'Dark Side of Female Nature',price:3.99,currency:'USD',cover_url:'https://public-files.gumroad.com/gvezyai17gt2u0vfy63pzaypifv2',external_buy_url:'https://mahfuzshohel.gumroad.com/l/Dsofn?wanted=true',short_description:'A digital read from Bramble.'},
-{id:'legacy-psychology',title:'The Psychology of Attraction (No Woman Wants You to Know)',price:5.99,currency:'USD',cover_url:'https://public-files.gumroad.com/ck5kcls1zvbzfjxv9i0zr0pvnpmc',external_buy_url:'https://mahfuzshohel.gumroad.com/l/cgftqc?wanted=true',short_description:'A digital book about attraction and psychology.'}
+{id:'legacy-coloring',title:'My First Coloring Book',price:99,currency:'BDT',cover_url:'https://public-files.gumroad.com/qzswz0g30yz605d2amm8etc5q7fh',external_buy_url:'https://mahfuzshohel.gumroad.com/l/Myfirstcoloringbook?wanted=true',short_description:'A fun colouring book for young learners.'},
+{id:'legacy-dark',title:'Dark Side of Female Nature',price:110,currency:'BDT',cover_url:'https://public-files.gumroad.com/gvezyai17gt2u0vfy63pzaypifv2',external_buy_url:'https://mahfuzshohel.gumroad.com/l/Dsofn?wanted=true',short_description:'A digital read from Bramble.'},
+{id:'legacy-psychology',title:'The Psychology of Attraction (No Woman Wants You to Know)',price:199,currency:'BDT',cover_url:'https://public-files.gumroad.com/ck5kcls1zvbzfjxv9i0zr0pvnpmc',external_buy_url:'https://mahfuzshohel.gumroad.com/l/cgftqc?wanted=true',short_description:'A digital book about attraction and psychology.'}
 ];
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeUrl=s=>{try{const u=new URL(s,location.href);return ['https:','http:'].includes(u.protocol)?u.href:''}catch(e){return ''}};
 const money=p=>new Intl.NumberFormat('en-US',{style:'currency',currency:p.currency||'USD'}).format(Number(p.price||0));
 function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),2600)}
 function openModal(id){$('#'+id).classList.add('open')}
-function closeModal(id){$('#'+id).classList.remove('open')}
+function closeModal(id){const modal=$('#'+id);if(!modal)return;if(id==='watchModal'){modal.querySelectorAll('video').forEach(v=>{try{v.pause();v.removeAttribute('src');v.load()}catch(e){}});modal.querySelectorAll('iframe').forEach(f=>{try{f.src='about:blank'}catch(e){}});state.currentVideo=null}modal.classList.remove('open')}
 function setPage(page){state.page=page;$('.page').forEach(p=>p.classList.add('hidden'));const el=$('#'+page+'Page');if(el)el.classList.remove('hidden');$('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===page));$('#hero').classList.toggle('hidden',page!=='watch');$('#mainnav').classList.remove('open');window.scrollTo({top:0,behavior:'smooth'});if(page==='library')renderLibrary();if(page==='history')renderHistory();if(page==='following')renderFollowing();if(page==='playlists')renderPlaylists();if(page==='studio')renderStudio();if(page==='admin')renderAdmin()}
 function youtubeId(url){try{const u=new URL(url);if(u.hostname.includes('youtu.be'))return u.pathname.slice(1);if(u.searchParams.get('v'))return u.searchParams.get('v');const m=u.pathname.match(/\/(?:embed|shorts)\/([^/?]+)/);return m?m[1]:''}catch(e){return ''}}
 
@@ -126,14 +129,47 @@ async function renderHistory(){if(!state.user){$('#historyGrid').innerHTML='<div
 async function renderFollowing(){if(!state.user){$('#followingGrid').innerHTML='<div class="empty" style="grid-column:1/-1"><b>Sign in to see Following</b>Follow creators to see their latest videos here.</div>';return}const {data,error}=await db.from('bramble_channel_subscriptions').select('channel_id').eq('subscriber_id',state.user.id);if(error){$('#followingGrid').innerHTML='<div class="empty">Could not load subscriptions.</div>';return}const ids=(data||[]).map(x=>x.channel_id);if(!ids.length){$('#followingChannels').innerHTML='';$('#followingGrid').innerHTML='<div class="empty" style="grid-column:1/-1"><b>You are not following any channels yet</b>Open a video and subscribe to its creator.</div>';return}const [channels,videos]=await Promise.all([db.from('creator_channels').select('id,handle,display_name').in('id',ids),db.from('bramble_videos').select('*,creator_channels(id,owner_id,handle,display_name,avatar_url)').in('channel_id',ids).eq('status','published').eq('visibility','public').order('created_at',{ascending:false}).limit(60)]);$('#followingChannels').innerHTML=(channels.data||[]).map(c=>'<span class="pill active">'+esc(c.display_name)+' · @'+esc(c.handle)+'</span>').join('');$('#followingGrid').innerHTML=videos.data?.length?videos.data.map(v=>videoCard(v,false)).join(''):'<div class="empty" style="grid-column:1/-1">No new videos from your followed creators yet.</div>'}
 async function saveProduct(id){if(!state.user){openModal('authModal');return}if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(String(id))){const saved=getSaved();if(!saved.includes(String(id))){saved.push(String(id));localStorage.setItem('bramble-saved-products',JSON.stringify(saved))}toast('Saved on this device');return}const {error}=await db.from('bramble_saved_products').upsert({user_id:state.user.id,product_id:id},{onConflict:'user_id,product_id'});if(error){toast(error.message);return}toast('Saved to My Library 🌱');if(state.page==='library')renderLibrary()}
 async function openWatch(id){
- const v=state.videos.find(x=>x.id===id);if(!v)return;state.currentVideo=v;
- const embed=videoEmbed(v),src=await videoSource(v);
- let player=embed?'<iframe src="'+embed+'" title="'+esc(v.title)+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share" allowfullscreen loading="lazy"></iframe>':src?'<video controls playsinline preload="metadata" src="'+safeUrl(src)+'"></video>':'<div class="thumb-placeholder">Video unavailable</div>';
+ let v=state.videos.find(x=>x.id===id);
+ if(!v){
+  const {data,error}=await db.from('bramble_videos').select('*,creator_channels(id,owner_id,handle,display_name,avatar_url,description)').eq('id',id).maybeSingle();
+  if(error||!data){toast(error?.message||'This video is no longer available.');return}
+  v=data;
+  if(v.status!=='published'||v.visibility!=='public'){toast('This video is not available publicly.');return}
+  state.videos.push(v);
+ }
+ state.currentVideo=v;
  $('#watchModalTitle').textContent=v.title;
- $('#watchModalBody').innerHTML='<div class="watch-layout"><div><div class="player">'+player+'</div><h2 class="watch-title">'+esc(v.title)+'</h2><p class="muted small">'+esc(channelName(v))+' · '+Number(v.views_count||0).toLocaleString()+' views · '+Number(v.likes_count||0).toLocaleString()+' likes</p><p>'+esc(v.description||'')+'</p><div class="watch-actions"><button class="btn btn-soft" id="likeVideo">♡ Like ('+Number(v.likes_count||0).toLocaleString()+')</button><button class="btn btn-soft" id="subscribeChannel">＋ Subscribe</button><button class="btn btn-outline" id="reportVideo">⚑ Report</button><button class="btn btn-outline" id="shareVideo">↗ Share</button><button class="btn btn-outline" id="watchLater">＋ Watch later</button></div><div class="panel"><h3>Comments</h3><div id="commentList">Loading comments…</div><div id="commentForm" class="hidden"><textarea id="commentText" class="field" maxlength="1200" placeholder="Add a respectful comment"></textarea><button class="btn btn-primary" id="sendComment">Post comment</button></div></div></div><aside class="panel"><h3>About this creator</h3><b><button class="creator-link" data-channel="'+esc(v.channel_id)+'">'+esc(channelName(v))+'</button></b><p class="muted small">'+esc(channelHandle(v))+'</p><p class="muted">'+esc(v.creator_channels?.description||'Welcome to this Bramble channel.')+'</p><button class="btn btn-soft" id="openCreatorChannel">Visit channel ↗</button></aside></div>';
+ $('#watchModalBody').innerHTML='<div class="watch-layout"><div><div class="player" id="watchPlayer"><div class="thumb-placeholder">Loading video…</div></div><h2 class="watch-title">'+esc(v.title)+'</h2><p class="muted small">'+esc(channelName(v))+' · <span id="watchViewCount">'+Number(v.views_count||0).toLocaleString()+'</span> views · <span id="watchLikeCount">'+Number(v.likes_count||0).toLocaleString()+'</span> likes</p><p>'+esc(v.description||'')+'</p><div class="watch-actions"><button class="btn btn-soft" id="likeVideo">♡ Like ('+Number(v.likes_count||0).toLocaleString()+')</button><button class="btn btn-soft" id="subscribeChannel">＋ Subscribe</button><button class="btn btn-outline" id="reportVideo">⚑ Report</button><button class="btn btn-outline" id="shareVideo">↗ Share</button><button class="btn btn-outline" id="watchLater">＋ Watch later</button></div><div class="panel"><h3>Comments</h3><div id="commentList">Loading comments…</div><div id="commentForm" class="hidden"><textarea id="commentText" class="field" maxlength="1200" placeholder="Add a respectful comment"></textarea><button class="btn btn-primary" id="sendComment">Post comment</button></div></div></div><aside class="panel"><h3>About this creator</h3><b><button class="creator-link" data-channel="'+esc(v.channel_id)+'">'+esc(channelName(v))+'</button></b><p class="muted small">'+esc(channelHandle(v))+'</p><p class="muted">'+esc(v.creator_channels?.description||'Welcome to this Bramble channel.')+'</p><button class="btn btn-soft" id="openCreatorChannel">Visit channel ↗</button></aside></div>';
  openModal('watchModal');
- if(state.user){db.rpc('record_bramble_video_view',{p_video_id:v.id}).then(()=>{});db.from('bramble_watch_history').upsert({user_id:state.user.id,video_id:v.id,watched_at:new Date().toISOString()}).then(()=>{});$('#commentForm').classList.remove('hidden');const {data:reaction}=await db.from('bramble_video_reactions').select('reaction').eq('video_id',v.id).eq('user_id',state.user.id).maybeSingle();if(reaction?.reaction==='like')$('#likeVideo').textContent='♥ Liked ('+Number(v.likes_count||0).toLocaleString()+')'}
- $('#likeVideo').onclick=()=>toggleLike(v.id);$('#subscribeChannel').onclick=()=>toggleSubscribe(v.channel_id);$('#reportVideo').onclick=()=>reportVideo(v.id);$('#shareVideo').onclick=()=>shareVideo(v);$('#watchLater').onclick=()=>saveToWatchLater(v.id);$('#openCreatorChannel').onclick=()=>{closeModal('watchModal');openChannel(v.channel_id)};$('#sendComment').onclick=()=>sendComment(v.id);loadComments(v.id);
+ const embed=videoEmbed(v),src=await videoSource(v);
+ if(!$('#watchModal').classList.contains('open')||state.currentVideo?.id!==v.id)return;
+ const player=embed?'<iframe src="'+embed+'" title="'+esc(v.title)+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share" allowfullscreen loading="lazy"></iframe>':src?'<video controls playsinline preload="metadata" src="'+safeUrl(src)+'"></video>':'<div class="thumb-placeholder">Video unavailable — check the creator’s video link or upload.</div>';
+ $('#watchPlayer').innerHTML=player;
+ if(state.user){
+  $('#commentForm').classList.remove('hidden');
+  const [viewResult,historyResult,reactionResult,subscriptionResult]=await Promise.all([
+   db.rpc('record_bramble_video_view',{p_video_id:v.id}),
+   db.from('bramble_watch_history').upsert({user_id:state.user.id,video_id:v.id,watched_at:new Date().toISOString()}),
+   db.from('bramble_video_reactions').select('reaction').eq('video_id',v.id).eq('user_id',state.user.id).maybeSingle(),
+   db.from('bramble_channel_subscriptions').select('channel_id').eq('channel_id',v.channel_id).eq('subscriber_id',state.user.id).maybeSingle()
+  ]);
+  if(viewResult.error)console.warn('Could not record view',viewResult.error);
+  if(historyResult.error)console.warn('Could not save watch history',historyResult.error);
+  if(reactionResult.data?.reaction==='like')$('#likeVideo').textContent='♥ Liked ('+Number(v.likes_count||0).toLocaleString()+')';
+  if(subscriptionResult.data)$('#subscribeChannel').textContent='✓ Subscribed';
+  if(viewResult.data!==undefined&&!viewResult.error){
+   const {data:metrics}=await db.from('bramble_videos').select('views_count').eq('id',v.id).maybeSingle();
+   if(metrics){v.views_count=metrics.views_count;const el=$('#watchViewCount');if(el)el.textContent=Number(metrics.views_count||0).toLocaleString()}
+  }
+ }
+ $('#likeVideo').onclick=()=>toggleLike(v.id);
+ $('#subscribeChannel').onclick=()=>toggleSubscribe(v.channel_id);
+ $('#reportVideo').onclick=()=>reportVideo(v.id);
+ $('#shareVideo').onclick=()=>shareVideo(v);
+ $('#watchLater').onclick=()=>saveToWatchLater(v.id);
+ $('#openCreatorChannel').onclick=()=>{closeModal('watchModal');openChannel(v.channel_id)};
+ $('#sendComment').onclick=()=>sendComment(v.id);
+ loadComments(v.id);
 }
 async function loadComments(id){
  const el=$('#commentList'),{data,error}=await db.from('bramble_video_comments').select('id,user_id,body,created_at').eq('video_id',id).order('created_at',{ascending:false}).limit(50);
@@ -144,27 +180,68 @@ async function loadComments(id){
 async function deleteComment(id){if(!state.user||!confirm('Delete this comment?'))return;const {error}=await db.from('bramble_video_comments').delete().eq('id',id);if(error){toast(error.message);return}toast('Comment deleted');if(state.currentVideo)loadComments(state.currentVideo.id);}
 async function toggleLike(id){
  if(!state.user){openModal('authModal');return}
- const {data,error:readError}=await db.from('bramble_video_reactions').select('reaction').eq('video_id',id).eq('user_id',state.user.id).maybeSingle();if(readError){toast(readError.message);return}
- let error;if(data)({error}=await db.from('bramble_video_reactions').delete().eq('video_id',id).eq('user_id',state.user.id));else({error}=await db.from('bramble_video_reactions').upsert({video_id:id,user_id:state.user.id,reaction:'like'}));
+ const {data,error:readError}=await db.from('bramble_video_reactions').select('reaction').eq('video_id',id).eq('user_id',state.user.id).maybeSingle();
+ if(readError){toast(readError.message);return}
+ let error;
+ if(data?.reaction==='like')({error}=await db.from('bramble_video_reactions').delete().eq('video_id',id).eq('user_id',state.user.id));
+ else ({error}=await db.from('bramble_video_reactions').upsert({video_id:id,user_id:state.user.id,reaction:'like'},{onConflict:'video_id,user_id'}));
  if(error){toast(error.message);return}
- const {data:count}=await db.from('bramble_videos').select('likes_count').eq('id',id).maybeSingle();const {data:updated}=await db.from('bramble_video_reactions').select('reaction').eq('video_id',id).eq('user_id',state.user.id).maybeSingle();
- const button=$('#likeVideo');if(button)button.textContent=(updated?'♥ Liked (':'♡ Like (')+Number(count?.likes_count||0).toLocaleString()+')';const v=state.videos.find(x=>x.id===id);if(v&&count)v.likes_count=count.likes_count;toast(updated?'Liked! 💚':'Like removed');
+ const [{data:count,error:countError},{data:updated,error:updatedError}]=await Promise.all([
+  db.from('bramble_videos').select('likes_count').eq('id',id).maybeSingle(),
+  db.from('bramble_video_reactions').select('reaction').eq('video_id',id).eq('user_id',state.user.id).maybeSingle()
+ ]);
+ if(countError||updatedError){toast(countError?.message||updatedError?.message||'Could not refresh like status.');return}
+ const button=$('#likeVideo');
+ if(button)button.textContent=(updated?.reaction==='like'?'♥ Liked (':'♡ Like (')+Number(count?.likes_count||0).toLocaleString()+')';
+ const video=state.videos.find(x=>x.id===id)||state.currentVideo;
+ if(video&&count)video.likes_count=count.likes_count;
+ const countEl=$('#watchLikeCount');if(countEl&&count)countEl.textContent=Number(count.likes_count||0).toLocaleString();
+ toast(updated?.reaction==='like'?'Liked! 💚':'Like removed');
 }
 async function shareVideo(v){const url=location.origin+location.pathname+'#watch='+encodeURIComponent(v.id);try{if(navigator.share){await navigator.share({title:v.title,text:'Watch this on Bramble',url});return}if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(url);toast('Video link copied');return}prompt('Copy this Bramble video link:',url)}catch(e){if(e?.name!=='AbortError')toast('Could not share this link.')}}
 async function toggleSubscribe(channelId){
- if(!state.user){openModal('authModal');return}if(state.channel?.id===channelId){toast('You cannot subscribe to your own channel.');return}
- const {data}=await db.from('bramble_channel_subscriptions').select('channel_id').eq('channel_id',channelId).eq('subscriber_id',state.user.id).maybeSingle();
- if(data){const {error}=await db.from('bramble_channel_subscriptions').delete().eq('channel_id',channelId).eq('subscriber_id',state.user.id);if(error){toast(error.message);return}toast('Unsubscribed')}
- else{const {error}=await db.from('bramble_channel_subscriptions').insert({channel_id:channelId,subscriber_id:state.user.id});if(error){toast(error.message);return}toast('Subscribed to channel!')}
+ if(!state.user){openModal('authModal');return false}
+ if(state.channel?.id===channelId){toast('You cannot subscribe to your own channel.');return false}
+ const {data,error:readError}=await db.from('bramble_channel_subscriptions').select('channel_id').eq('channel_id',channelId).eq('subscriber_id',state.user.id).maybeSingle();
+ if(readError){toast(readError.message);return false}
+ let subscribed=false,error=null;
+ if(data){({error}=await db.from('bramble_channel_subscriptions').delete().eq('channel_id',channelId).eq('subscriber_id',state.user.id));subscribed=false}
+ else{({error}=await db.from('bramble_channel_subscriptions').insert({channel_id:channelId,subscriber_id:state.user.id}));subscribed=true}
+ if(error){toast(error.message);return false}
+ const label=subscribed?'✓ Subscribed':'＋ Subscribe';
+ const watchButton=$('#subscribeChannel');if(watchButton&&state.currentVideo?.channel_id===channelId)watchButton.textContent=label;
+ const channelButton=$('#channelSubscribe');if(channelButton){channelButton.textContent=label;channelButton.className='btn '+(subscribed?'btn-soft':'btn-primary')}
+ const countResult=await db.rpc('bramble_get_subscriber_count',{p_channel_id:channelId});
+ const count=countResult.error?null:Number(countResult.data||0);
+ const channelCount=$('#channelSubscriberCount');if(channelCount&&count!==null)channelCount.textContent=count.toLocaleString();
  if(state.page==='following')renderFollowing();
+ if(state.page==='studio'&&state.channel?.id===channelId)loadMyVideos();
+ toast(subscribed?'Subscribed to channel!':'Unsubscribed');
+ return subscribed;
 }
 async function sendComment(id){if(!state.user){openModal('authModal');return}const body=$('#commentText').value.trim();if(!body)return;const {error}=await db.from('bramble_video_comments').insert({video_id:id,user_id:state.user.id,body});if(error){toast(error.message);return}$('#commentText').value='';loadComments(id);toast('Comment posted')}
 async function reportVideo(id){if(!state.user){openModal('authModal');return}const reason=prompt('What is the issue? Please describe briefly.');if(!reason||reason.trim().length<5)return;const {error}=await db.from('bramble_video_reports').insert({video_id:id,reporter_id:state.user.id,reason:reason.trim()});toast(error?'Report could not be sent (you may already have reported this video).':'Report submitted for review.')}
-async function refreshAuth(session){state.session=session;state.user=session?.user||null;state.admin=!!(state.user?.app_metadata?.role==='admin');$('#accountBtn').textContent=state.user?(state.user.user_metadata?.display_name||state.user.email.split('@')[0]).slice(0,18):'Sign in';$('#adminNav').classList.toggle('hidden',!state.admin);if(state.user){const {data}=await db.from('creator_channels').select('*').eq('owner_id',state.user.id).maybeSingle();state.channel=data||null}else state.channel=null;if(state.page==='studio')renderStudio();if(state.page==='library')renderLibrary();if(state.page==='history')renderHistory();if(state.page==='following')renderFollowing()}
+async function refreshAuth(session){
+ const previousUserId=state.user?.id||null;
+ state.session=session;state.user=session?.user||null;
+ const nextUserId=state.user?.id||null;
+ state.admin=!!(state.user?.app_metadata?.role==='admin');
+ $('#accountBtn').textContent=state.user?(state.user.user_metadata?.display_name||state.user.email.split('@')[0]).slice(0,18):'Sign in';
+ $('#adminNav').classList.toggle('hidden',!state.admin);
+ if(previousUserId&&previousUserId!==nextUserId)closeModal('watchModal');
+ if(state.user){const {data,error}=await db.from('creator_channels').select('*').eq('owner_id',state.user.id).maybeSingle();if(error)console.warn('Could not load creator channel',error);state.channel=data||null}
+ else state.channel=null;
+ if(state.page==='studio')renderStudio();
+ if(state.page==='library')renderLibrary();
+ if(state.page==='history')renderHistory();
+ if(state.page==='following')renderFollowing();
+ if(state.page==='playlists')renderPlaylists();
+ if(state.page==='admin')renderAdmin();
+}
 async function signIn(){const email=$('#authEmail').value.trim(),password=$('#authPassword').value;const {data,error}=state.authMode==='signup'?await db.auth.signUp({email,password,options:{emailRedirectTo:location.origin,data:{display_name:$('#authName').value.trim()}}}):await db.auth.signInWithPassword({email,password});if(error){toast(error.message);return}if(state.authMode==='signup'&&!data.session){toast('Check your email to confirm your account, then sign in.');return}closeModal('authModal');toast(state.authMode==='signup'?'Account created!':'Welcome back!');await refreshAuth(data.session)}
 function renderStudio(){const gate=$('#studioGate'),content=$('#studioContent');gate.classList.toggle('hidden',!!state.user);content.classList.toggle('hidden',!state.user);if(!state.user)return;$('#channelDetails').innerHTML=state.channel?'<b>'+esc(state.channel.display_name)+'</b> <span class="muted">@'+esc(state.channel.handle)+'</span><p class="muted">'+esc(state.channel.description||'')+'</p>':'<p class="muted">Create your public channel before publishing videos.</p>';$('#channelForm').classList.toggle('hidden',!!state.channel);$('#uploadPanel').classList.toggle('hidden',!state.channel);$('#myVideosPanel').classList.toggle('hidden',!state.channel);if(state.channel)loadMyVideos()}
 async function createChannel(){const display_name=$('#channelName').value.trim(),handle=$('#channelHandle').value.trim().replace(/^@/,'');const description=$('#channelDescription').value.trim();if(display_name.length<2||handle.length<3){toast('Please enter a channel name and a handle with at least 3 characters.');return}const {data,error}=await db.from('creator_channels').insert({owner_id:state.user.id,display_name,handle,description}).select().single();if(error){toast(error.message);return}state.channel=data;renderStudio();toast('Your channel is ready!')}
-async function loadMyVideos(){const {data,error}=await db.from('bramble_videos').select('*').eq('channel_id',state.channel.id).order('created_at',{ascending:false});if(error){$('#myVideos').textContent='Could not load videos.';return}const rows=data||[],totalViews=rows.reduce((s,v)=>s+Number(v.views_count||0),0),totalLikes=rows.reduce((s,v)=>s+Number(v.likes_count||0),0);const {count:subs}=await db.from('bramble_channel_subscriptions').select('channel_id',{count:'exact',head:true}).eq('channel_id',state.channel.id);$('#creatorStats').innerHTML='<div class="creator-stat"><b>'+rows.length+'</b><small>Videos & drafts</small></div><div class="creator-stat"><b>'+totalViews.toLocaleString()+'</b><small>Total views</small></div><div class="creator-stat"><b>'+totalLikes.toLocaleString()+'</b><small>Total likes</small></div><div class="creator-stat"><b>'+Number(subs||0).toLocaleString()+'</b><small>Subscribers</small></div>';$('#myVideos').innerHTML=rows.length?'<table class="admin-table"><tr><th>Video</th><th>Status</th><th>Views</th><th>Likes</th><th>Actions</th></tr>'+rows.map(v=>'<tr><td>'+esc(v.title)+'</td><td>'+esc(v.status)+'</td><td>'+Number(v.views_count||0)+'</td><td>'+Number(v.likes_count||0)+'</td><td><div class="video-actions-inline"><button class="btn btn-outline edit-own" data-id="'+v.id+'">Edit</button><button class="btn btn-outline delete-own" data-id="'+v.id+'">Delete</button></div></td></tr>').join('')+'</table>':'<div class="empty">You have not uploaded any videos yet. Submitted videos stay in draft until moderator approval.</div>'}
+async function loadMyVideos(){const {data,error}=await db.from('bramble_videos').select('*').eq('channel_id',state.channel.id).order('created_at',{ascending:false});if(error){$('#myVideos').textContent='Could not load videos.';return}const rows=data||[],totalViews=rows.reduce((s,v)=>s+Number(v.views_count||0),0),totalLikes=rows.reduce((s,v)=>s+Number(v.likes_count||0),0);const subscriberResult=await db.rpc('bramble_get_subscriber_count',{p_channel_id:state.channel.id});const subs=subscriberResult.error?0:Number(subscriberResult.data||0);$('#creatorStats').innerHTML='<div class="creator-stat"><b>'+rows.length+'</b><small>Videos & drafts</small></div><div class="creator-stat"><b>'+totalViews.toLocaleString()+'</b><small>Total views</small></div><div class="creator-stat"><b>'+totalLikes.toLocaleString()+'</b><small>Total likes</small></div><div class="creator-stat"><b>'+Number(subs||0).toLocaleString()+'</b><small>Subscribers</small></div>';$('#myVideos').innerHTML=rows.length?'<table class="admin-table"><tr><th>Video</th><th>Status</th><th>Views</th><th>Likes</th><th>Actions</th></tr>'+rows.map(v=>'<tr><td>'+esc(v.title)+'</td><td>'+esc(v.status)+'</td><td>'+Number(v.views_count||0)+'</td><td>'+Number(v.likes_count||0)+'</td><td><div class="video-actions-inline"><button class="btn btn-outline edit-own" data-id="'+v.id+'">Edit</button><button class="btn btn-outline delete-own" data-id="'+v.id+'">Delete</button></div></td></tr>').join('')+'</table>':'<div class="empty">You have not uploaded any videos yet. Submitted videos stay in draft until moderator approval.</div>'}
 async function publishVideo(){if(!state.user||!state.channel)return;const title=$('#videoTitle').value.trim(),description=$('#videoDescription').value.trim(),category=$('#videoCategory').value,video_kind=$('#videoKind').value,source_type=$('#videoSource').value,thumbnail_url=safeUrl($('#videoThumbnail').value.trim())||null;if(title.length<3){toast('Video title must be at least 3 characters.');return}let video_url=null,storage_path=null;
 if(source_type==='upload'){const file=$('#videoFile').files[0];if(!file){toast('Choose a video file first.');return}if(file.size>50*1024*1024){toast('This file is larger than 50 MB. Please use a YouTube link.');return}if(!['video/mp4','video/webm','video/quicktime'].includes(file.type)){toast('Only MP4, WebM or MOV files are supported.');return}const safe=file.name.replace(/[^a-zA-Z0-9._-]/g,'-');storage_path=state.user.id+'/'+Date.now()+'-'+safe;const {error}=await db.storage.from('bramble-videos').upload(storage_path,file,{contentType:file.type,upsert:false});if(error){toast('Upload failed: '+error.message);return}}
 else{video_url=safeUrl($('#videoUrl').value.trim());if(!video_url||!(source_type==='youtube'?youtubeId(video_url):/vimeo\.com\/(?:video\/)?\d+/.test(video_url))){toast('Please enter a valid '+source_type+' video URL.');return}}
@@ -202,10 +279,10 @@ async function openPlaylist(id){
 async function deletePlaylist(id){if(!state.user||!confirm('Delete this playlist? The videos themselves will not be deleted.'))return;const {error:le}=await db.from('bramble_playlist_videos').delete().eq('playlist_id',id);if(le){toast(le.message);return}const {error}=await db.from('bramble_playlists').delete().eq('id',id);if(error){toast(error.message);return}toast('Playlist deleted');$('#playlistDetail').classList.add('hidden');renderPlaylists()}
 async function openChannel(id){
  const {data:channel,error}=await db.from('creator_channels').select('*').eq('id',id).maybeSingle();if(error||!channel){toast(error?.message||'Channel not found');return}
- const {data:videos,error:videoError}=await db.from('bramble_videos').select('*,creator_channels(id,owner_id,handle,display_name,avatar_url,description)').eq('channel_id',id).eq('status','published').eq('visibility','public').order('created_at',{ascending:false}).limit(80);
- const list=videos||[],views=list.reduce((s,v)=>s+Number(v.views_count||0),0),{count:subs}=await db.from('bramble_channel_subscriptions').select('channel_id',{count:'exact',head:true}).eq('channel_id',id);
+ const {data:videos,error:videoError}=await db.from('bramble_videos').select('*,creator_channels(id,handle,display_name,avatar_url,description)').eq('channel_id',id).eq('status','published').eq('visibility','public').order('created_at',{ascending:false}).limit(80);
+ const list=videos||[],views=list.reduce((s,v)=>s+Number(v.views_count||0),0),subscriberResult=await db.rpc('bramble_get_subscriber_count',{p_channel_id:id}),subs=subscriberResult.error?0:Number(subscriberResult.data||0);
  const {data:sub}=state.user?await db.from('bramble_channel_subscriptions').select('channel_id').eq('channel_id',id).eq('subscriber_id',state.user.id).maybeSingle():{data:null};
- $('#channelHero').innerHTML='<div class="eyebrow">Bramble creator</div><h2 style="font-size:32px;color:var(--forest);margin:0 0 6px">'+esc(channel.display_name)+'</h2><p class="muted">@'+esc(channel.handle)+'</p><p>'+esc(channel.description||'Welcome to this creator channel.')+'</p><div class="feature-strip"><div class="creator-stat"><b>'+list.length+'</b><small>Public videos</small></div><div class="creator-stat"><b>'+views.toLocaleString()+'</b><small>Total views</small></div><div class="creator-stat"><b>'+Number(subs||0).toLocaleString()+'</b><small>Subscribers</small></div></div>'+(state.user&&channel.owner_id!==state.user.id?'<button class="btn '+(sub?'btn-soft':'btn-primary')+'" id="channelSubscribe">'+(sub?'✓ Subscribed':'＋ Subscribe')+'</button>':'');
+ $('#channelHero').innerHTML='<div class="eyebrow">Bramble creator</div><h2 style="font-size:32px;color:var(--forest);margin:0 0 6px">'+esc(channel.display_name)+'</h2><p class="muted">@'+esc(channel.handle)+'</p><p>'+esc(channel.description||'Welcome to this creator channel.')+'</p><div class="feature-strip"><div class="creator-stat"><b>'+list.length+'</b><small>Public videos</small></div><div class="creator-stat"><b>'+views.toLocaleString()+'</b><small>Total views</small></div><div class="creator-stat"><b id="channelSubscriberCount">'+Number(subs||0).toLocaleString()+'</b><small>Subscribers</small></div></div>'+(state.user&&state.channel?.id!==id?'<button class="btn '+(sub?'btn-soft':'btn-primary')+'" id="channelSubscribe">'+(sub?'✓ Subscribed':'＋ Subscribe')+'</button>':'');
  $('#channelVideoGrid').innerHTML=videoError?'<div class="empty">Could not load channel videos.</div>':list.length?list.map(v=>videoCard(v,false)).join(''):'<div class="empty">This creator has not published any public videos yet.</div>';setPage('channel');
  const btn=$('#channelSubscribe');if(btn)btn.onclick=async()=>{await toggleSubscribe(id);openChannel(id)};
 }
@@ -222,10 +299,10 @@ $('#showLogin').onclick=()=>{state.authMode='login';$('#nameWrap').classList.add
 $('#showSignup').onclick=()=>{state.authMode='signup';$('#nameWrap').classList.remove('hidden');$('#authSubmit').textContent='Create account';$('#showSignup').className='btn btn-primary';$('#showLogin').className='btn btn-soft'};
 $('#authForm').addEventListener('submit',e=>{e.preventDefault();signIn()});$('#createChannel').onclick=createChannel;$('#publishVideo').onclick=publishVideo;$('#addProduct').onclick=addProduct;$('#createPlaylist').onclick=createPlaylist;$('#closePlaylist').onclick=()=>$('#playlistDetail').classList.add('hidden');
 $('#videoSource').onchange=()=>{const upload=$('#videoSource').value==='upload';$('#videoFileWrap').classList.toggle('hidden',!upload);$('#videoUrlWrap').classList.toggle('hidden',upload)};
-$$('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));
+$('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));document.addEventListener('keydown',e=>{if(e.key==='Escape'){const opened=$('.modal-backdrop.open').pop();if(opened)closeModal(opened.id)}});
 if(!db){toast('Bramble could not connect to its database. Please refresh.');return}
 db.auth.getSession().then(({data})=>refreshAuth(data.session));db.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>refreshAuth(session),0)});
-loadVideos().then(()=>{const match=location.hash.match(/watch=([^&]+)/);if(match){const id=decodeURIComponent(match[1]);if(state.videos.some(v=>v.id===id))openWatch(id)}});loadProducts();
+loadVideos().then(()=>{const match=location.hash.match(/watch=([^&]+)/);if(match){const id=decodeURIComponent(match[1]);openWatch(id)}});loadProducts();
 })();
 
 </script>
